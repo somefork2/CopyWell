@@ -118,6 +118,22 @@ final class ThemeManager {
         guard !Self.isSystemOwned(window) else { return }
         let palette = self.palette
         let appearance = palette.appearance.map { NSAppearance(named: $0) } ?? nil
+
+        // A window that made itself transparent meant it. The palette is a
+        // borderless panel with a clear background that rounds its own corners
+        // in a layer; painting the theme colour behind that fills the corners
+        // straight back in, and the seam between the square window colour and
+        // the rounded content is the hairline that kept being reported around
+        // the palette. Measured: the panel's backgroundColor came back as the
+        // theme's own 0.051/0.051/0.059 despite being set to `.clear` when the
+        // panel was built.
+        if Self.managesOwnBackground(window) {
+            window.appearance = appearance
+            window.contentView?.appearance = appearance
+            if window.backgroundColor != .clear { window.backgroundColor = .clear }
+            return
+        }
+
         let wantedBackground = palette.usesSystemMaterials ? nil : NSColor(palette.background)
         guard window.appearance?.name != appearance?.name
                 || window.backgroundColor != wantedBackground
@@ -134,6 +150,12 @@ final class ThemeManager {
     /// it is both wrong and visible.
     private static func isSystemOwned(_ window: NSWindow) -> Bool {
         window.level == .statusBar || window.className.contains("NSStatusBar")
+    }
+
+    /// Windows that paint their own backdrop and must be left alone: borderless
+    /// and non-opaque is how a floating panel says so.
+    private static func managesOwnBackground(_ window: NSWindow) -> Bool {
+        window.styleMask.contains(.borderless) && !window.isOpaque
     }
 
     private func persist() {
