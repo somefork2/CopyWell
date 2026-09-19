@@ -522,7 +522,7 @@ struct SubscriptionSettings: View {
                 LabeledContent(L("Status"), value: statusText)
                 if let expiry = manager.expirationDate {
                     LabeledContent(
-                        manager.isInTrial ? "Trial ends" : "Renews",
+                        manager.isInTrial ? L("Trial ends") : L("Renews"),
                         value: expiry.formatted(
                             Date.FormatStyle(date: .abbreviated, time: .shortened,
                                              locale: LanguageBundle.locale))

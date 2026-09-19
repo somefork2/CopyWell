@@ -17,49 +17,55 @@ struct ShortcutRecorder: View {
     private var manager: GlobalShortcutsManager { .shared }
 
     var body: some View {
-        HStack(spacing: 6) {
-            Button {
-                isRecording ? stopRecording() : startRecording()
-            } label: {
-                Text(isRecording ? L("Press keys…") : manager.shortcut(for: action).displayString)
-                    .font(.callout.monospaced())
-                    .frame(minWidth: 88)
-                    .padding(.horizontal, 8)
-                    .padding(.vertical, 3)
-                    .background(
-                        RoundedRectangle(cornerRadius: 5)
-                            .fill(isRecording ? Theme.accent.opacity(0.15) : Theme.secondaryBackground)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 5)
-                            .stroke(isRecording ? Theme.accent : Theme.separator, lineWidth: isRecording ? 1.5 : 0.5)
-                    )
-            }
-            .buttonStyle(.plain)
-
-            if !manager.shortcut(for: action).isEmpty {
+        // A stack, not an overlay. An overlay is offered its parent's width and
+        // draws inside its bounds, so "Use at least one of ⌘, ⌥ or ⌃." was cut
+        // to the width of the record button and came out as "Use at least one
+        // of ⌘,…". Stacked, the row grows to hold the message and the message
+        // wraps instead of being truncated.
+        VStack(alignment: .leading, spacing: 3) {
+            HStack(spacing: 6) {
                 Button {
-                    manager.rebind(action, to: .none)
+                    isRecording ? stopRecording() : startRecording()
                 } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(.tertiary)
+                    Text(isRecording ? L("Press keys…") : manager.shortcut(for: action).displayString)
+                        .font(.callout.monospaced())
+                        .frame(minWidth: 88)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 3)
+                        .background(
+                            RoundedRectangle(cornerRadius: 5)
+                                .fill(isRecording ? Theme.accent.opacity(0.15) : Theme.secondaryBackground)
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(isRecording ? Theme.accent : Theme.separator, lineWidth: isRecording ? 1.5 : 0.5)
+                        )
                 }
                 .buttonStyle(.plain)
-                .help(L("Remove this shortcut"))
+
+                if !manager.shortcut(for: action).isEmpty {
+                    Button {
+                        manager.rebind(action, to: .none)
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundStyle(.tertiary)
+                    }
+                    .buttonStyle(.plain)
+                    .help(L("Remove this shortcut"))
+                }
+
+                if manager.conflicts.contains(action) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .foregroundStyle(.orange)
+                        .help(L("Another app is already using this combination."))
+                }
             }
 
-            if manager.conflicts.contains(action) {
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .foregroundStyle(.orange)
-                    .help(L("Another app is already using this combination."))
-            }
-        }
-        .overlay(alignment: .bottomLeading) {
             if let errorMessage {
                 Text(errorMessage)
                     .font(.caption2)
                     .foregroundStyle(.orange)
-                    .offset(y: 16)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
         .onDisappear { stopRecording() }
