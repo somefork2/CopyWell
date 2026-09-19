@@ -189,6 +189,93 @@ enum ScreenshotRenderer {
         }
     }
 
+    /// Walks the palette's real window looking for whatever draws the hairline
+    /// around it: a layer border, a frame view, the window's own edge.
+    static var isDiagnosingPalette: Bool { CommandLine.arguments.contains("--diagnose-palette") }
+
+    static func diagnosePalette() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            MainActor.assumeIsolated {
+                QuickPastePanel.shared.toggle()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    MainActor.assumeIsolated {
+                        guard let panel = NSApp.windows.first(where: {
+                            $0.isVisible && String(describing: type(of: $0)).contains("Panel")
+                                && $0.frame.width > 300
+                        }) else { print("RESULT: palette window not found"); exit(2) }
+
+                        print("window \(type(of: panel)) opaque=\(panel.isOpaque) " +
+                              "shadow=\(panel.hasShadow) style=\(panel.styleMask.rawValue) " +
+                              "bg=\(panel.backgroundColor.description)")
+
+                        func walk(_ v: NSView, _ d: Int) {
+                            let pad = String(repeating: "  ", count: d)
+                            let l = v.layer
+                            let bw = l?.borderWidth ?? 0
+                            let notable = bw > 0 || (l?.cornerRadius ?? 0) > 0 || l?.mask != nil
+                                || l?.shadowOpacity ?? 0 > 0
+                            if notable || d < 3 {
+                                print("\(pad)\(type(of: v)) frame=\(Int(v.frame.width))x\(Int(v.frame.height)) " +
+                                      "border=\(bw) radius=\(l?.cornerRadius ?? 0) " +
+                                      "masks=\(l?.masksToBounds ?? false) " +
+                                      "shadowOpacity=\(l?.shadowOpacity ?? 0) " +
+                                      "borderColor=\(l?.borderColor.map { String(describing: $0) } ?? "nil")")
+                            }
+                            for sub in v.subviews { walk(sub, d + 1) }
+                        }
+                        if let frameView = panel.contentView?.superview {
+                            print("--- from the frame view down ---")
+                            walk(frameView, 0)
+                        }
+                        exit(0)
+                    }
+                }
+            }
+        }
+    }
+
+    /// Answers whether a first-time launch actually puts the setup guide on
+    /// screen: whether a window opens at all when the app is a menu bar
+    /// accessory, and whether the guide is presented over it.
+    static var isDiagnosingFirstRun: Bool { CommandLine.arguments.contains("--diagnose-firstrun") }
+
+    static func diagnoseFirstRun() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            MainActor.assumeIsolated {
+                let settings = AppSettings.shared
+                print("hasCompletedOnboarding: \(settings.hasCompletedOnboarding)")
+                let env = ProcessInfo.processInfo.environment
+                print("XPC_SERVICE_NAME: \(env["XPC_SERVICE_NAME"] ?? "(нет)")")
+                print("app active: \(NSApp.isActive)  frontmost: " +
+                      "\(NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? "?")")
+                print("showInDock: \(settings.showInDock)  policy: \(NSApp.activationPolicy().rawValue)")
+                let visible = NSApp.windows.filter(\.isVisible)
+                for w in visible {
+                    print("  window '\(w.title)' sheet=\(w.isSheet) size=\(Int(w.frame.width))x\(Int(w.frame.height))")
+                }
+                let sheet = visible.contains(where: \.isSheet)
+                let main = visible.contains { $0.canBecomeMain && !$0.isSheet }
+                let line = "RESULT: main window \(main ? "opened" : "did NOT open"), " +
+                    "setup guide \(sheet ? "is on screen" : "is NOT on screen")"
+                print(line)
+                // Launched through Finder there is no terminal to print to, so
+                // the answer goes somewhere it can be read afterwards.
+                let report = """
+                XPC_SERVICE_NAME=\(env["XPC_SERVICE_NAME"] ?? "(нет)")
+                active=\(NSApp.isActive) frontmost=\(NSWorkspace.shared.frontmostApplication?.bundleIdentifier ?? "?")
+                policy=\(NSApp.activationPolicy().rawValue)
+                mainWindowOnScreen=\(NSApp.windows.first { $0.canBecomeMain && !$0.isSheet }?.isOnActiveSpace ?? false)
+                \(line)
+                """
+                if let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                    try? report.write(to: docs.appendingPathComponent("firstrun.txt"),
+                                      atomically: true, encoding: .utf8)
+                }
+                exit(main && (sheet || settings.hasCompletedOnboarding) ? 0 : 1)
+            }
+        }
+    }
+
     /// Reports which toolbar items survive a narrow window.
     ///
     /// A toolbar short of room sweeps its trailing items into the » overflow
@@ -433,7 +520,13 @@ enum ScreenshotRenderer {
         subscriptions.simulatedPro = !locked
         subscriptions.forcedLock = locked
         let settings = AppSettings.shared
+        // Put back before exiting. This is a real preference in the real
+        // defaults, shared with every other copy of CopyWell on this Mac
+        // because they all carry the same bundle id — leaving it set is how a
+        // TestFlight install came up with no setup guide.
+        let originalOnboarding = settings.hasCompletedOnboarding
         settings.hasCompletedOnboarding = true
+        defer { settings.hasCompletedOnboarding = originalOnboarding }
         let coordinator = AppCoordinator.shared
 
         func dressed<V: View>(_ view: V) -> AnyView {
@@ -510,6 +603,9 @@ enum ScreenshotRenderer {
         }
 
         print("rendered to \(directory.path)")
+        // `defer` never runs before `exit`, so the restore is explicit.
+        settings.hasCompletedOnboarding = originalOnboarding
+        print("restored: hasCompletedOnboarding=\(originalOnboarding)")
         exit(0)
     }
 

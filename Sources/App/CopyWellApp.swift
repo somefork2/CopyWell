@@ -146,6 +146,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    /// True while the screenshot renderer runs: it builds and captures its own
+    /// off-screen windows, and raising the main one over them would land in the
+    /// pictures. The diagnostics are deliberately *not* excluded — a diagnostic
+    /// that watches a special case instead of the shipped behaviour is worth
+    /// nothing.
+    private static var isRunningADiagnostic: Bool {
+        #if DEBUG
+        CommandLine.arguments.contains("--render-screenshots")
+        #else
+        false
+        #endif
+    }
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         survivePlatformExceptions()
         NSApp.servicesProvider = ServiceProvider()
@@ -160,10 +173,27 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             if ScreenshotRenderer.isDiagnosingSettings { ScreenshotRenderer.diagnoseSettings() }
             if ScreenshotRenderer.isDiagnosingSidebar { ScreenshotRenderer.diagnoseSidebar() }
             if ScreenshotRenderer.isDiagnosingToolbar { ScreenshotRenderer.diagnoseToolbar() }
+            if ScreenshotRenderer.isDiagnosingFirstRun { ScreenshotRenderer.diagnoseFirstRun() }
+            if ScreenshotRenderer.isDiagnosingPalette { ScreenshotRenderer.diagnosePalette() }
             if ScreenshotRenderer.isDiagnosingRelayout { ScreenshotRenderer.diagnoseRelayout() }
             if ScreenshotRenderer.isDiagnosingFileRead { ScreenshotRenderer.diagnoseFileRead() }
             if ScreenshotRenderer.isDiagnosingLanguage { ScreenshotRenderer.diagnoseLanguage() }
             #endif
+
+            // An accessory app is not brought forward by the system when it
+            // launches. Measured on a Finder launch: the window opens, but
+            // `NSApp.isActive` comes back false and another app stays
+            // frontmost, so the window sits behind everything and the launch
+            // reads as "nothing happened".
+            //
+            // SwiftUI builds the WindowGroup's window after this method runs,
+            // so the next turn of the run loop is the earliest the window
+            // exists to be raised.
+            if !Self.isRunningADiagnostic {
+                DispatchQueue.main.async {
+                    MainActor.assumeIsolated { AppCoordinator.shared.openMainWindow() }
+                }
+            }
         }
 
         observeWindowPrivacy()
