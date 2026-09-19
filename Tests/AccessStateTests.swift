@@ -23,10 +23,16 @@ struct AccessStateTests {
         // than left wherever the test moved it.
         let previousStart = trial.startDate
 
+        // Pinned, not merely un-simulated: a real `SKTestSession` transaction
+        // left by the purchase tests lives in the same process and would
+        // otherwise make `currentTier` .pro behind this test's back.
+        let previousPin = manager.pinnedTierForTesting
+        manager.pinnedTierForTesting = pro ? .pro : .free
         manager.simulatedPro = pro
         manager.forcedLock = locked
         trial.simulateStart(daysAgo: trialActive ? 1 : 40)
         defer {
+            manager.pinnedTierForTesting = previousPin
             manager.simulatedPro = previousPro
             manager.forcedLock = previousLock
             trial.simulateStart(daysAgo: Int((Date().timeIntervalSince(previousStart) / 86_400).rounded()))

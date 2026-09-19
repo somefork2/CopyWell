@@ -92,6 +92,8 @@ final class SubscriptionManager {
     var showingPaywall = false
 
     @ObservationIgnored private var updatesTask: Task<Void, Never>?
+    @ObservationIgnored private var expiryTimer: Timer?
+    @ObservationIgnored private var activationObserver: NSObjectProtocol?
 
     private init() {}
 
@@ -103,6 +105,18 @@ final class SubscriptionManager {
     /// preference and no code path in the shipping app that can reach it.
     var simulatedPro: Bool = UserDefaults.standard.bool(forKey: "debug_simulated_pro") {
         didSet { UserDefaults.standard.set(simulatedPro, forKey: "debug_simulated_pro") }
+    }
+
+    /// Pins the entitlement for a test.
+    ///
+    /// The purchase tests and the access tests share one process, and a
+    /// `SKTestSession` transaction from the first is visible to the second:
+    /// `inState(pro: false)` was reading back `isPro == true` whenever the
+    /// order happened to put them that way round. Re-reading the entitlement on
+    /// activation and on a timer turned that occasional flake into a frequent
+    /// one, which is how it was finally found. Compiled out of release.
+    var pinnedTierForTesting: SubscriptionTier? {
+        didSet { if let pinnedTierForTesting { currentTier = pinnedTierForTesting } }
     }
 
     var isPro: Bool { simulatedPro || currentTier == .pro }
@@ -146,9 +160,43 @@ final class SubscriptionManager {
             await loadProducts()
             await refreshEntitlement()
         }
+        watchForExpiry()
     }
 
-    deinit { updatesTask?.cancel() }
+    /// Notices a subscription that has simply run out.
+    ///
+    /// `Transaction.updates` reports purchases, renewals, refunds and
+    /// revocations — things that happen. Expiry is not one of them: it is a
+    /// date passing, and StoreKit sends nothing. Everywhere else the
+    /// entitlement is read is a moment that may never come again in a menu bar
+    /// app: launch, a purchase, a restore. One left running for a fortnight
+    /// would have kept full access for a fortnight after the subscription
+    /// lapsed.
+    ///
+    /// Re-read when the app is brought to the front, and on a quarter-hour
+    /// timer for when it is not. `refreshEntitlement` only reads, so an extra
+    /// pass costs nothing when nothing has changed.
+    private func watchForExpiry() {
+        activationObserver = NotificationCenter.default.addObserver(
+            forName: NSApplication.didBecomeActiveNotification,
+            object: nil, queue: .main
+        ) { _ in
+            Task { @MainActor in await SubscriptionManager.shared.refreshEntitlement() }
+        }
+
+        let timer = Timer(timeInterval: 900, repeats: true) { _ in
+            Task { @MainActor in await SubscriptionManager.shared.refreshEntitlement() }
+        }
+        // `.common`, so a menu open or a drag does not hold the check off.
+        RunLoop.main.add(timer, forMode: .common)
+        expiryTimer = timer
+    }
+
+    deinit {
+        updatesTask?.cancel()
+        expiryTimer?.invalidate()
+        if let activationObserver { NotificationCenter.default.removeObserver(activationObserver) }
+    }
 
     // MARK: - Products
 
@@ -290,6 +338,12 @@ final class SubscriptionManager {
     /// The verified transaction handed to us by `purchase()` is authoritative,
     /// so it is folded in alongside whatever the store reports.
     func refreshEntitlement(justPurchased: StoreKit.Transaction? = nil) async {
+        #if DEBUG
+        if let pinnedTierForTesting {
+            currentTier = pinnedTierForTesting
+            return
+        }
+        #endif
         var tier: SubscriptionTier = .free
         var productID: String?
         var expiry: Date?
