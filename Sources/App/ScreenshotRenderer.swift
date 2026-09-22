@@ -234,6 +234,48 @@ enum ScreenshotRenderer {
         }
     }
 
+    /// Closes the main window, then waits to see whether launching the app
+    /// again brings it back — the only way back a reviewer has if the menu bar
+    /// icon is hidden under the notch of a crowded MacBook menu bar.
+    static var isDiagnosingReopen: Bool { CommandLine.arguments.contains("--diagnose-reopen") }
+
+    static func diagnoseReopen() {
+        func report(_ text: String) {
+            print(text)
+            if let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                let url = docs.appendingPathComponent("reopen.txt")
+                let old = (try? String(contentsOf: url, encoding: .utf8)) ?? ""
+                try? (old + text + "\n").write(to: url, atomically: true, encoding: .utf8)
+            }
+        }
+        func mainVisible() -> Bool {
+            NSApp.windows.contains { $0.isVisible && $0.canBecomeMain && !$0.isSheet }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            MainActor.assumeIsolated {
+                report("before close: main visible=\(mainVisible())")
+                for w in NSApp.windows where w.canBecomeMain && !w.isSheet { w.close() }
+                report("after close:  main visible=\(mainVisible())  policy=\(NSApp.activationPolicy().rawValue)")
+                var seen = false
+                let timer = Timer(timeInterval: 0.5, repeats: true) { _ in
+                    MainActor.assumeIsolated {
+                        if !seen && mainVisible() {
+                            seen = true
+                            report("REOPENED: the main window came back after a second launch")
+                        }
+                    }
+                }
+                RunLoop.main.add(timer, forMode: .common)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 25) {
+                    MainActor.assumeIsolated {
+                        report(seen ? "RESULT: reopen works" : "RESULT: window did NOT come back")
+                        exit(seen ? 0 : 1)
+                    }
+                }
+            }
+        }
+    }
+
     /// Answers whether a first-time launch actually puts the setup guide on
     /// screen: whether a window opens at all when the app is a menu bar
     /// accessory, and whether the guide is presented over it.

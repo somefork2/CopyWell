@@ -175,6 +175,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             if ScreenshotRenderer.isDiagnosingToolbar { ScreenshotRenderer.diagnoseToolbar() }
             if ScreenshotRenderer.isDiagnosingFirstRun { ScreenshotRenderer.diagnoseFirstRun() }
             if ScreenshotRenderer.isDiagnosingPalette { ScreenshotRenderer.diagnosePalette() }
+            if ScreenshotRenderer.isDiagnosingReopen { ScreenshotRenderer.diagnoseReopen() }
             if ScreenshotRenderer.isDiagnosingRelayout { ScreenshotRenderer.diagnoseRelayout() }
             if ScreenshotRenderer.isDiagnosingFileRead { ScreenshotRenderer.diagnoseFileRead() }
             if ScreenshotRenderer.isDiagnosingLanguage { ScreenshotRenderer.diagnoseLanguage() }
