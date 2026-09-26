@@ -1,6 +1,6 @@
 # Store shots
 
-Marketing screenshots for the Mac App Store listing — ten frames, 2880×1800,
+Marketing screenshots for the Mac App Store listing — nine frames, 2880×1800,
 in one look: a near-black ground lit by two coloured glows, the header centred
 at the top, and the scene on a Mac screen with wallpaper and a menu bar.
 
@@ -17,7 +17,6 @@ The finished set, in listing order, is in `docs/screenshots/store/`:
 | 07 | Text inside images | `shots.html?n=3` |
 | 08 | Pinboards | `shots.html?n=4` |
 | 09 | Privacy | `shots.html?n=5` |
-| 10 | Right-click menu | `shots.html?n=6` |
 
 **HTML frames** are plain HTML in `shots.html`, selected with `?n=`. `shoot.sh N`
 renders one through headless Chrome at 2× from a 1440×900 window:

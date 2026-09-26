@@ -147,7 +147,7 @@ def step_shots(only):
             continue
         lang = LOCALE_TO_LANG.get(locale)
         files = sorted(glob.glob(os.path.join(REPO, "docs", "screenshots", "store", lang or "-", "*.png")))
-        if len(files) != 10:
+        if len(files) != 9:
             print(f"shots: {locale} skipped — {len(files)} rendered files for {lang}")
             continue
         sets = asc.get_all(f"/v1/appStoreVersionLocalizations/{loc['id']}/appScreenshotSets")

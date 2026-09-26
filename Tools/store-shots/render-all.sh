@@ -33,9 +33,9 @@ for lang in $languages; do
   kill $pid 2>/dev/null || true
   features="$container/Screenshots/features/$lang"
 
-  # The six HTML frames, one at a time: two headless Chromes at once starve
+  # The five HTML frames, one at a time: two headless Chromes at once starve
   # each other and neither takes its screenshot. One retry each.
-  for n in 1 2 3 4 5 6; do
+  for n in 1 2 3 4 5; do
     "$here/shoot.sh" $n "$lang" >/dev/null || "$here/shoot.sh" $n "$lang" >/dev/null
   done
 
@@ -48,6 +48,6 @@ for lang in $languages; do
   cp "$here/out/$lang/3.png"                     "$out/07-text-in-images.png"
   cp "$here/out/$lang/4.png"                     "$out/08-pinboards.png"
   cp "$here/out/$lang/5.png"                     "$out/09-privacy.png"
-  cp "$here/out/$lang/6.png"                     "$out/10-right-click.png"
+  rm -f "$out/10-right-click.png"
   echo "$lang: $(ls "$out" | wc -l | tr -d ' ') frames"
 done
