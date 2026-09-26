@@ -24,3 +24,4 @@ docs/screenshots/store/
 docs/screenshots/features/
 Tools/store-shots/out/*/
 Tools/store-shots/strings/
+__pycache__/
