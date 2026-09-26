@@ -58,7 +58,11 @@ struct PasteStackView: View {
                     }
                 }
                 .frame(height: Theme.Metric.rowHeight)
-                .listRowBackground(Theme.rowBackground(index))
+                .padding(.horizontal, 8)
+                .modifier(RowHover())
+                .listRowInsets(EdgeInsets(top: 1, leading: 8, bottom: 1, trailing: 8))
+                .listRowBackground(Color.clear)
+                .listRowSeparator(.hidden)
             }
             .onDelete { stack.remove(at: $0) }
             .onMove { stack.move(from: $0, to: $1) }

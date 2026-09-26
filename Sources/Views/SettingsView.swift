@@ -81,6 +81,32 @@ struct GeneralSettings: View {
                     .foregroundStyle(.secondary)
             }
 
+            Section {
+                Toggle(L("Record the Mac's sound"), isOn: $settings.recordSystemAudio)
+                Toggle(L("Show the pointer in recordings"), isOn: $settings.recordShowsPointer)
+                Toggle(L("Show clicks in recordings"), isOn: $settings.recordShowsClicks)
+                Toggle(L("Count down before recording"), isOn: $settings.recordCountdown)
+                Toggle(L("Open the recording when it is finished"), isOn: $settings.openRecordingWhenDone)
+                LabeledContent(L("Screen Recording permission")) {
+                    if ScreenCaptureAccess.isGranted {
+                        Label(L("Allowed"), systemImage: "checkmark.circle.fill")
+                            .foregroundStyle(.green)
+                    } else {
+                        Button(L("Open System Settings")) {
+                            NSWorkspace.shared.open(ScreenCaptureAccess.settingsURL)
+                        }
+                    }
+                }
+            } header: {
+                Text(L("Screenshots & Recording"))
+            } footer: {
+                Text(L("Screenshots are copied and added to your history; ⌘S in the overlay saves them to a file instead. Recordings are saved to Movies ▸ CopyWell and copied as a file. Both need the Screen Recording permission, which is asked for the first time you use them."))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+
+            RecordingPresenterSettings()
+
             // macOS ships both of these switched off, and neither can be
             // turned on from inside an app — only pointed at. Without this
             // section people cannot find them: the entries are called Services
@@ -152,7 +178,7 @@ struct GeneralSettings: View {
                             Text(L("Locked"))
                                 .foregroundStyle(.secondary)
                             Button(L("See CopyWell Pro")) { subscriptions.showingPaywall = true }
-                                .buttonStyle(.link)
+                                .buttonStyle(.hoverLink)
                         }
                     }
                 }
@@ -181,12 +207,12 @@ struct PrivacySettings: View {
                 Toggle(L("Never record anything that looks like a password"), isOn: $settings.skipPasswords)
                 Toggle(L("Hide CopyWell windows from screen recordings"), isOn: $settings.hideFromScreenCapture)
             } footer: {
-                Text("""
+                Text(L("""
                 Password managers mark their copies with the standard \
                 org.nspasteboard.ConcealedType flag; CopyWell skips those and never \
                 records copies made in known password managers. Items you mark as \
                 sensitive yourself are encrypted with a key kept in your login keychain.
-                """)
+                """))
                 .font(.caption)
                 .foregroundStyle(.secondary)
             }
@@ -302,7 +328,7 @@ struct AppearanceSettings: View {
                                     .padding(-3)
                             )
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.hoverLift(scale: 1.15))
                     .help(L("Use the colour this theme was designed around"))
                     .accessibilityLabel(L("Theme accent"))
 
@@ -321,7 +347,7 @@ struct AppearanceSettings: View {
                                         .padding(-3)
                                 )
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(.hoverLift(scale: 1.15))
                         .accessibilityLabel(name)
                     }
                 }
@@ -366,7 +392,7 @@ struct ThemeSwatch: View {
                             lineWidth: isSelected ? 2 : 0.5)
             )
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.hoverLift(scale: 1.03))
         .accessibilityLabel(L("\(theme.displayName) theme"))
         .accessibilityAddTraits(isSelected ? [.isSelected] : [])
     }
@@ -566,4 +592,58 @@ struct SubscriptionSettings: View {
     }
 
     private var statusText: String { manager.statusDescription }
+}
+
+// MARK: - Camera and microphone
+
+/// The presenter's camera and voice. Each switch asks for its permission the
+/// moment it is turned on, and not before; turned down, the switch goes back
+/// off and says where the setting lives.
+struct RecordingPresenterSettings: View {
+    @Environment(AppSettings.self) private var settings
+
+    var body: some View {
+        @Bindable var settings = settings
+
+        Section {
+            Toggle(L("Show my camera in a bubble"), isOn: $settings.recordCamera)
+                .onChange(of: settings.recordCamera) { _, on in
+                    guard on else { return }
+                    Task { if !(await MediaAccess.request(.camera)) { settings.recordCamera = false } }
+                }
+            if settings.recordCamera {
+                Picker(L("Camera"), selection: $settings.cameraID) {
+                    Text(L("Default")).tag(String?.none)
+                    ForEach(MediaAccess.cameras, id: \.uniqueID) { device in
+                        Text(device.localizedName).tag(Optional(device.uniqueID))
+                    }
+                }
+                Picker(L("Bubble size"), selection: $settings.cameraSize) {
+                    ForEach(CameraBubbleSize.allCases) { size in
+                        Text(size.title).tag(size)
+                    }
+                }
+            }
+
+            Toggle(L("Record my voice"), isOn: $settings.recordMicrophone)
+                .onChange(of: settings.recordMicrophone) { _, on in
+                    guard on else { return }
+                    Task { if !(await MediaAccess.request(.microphone)) { settings.recordMicrophone = false } }
+                }
+            if settings.recordMicrophone {
+                Picker(L("Microphone"), selection: $settings.microphoneID) {
+                    Text(L("Default")).tag(String?.none)
+                    ForEach(MediaAccess.microphones, id: \.uniqueID) { device in
+                        Text(device.localizedName).tag(Optional(device.uniqueID))
+                    }
+                }
+            }
+        } header: {
+            Text(L("Camera & Microphone"))
+        } footer: {
+            Text(L("Both are off until you switch them on, and CopyWell asks for the camera or the microphone only then. The bubble can be dragged anywhere during a recording; double-click it to change its size."))
+                .font(.caption)
+                .foregroundStyle(.secondary)
+        }
+    }
 }

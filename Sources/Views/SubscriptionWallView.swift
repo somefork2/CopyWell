@@ -40,7 +40,7 @@ struct SubscriptionWallView: View {
                     Button(L("Restore Purchases")) {
                         Task { await subscriptions.restorePurchases() }
                     }
-                    .buttonStyle(.link)
+                    .buttonStyle(.hoverLink)
                     .disabled(subscriptions.purchaseInFlight)
                 }
 

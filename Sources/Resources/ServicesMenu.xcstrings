@@ -1,1354 +1,1347 @@
 {
   "sourceLanguage": "en",
-  "version": "1.0",
   "strings": {
-    "Copy Path": {
+    "Add to CopyWell Paste Stack": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Скопировать путь"
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Скопіювати шлях"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pfad kopieren"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copier le chemin"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copiar la ruta"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copia il percorso"
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copiar o caminho"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copiar o caminho"
+            "value": "إضافة إلى رصة اللصق في CopyWell"
           }
         },
         "ca": {
           "stringUnit": {
             "state": "translated",
-            "value": "Copia el camí"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pad kopiëren"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kopiera sökvägen"
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kopiér stien"
-          }
-        },
-        "nb": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kopier banen"
-          }
-        },
-        "fi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kopioi polku"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kopiuj ścieżkę"
+            "value": "Afegeix a la pila d’enganxar del CopyWell"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kopírovat cestu"
+            "value": "Přidat do zásobníku vkládání CopyWellu"
           }
         },
-        "sk": {
+        "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kopírovať cestu"
+            "value": "Føj til CopyWells indsætningsstak"
           }
         },
-        "hr": {
+        "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kopiraj putanju"
-          }
-        },
-        "ro": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copiază calea"
-          }
-        },
-        "hu": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Útvonal másolása"
+            "value": "Zum CopyWell-Einfügestapel hinzufügen"
           }
         },
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Αντιγραφή διαδρομής"
+            "value": "Προσθήκη στη στοίβα επικόλλησης του CopyWell"
           }
         },
-        "tr": {
+        "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Yolu kopyala"
+            "value": "Añadir a la pila de pegado de CopyWell"
           }
         },
-        "ar": {
+        "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "نسخ المسار"
+            "value": "Lisää CopyWellin liitäpinoon"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajouter à la pile de collage de CopyWell"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "העתקת הנתיב"
+            "value": "הוספה לערימת ההדבקה של CopyWell"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "पथ कॉपी करें"
+            "value": "CopyWell के पेस्ट स्टैक में जोड़ें"
           }
         },
-        "th": {
+        "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "คัดลอกเส้นทาง"
+            "value": "Dodaj u hrpu lijepljenja CopyWella"
           }
         },
-        "vi": {
+        "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sao chép đường dẫn"
+            "value": "Hozzáadás a CopyWell beillesztési sorához"
           }
         },
         "id": {
           "stringUnit": {
             "state": "translated",
-            "value": "Salin jalur"
+            "value": "Tambahkan ke Tumpukan Tempel CopyWell"
           }
         },
-        "ms": {
+        "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Salin laluan"
+            "value": "Aggiungi alla pila di incollaggio di CopyWell"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "パスをコピー"
+            "value": "CopyWellのペーストスタックに追加"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "경로 복사"
+            "value": "CopyWell 붙여넣기 스택에 추가"
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tambah ke Timbunan Tampal CopyWell"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Legg til i CopyWell-limstabelen"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voeg toe aan CopyWell-plakstapel"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dodaj do stosu wklejania CopyWell"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar à pilha de colagem do CopyWell"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar à pilha de colagem do CopyWell"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adaugă în teancul de lipire CopyWell"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить в стопку вставки CopyWell"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pridať do zásobníka vkladania CopyWellu"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lägg till i CopyWells klistra in-stack"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "เพิ่มไปยังกองวางของ CopyWell"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell yapıştırma yığınına ekle"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Додати до стосу вставляння CopyWell"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Thêm vào ngăn dán CopyWell"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "拷贝路径"
+            "value": "加入 CopyWell 粘贴栈"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "拷貝路徑"
+            "value": "加入 CopyWell 貼上堆疊"
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "পাথ কপি করুন"
+            "value": "CopyWell পেস্ট স্ট্যাকে যোগ করুন"
           }
         },
         "gu": {
           "stringUnit": {
             "state": "translated",
-            "value": "પાથ કૉપિ કરો"
+            "value": "CopyWell પેસ્ટ સ્ટૅકમાં ઉમેરો"
           }
         },
         "kn": {
           "stringUnit": {
             "state": "translated",
-            "value": "ಪಾತ್ ನಕಲಿಸಿ"
+            "value": "CopyWell ಪೇಸ್ಟ್ ಸ್ಟ್ಯಾಕ್‌ಗೆ ಸೇರಿಸಿ"
           }
         },
         "ml": {
           "stringUnit": {
             "state": "translated",
-            "value": "പാത്ത് പകർത്തുക"
+            "value": "CopyWell പേസ്റ്റ് സ്റ്റാക്കിലേക്ക് ചേർക്കുക"
           }
         },
         "mr": {
           "stringUnit": {
             "state": "translated",
-            "value": "पाथ कॉपी करा"
+            "value": "CopyWell पेस्ट स्टॅकमध्ये जोडा"
           }
         },
         "or": {
           "stringUnit": {
             "state": "translated",
-            "value": "ପାଥ୍ କପି କରନ୍ତୁ"
+            "value": "CopyWell ପେଷ୍ଟ ଷ୍ଟାକରେ ଯୋଡ଼ନ୍ତୁ"
           }
         },
         "pa": {
           "stringUnit": {
             "state": "translated",
-            "value": "ਪਾਥ ਕਾਪੀ ਕਰੋ"
+            "value": "CopyWell ਪੇਸਟ ਸਟੈਕ ਵਿੱਚ ਜੋੜੋ"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kopiraj pot"
+            "value": "Dodaj v sklad za lepljenje CopyWell"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "பாதையை நகலெடு"
+            "value": "CopyWell ஒட்டு அடுக்கில் சேர்"
           }
         },
         "te": {
           "stringUnit": {
             "state": "translated",
-            "value": "పాత్‌ను కాపీ చేయి"
+            "value": "CopyWell పేస్ట్ స్టాక్‌కు జోడించు"
           }
         },
         "ur": {
           "stringUnit": {
             "state": "translated",
-            "value": "پاتھ کاپی کریں"
+            "value": "CopyWell پیسٹ اسٹیک میں شامل کریں"
           }
         }
       }
     },
-    "Copy Text Contents": {
+    "Copy Text in Image": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Скопировать текст файла"
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Скопіювати текст файлу"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Textinhalt kopieren"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copier le contenu texte"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copiar el texto del archivo"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copia il contenuto testuale"
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copiar o texto do ficheiro"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copiar o texto do arquivo"
+            "value": "نسخ النص من الصورة"
           }
         },
         "ca": {
           "stringUnit": {
             "state": "translated",
-            "value": "Copia el text del fitxer"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tekstinhoud kopiëren"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kopiera textinnehållet"
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kopiér tekstindholdet"
-          }
-        },
-        "nb": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kopier tekstinnholdet"
-          }
-        },
-        "fi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kopioi tekstisisältö"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Kopiuj zawartość tekstową"
+            "value": "Copia el text de la imatge"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kopírovat textový obsah"
+            "value": "Kopírovat text z obrázku"
           }
         },
-        "sk": {
+        "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kopírovať textový obsah"
+            "value": "Kopier teksten i billedet"
           }
         },
-        "hr": {
+        "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kopiraj tekstualni sadržaj"
-          }
-        },
-        "ro": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Copiază conținutul text"
-          }
-        },
-        "hu": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Szöveges tartalom másolása"
+            "value": "Text im Bild kopieren"
           }
         },
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Αντιγραφή κειμένου αρχείου"
+            "value": "Αντιγραφή κειμένου από την εικόνα"
           }
         },
-        "tr": {
+        "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Metin içeriğini kopyala"
+            "value": "Copiar el texto de la imagen"
           }
         },
-        "ar": {
+        "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "نسخ المحتوى النصي"
+            "value": "Kopioi kuvan teksti"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier le texte de l’image"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "העתקת תוכן הטקסט"
+            "value": "העתקת הטקסט שבתמונה"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "टेक्स्ट सामग्री कॉपी करें"
+            "value": "तस्वीर का पाठ कॉपी करें"
           }
         },
-        "th": {
+        "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "คัดลอกเนื้อหาข้อความ"
+            "value": "Kopiraj tekst sa slike"
           }
         },
-        "vi": {
+        "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sao chép nội dung văn bản"
+            "value": "A képen lévő szöveg másolása"
           }
         },
         "id": {
           "stringUnit": {
             "state": "translated",
-            "value": "Salin isi teks"
+            "value": "Salin Teks dalam Gambar"
           }
         },
-        "ms": {
+        "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Salin kandungan teks"
+            "value": "Copia il testo nell’immagine"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "テキストの内容をコピー"
+            "value": "画像内のテキストをコピー"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "텍스트 내용 복사"
+            "value": "이미지 속 텍스트 복사"
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Salin Teks dalam Imej"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopier teksten i bildet"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopieer tekst in afbeelding"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopiuj tekst z obrazu"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiar o texto da imagem"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiar o texto da imagem"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiază textul din imagine"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скопировать текст с изображения"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopírovať text z obrázka"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kopiera texten i bilden"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "คัดลอกข้อความในรูปภาพ"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Görüntüdeki metni kopyala"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скопіювати текст із зображення"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sao chép văn bản trong hình"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "拷贝文本内容"
+            "value": "拷贝图像中的文本"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "拷貝文字內容"
+            "value": "拷貝影像中的文字"
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "টেক্সট কনটেন্ট কপি করুন"
+            "value": "ছবির টেক্সট কপি করুন"
           }
         },
         "gu": {
           "stringUnit": {
             "state": "translated",
-            "value": "ટેક્સ્ટ સામગ્રી કૉપિ કરો"
+            "value": "છબીમાંનું ટેક્સ્ટ કૉપિ કરો"
           }
         },
         "kn": {
           "stringUnit": {
             "state": "translated",
-            "value": "ಪಠ್ಯದ ವಿಷಯವನ್ನು ನಕಲಿಸಿ"
+            "value": "ಚಿತ್ರದಲ್ಲಿನ ಪಠ್ಯ ನಕಲಿಸಿ"
           }
         },
         "ml": {
           "stringUnit": {
             "state": "translated",
-            "value": "ടെക്സ്റ്റ് ഉള്ളടക്കം പകർത്തുക"
+            "value": "ചിത്രത്തിലെ ടെക്സ്റ്റ് പകർത്തുക"
           }
         },
         "mr": {
           "stringUnit": {
             "state": "translated",
-            "value": "मजकूर सामग्री कॉपी करा"
+            "value": "इमेजमधील मजकूर कॉपी करा"
           }
         },
         "or": {
           "stringUnit": {
             "state": "translated",
-            "value": "ଟେକ୍ସଟ୍ ବିଷୟବସ୍ତୁ କପି କରନ୍ତୁ"
+            "value": "ଛବିରେ ଥିବା ଟେକ୍ସଟ୍ କପି କରନ୍ତୁ"
           }
         },
         "pa": {
           "stringUnit": {
             "state": "translated",
-            "value": "ਟੈਕਸਟ ਸਮੱਗਰੀ ਕਾਪੀ ਕਰੋ"
+            "value": "ਤਸਵੀਰ ਵਿਚਲਾ ਟੈਕਸਟ ਕਾਪੀ ਕਰੋ"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kopiraj besedilno vsebino"
+            "value": "Kopiraj besedilo s slike"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "உரை உள்ளடக்கத்தை நகலெடு"
+            "value": "படத்திலுள்ள உரையை நகலெடு"
           }
         },
         "te": {
           "stringUnit": {
             "state": "translated",
-            "value": "టెక్స్ట్ కంటెంట్‌ను కాపీ చేయి"
+            "value": "చిత్రంలోని టెక్స్ట్‌ను కాపీ చేయి"
           }
         },
         "ur": {
           "stringUnit": {
             "state": "translated",
-            "value": "متن کا مواد کاپی کریں"
+            "value": "تصویر میں موجود متن کاپی کریں"
           }
         }
       }
     },
-    "None of the selected files contain text.": {
+    "Paste as Plain Text from CopyWell": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ни в одном из выбранных файлов нет текста."
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "У жодному з вибраних файлів немає тексту."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Keine der ausgewählten Dateien enthält Text."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aucun des fichiers sélectionnés ne contient de texte."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ninguno de los archivos seleccionados contiene texto."
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nessuno dei file selezionati contiene testo."
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nenhum dos ficheiros selecionados contém texto."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nenhum dos arquivos selecionados contém texto."
+            "value": "اللصق كنص عادي من CopyWell"
           }
         },
         "ca": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cap dels fitxers seleccionats no conté text."
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Geen van de geselecteerde bestanden bevat tekst."
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ingen av de valda filerna innehåller text."
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ingen af de valgte filer indeholder tekst."
-          }
-        },
-        "nb": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ingen av de valgte filene inneholder tekst."
-          }
-        },
-        "fi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Missään valituista tiedostoista ei ole tekstiä."
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Żaden z wybranych plików nie zawiera tekstu."
+            "value": "Enganxa com a text net des del CopyWell"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Žádný z vybraných souborů neobsahuje text."
+            "value": "Vložit jako prostý text z CopyWellu"
           }
         },
-        "sk": {
+        "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Žiadny z vybraných súborov neobsahuje text."
+            "value": "Indsæt som almindelig tekst fra CopyWell"
           }
         },
-        "hr": {
+        "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nijedna od odabranih datoteka ne sadrži tekst."
-          }
-        },
-        "ro": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Niciunul dintre fișierele selectate nu conține text."
-          }
-        },
-        "hu": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A kijelölt fájlok egyike sem tartalmaz szöveget."
+            "value": "Aus CopyWell als reinen Text einfügen"
           }
         },
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Κανένα από τα επιλεγμένα αρχεία δεν περιέχει κείμενο."
+            "value": "Επικόλληση ως απλό κείμενο από το CopyWell"
           }
         },
-        "tr": {
+        "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Seçilen dosyaların hiçbirinde metin yok."
+            "value": "Pegar como texto sin formato desde CopyWell"
           }
         },
-        "ar": {
+        "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "لا يحتوي أي من الملفات المحددة على نص."
+            "value": "Liitä pelkkänä tekstinä CopyWellista"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coller en texte brut depuis CopyWell"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "אף אחד מהקבצים שנבחרו אינו מכיל טקסט."
+            "value": "הדבקה כטקסט רגיל מ-CopyWell"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "चुनी गई किसी भी फ़ाइल में टेक्स्ट नहीं है।"
+            "value": "CopyWell से सादे पाठ के रूप में पेस्ट करें"
           }
         },
-        "th": {
+        "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "ไม่มีไฟล์ที่เลือกไว้ไฟล์ใดมีข้อความ"
+            "value": "Zalijepi kao obični tekst iz CopyWella"
           }
         },
-        "vi": {
+        "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Không tệp nào trong số các tệp đã chọn có văn bản."
+            "value": "Beillesztés egyszerű szövegként a CopyWellből"
           }
         },
         "id": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tidak satu pun berkas yang dipilih berisi teks."
+            "value": "Tempel sebagai Teks Biasa dari CopyWell"
           }
         },
-        "ms": {
+        "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tiada satu pun fail yang dipilih mengandungi teks."
+            "value": "Incolla come testo semplice da CopyWell"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "選択したファイルのどれにもテキストが含まれていません。"
+            "value": "CopyWellからプレーンテキストとしてペースト"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "선택한 파일 중에 텍스트가 들어 있는 것이 없습니다."
+            "value": "CopyWell에서 일반 텍스트로 붙여넣기"
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tampal sebagai Teks Biasa daripada CopyWell"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lim inn som ren tekst fra CopyWell"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plak als platte tekst uit CopyWell"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wklej jako zwykły tekst z CopyWell"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colar como texto simples do CopyWell"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colar do CopyWell como texto simples"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lipește din CopyWell ca text simplu"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вставить из CopyWell как обычный текст"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vložiť z CopyWellu ako obyčajný text"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klistra in som vanlig text från CopyWell"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "วางเป็นข้อความธรรมดาจาก CopyWell"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell’den düz metin olarak yapıştır"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вставити з CopyWell як звичайний текст"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dán dưới dạng văn bản thuần từ CopyWell"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "所选文件中都不包含文字。"
+            "value": "从 CopyWell 以纯文本粘贴"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "所選檔案中都不含文字。"
+            "value": "從 CopyWell 以純文字貼上"
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "নির্বাচিত কোনো ফাইলেই টেক্সট নেই।"
+            "value": "CopyWell থেকে প্লেইন টেক্সট হিসেবে পেস্ট করুন"
           }
         },
         "gu": {
           "stringUnit": {
             "state": "translated",
-            "value": "પસંદ કરેલી કોઈપણ ફાઇલમાં ટેક્સ્ટ નથી."
+            "value": "CopyWellમાંથી સાદા ટેક્સ્ટ તરીકે પેસ્ટ કરો"
           }
         },
         "kn": {
           "stringUnit": {
             "state": "translated",
-            "value": "ಆಯ್ಕೆಮಾಡಿದ ಯಾವ ಫೈಲ್‌ಗಳಲ್ಲೂ ಪಠ್ಯವಿಲ್ಲ."
+            "value": "CopyWell ನಿಂದ ಸಾದಾ ಪಠ್ಯವಾಗಿ ಅಂಟಿಸಿ"
           }
         },
         "ml": {
           "stringUnit": {
             "state": "translated",
-            "value": "തിരഞ്ഞെടുത്ത ഫയലുകളിലൊന്നും ടെക്സ്റ്റ് ഇല്ല."
+            "value": "CopyWell-ൽ നിന്ന് പ്ലെയിൻ ടെക്സ്റ്റായി ഒട്ടിക്കുക"
           }
         },
         "mr": {
           "stringUnit": {
             "state": "translated",
-            "value": "निवडलेल्या कोणत्याही फाइलमध्ये मजकूर नाही."
+            "value": "CopyWell मधून साधा मजकूर म्हणून पेस्ट करा"
           }
         },
         "or": {
           "stringUnit": {
             "state": "translated",
-            "value": "ବଛାଯାଇଥିବା କୌଣସି ଫାଇଲରେ ଟେକ୍ସଟ୍ ନାହିଁ।"
+            "value": "CopyWell ରୁ ସାଧା ଟେକ୍ସଟ୍ ଭାବେ ପେଷ୍ଟ କରନ୍ତୁ"
           }
         },
         "pa": {
           "stringUnit": {
             "state": "translated",
-            "value": "ਚੁਣੀਆਂ ਗਈਆਂ ਫ਼ਾਈਲਾਂ ਵਿੱਚੋਂ ਕਿਸੇ ਵਿੱਚ ਵੀ ਟੈਕਸਟ ਨਹੀਂ ਹੈ।"
+            "value": "CopyWell ਤੋਂ ਸਾਦੇ ਟੈਕਸਟ ਵਜੋਂ ਪੇਸਟ ਕਰੋ"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nobena od izbranih datotek ne vsebuje besedila."
+            "value": "Prilepi kot navadno besedilo iz CopyWella"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "தேர்ந்தெடுத்த கோப்புகள் எதிலும் உரை இல்லை."
+            "value": "CopyWell-இலிருந்து எளிய உரையாக ஒட்டு"
           }
         },
         "te": {
           "stringUnit": {
             "state": "translated",
-            "value": "ఎంచుకున్న ఫైల్‌లలో దేనిలోనూ టెక్స్ట్ లేదు."
+            "value": "CopyWell నుండి ప్లెయిన్ టెక్స్ట్‌గా పేస్ట్ చేయి"
           }
         },
         "ur": {
           "stringUnit": {
             "state": "translated",
-            "value": "منتخب کردہ فائلوں میں سے کسی میں بھی متن نہیں ہے۔"
+            "value": "CopyWell سے سادہ متن کے طور پر پیسٹ کریں"
           }
         }
       }
     },
-    "Nothing to copy": {
+    "Paste from CopyWell": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
+        "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "Копировать нечего"
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Копіювати нічого"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nichts zu kopieren"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Rien à copier"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No hay nada que copiar"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Niente da copiare"
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nada para copiar"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nada para copiar"
+            "value": "اللصق من CopyWell"
           }
         },
         "ca": {
           "stringUnit": {
             "state": "translated",
-            "value": "No hi ha res per copiar"
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Niets om te kopiëren"
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Inget att kopiera"
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Intet at kopiere"
-          }
-        },
-        "nb": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ingenting å kopiere"
-          }
-        },
-        "fi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ei kopioitavaa"
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nie ma czego kopiować"
+            "value": "Enganxa des del CopyWell"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Není co kopírovat"
+            "value": "Vložit z CopyWellu"
           }
         },
-        "sk": {
+        "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nie je čo kopírovať"
+            "value": "Indsæt fra CopyWell"
           }
         },
-        "hr": {
+        "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nema se što kopirati"
-          }
-        },
-        "ro": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nu este nimic de copiat"
-          }
-        },
-        "hu": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nincs mit másolni"
+            "value": "Aus CopyWell einfügen"
           }
         },
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Δεν υπάρχει τίποτα για αντιγραφή"
+            "value": "Επικόλληση από το CopyWell"
           }
         },
-        "tr": {
+        "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kopyalanacak bir şey yok"
+            "value": "Pegar desde CopyWell"
           }
         },
-        "ar": {
+        "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "لا شيء لنسخه"
+            "value": "Liitä CopyWellista"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coller depuis CopyWell"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "אין מה להעתיק"
+            "value": "הדבקה מ-CopyWell"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "कॉपी करने के लिए कुछ नहीं"
+            "value": "CopyWell से पेस्ट करें"
           }
         },
-        "th": {
+        "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "ไม่มีอะไรให้คัดลอก"
+            "value": "Zalijepi iz CopyWella"
           }
         },
-        "vi": {
+        "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Không có gì để sao chép"
+            "value": "Beillesztés a CopyWellből"
           }
         },
         "id": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tidak ada yang bisa disalin"
+            "value": "Tempel dari CopyWell"
           }
         },
-        "ms": {
+        "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tiada apa-apa untuk disalin"
+            "value": "Incolla da CopyWell"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "コピーできるものがありません"
+            "value": "CopyWellからペースト"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "복사할 내용이 없음"
+            "value": "CopyWell에서 붙여넣기"
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tampal daripada CopyWell"
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lim inn fra CopyWell"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Plak uit CopyWell"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wklej z CopyWell"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colar do CopyWell"
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colar do CopyWell"
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lipește din CopyWell"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вставить из CopyWell"
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vložiť z CopyWellu"
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klistra in från CopyWell"
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "วางจาก CopyWell"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell’den yapıştır"
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Вставити з CopyWell"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dán từ CopyWell"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "没有可复制的内容"
+            "value": "从 CopyWell 粘贴"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "沒有可拷貝的內容"
+            "value": "從 CopyWell 貼上"
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "কপি করার মতো কিছু নেই"
+            "value": "CopyWell থেকে পেস্ট করুন"
           }
         },
         "gu": {
           "stringUnit": {
             "state": "translated",
-            "value": "કૉપિ કરવા માટે કંઈ નથી"
+            "value": "CopyWellમાંથી પેસ્ટ કરો"
           }
         },
         "kn": {
           "stringUnit": {
             "state": "translated",
-            "value": "ನಕಲಿಸಲು ಏನೂ ಇಲ್ಲ"
+            "value": "CopyWell ನಿಂದ ಅಂಟಿಸಿ"
           }
         },
         "ml": {
           "stringUnit": {
             "state": "translated",
-            "value": "പകർത്താൻ ഒന്നുമില്ല"
+            "value": "CopyWell-ൽ നിന്ന് ഒട്ടിക്കുക"
           }
         },
         "mr": {
           "stringUnit": {
             "state": "translated",
-            "value": "कॉपी करण्यासारखे काहीही नाही"
+            "value": "CopyWell मधून पेस्ट करा"
           }
         },
         "or": {
           "stringUnit": {
             "state": "translated",
-            "value": "କପି କରିବାକୁ କିଛି ନାହିଁ"
+            "value": "CopyWell ରୁ ପେଷ୍ଟ କରନ୍ତୁ"
           }
         },
         "pa": {
           "stringUnit": {
             "state": "translated",
-            "value": "ਕਾਪੀ ਕਰਨ ਲਈ ਕੁਝ ਨਹੀਂ"
+            "value": "CopyWell ਤੋਂ ਪੇਸਟ ਕਰੋ"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ničesar ni za kopiranje"
+            "value": "Prilepi iz CopyWella"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "நகலெடுக்க எதுவும் இல்லை"
+            "value": "CopyWell-இலிருந்து ஒட்டு"
           }
         },
         "te": {
           "stringUnit": {
             "state": "translated",
-            "value": "కాపీ చేయడానికి ఏమీ లేదు"
+            "value": "CopyWell నుండి పేస్ట్ చేయి"
           }
         },
         "ur": {
           "stringUnit": {
             "state": "translated",
-            "value": "کاپی کرنے کے لیے کچھ نہیں"
+            "value": "CopyWell سے پیسٹ کریں"
           }
         }
       }
     },
-    "Open CopyWell": {
+    "Pin to CopyWell": {
       "extractionState": "manual",
       "localizations": {
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "فتح CopyWell"
+            "value": "تثبيت في CopyWell"
           }
         },
         "ca": {
           "stringUnit": {
             "state": "translated",
-            "value": "Obre el CopyWell"
+            "value": "Fixa al CopyWell"
           }
         },
         "cs": {
           "stringUnit": {
             "state": "translated",
-            "value": "Otevřít CopyWell"
+            "value": "Připnout do CopyWellu"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "Åbn CopyWell"
+            "value": "Fastgør i CopyWell"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "CopyWell öffnen"
+            "value": "An CopyWell anheften"
           }
         },
         "el": {
           "stringUnit": {
             "state": "translated",
-            "value": "Άνοιγμα CopyWell"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Open CopyWell"
+            "value": "Καρφίτσωμα στο CopyWell"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Abrir CopyWell"
+            "value": "Fijar en CopyWell"
           }
         },
         "fi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Avaa CopyWell"
+            "value": "Kiinnitä CopyWelliin"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ouvrir CopyWell"
+            "value": "Épingler dans CopyWell"
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "פתיחת CopyWell"
+            "value": "נעיצה ב-CopyWell"
           }
         },
         "hi": {
           "stringUnit": {
             "state": "translated",
-            "value": "CopyWell खोलें"
+            "value": "CopyWell में पिन करें"
           }
         },
         "hr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Otvori CopyWell"
+            "value": "Prikvači u CopyWell"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "A CopyWell megnyitása"
+            "value": "Rögzítés a CopyWellben"
           }
         },
         "id": {
           "stringUnit": {
             "state": "translated",
-            "value": "Buka CopyWell"
+            "value": "Sematkan ke CopyWell"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Apri CopyWell"
+            "value": "Fissa in CopyWell"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "CopyWellを開く"
+            "value": "CopyWellにピン留め"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "CopyWell 열기"
+            "value": "CopyWell에 고정"
           }
         },
         "ms": {
           "stringUnit": {
             "state": "translated",
-            "value": "Buka CopyWell"
+            "value": "Semat ke CopyWell"
           }
         },
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "Åpne CopyWell"
+            "value": "Fest i CopyWell"
           }
         },
         "nl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open CopyWell"
+            "value": "Zet vast in CopyWell"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Otwórz CopyWell"
+            "value": "Przypnij w CopyWell"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Abrir o CopyWell"
+            "value": "Fixar no CopyWell"
           }
         },
         "pt-PT": {
           "stringUnit": {
             "state": "translated",
-            "value": "Abrir o CopyWell"
+            "value": "Fixar no CopyWell"
           }
         },
         "ro": {
           "stringUnit": {
             "state": "translated",
-            "value": "Deschide CopyWell"
+            "value": "Fixează în CopyWell"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Открыть CopyWell"
+            "value": "Закрепить в CopyWell"
           }
         },
         "sk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Otvoriť CopyWell"
+            "value": "Pripnúť do CopyWellu"
           }
         },
         "sv": {
           "stringUnit": {
             "state": "translated",
-            "value": "Öppna CopyWell"
+            "value": "Fäst i CopyWell"
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "เปิด CopyWell"
+            "value": "ปักหมุดใน CopyWell"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "CopyWell’i aç"
+            "value": "CopyWell’e sabitle"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "Відкрити CopyWell"
+            "value": "Закріпити в CopyWell"
           }
         },
         "vi": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mở CopyWell"
+            "value": "Ghim vào CopyWell"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "打开 CopyWell"
+            "value": "固定到 CopyWell"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "打開 CopyWell"
+            "value": "釘選到 CopyWell"
           }
         },
         "bn": {
           "stringUnit": {
             "state": "translated",
-            "value": "CopyWell খুলুন"
+            "value": "CopyWell-এ পিন করুন"
           }
         },
         "gu": {
           "stringUnit": {
             "state": "translated",
-            "value": "CopyWell ખોલો"
+            "value": "CopyWellમાં પિન કરો"
           }
         },
         "kn": {
           "stringUnit": {
             "state": "translated",
-            "value": "CopyWell ತೆರೆಯಿರಿ"
+            "value": "CopyWell ಗೆ ಪಿನ್ ಮಾಡಿ"
           }
         },
         "ml": {
           "stringUnit": {
             "state": "translated",
-            "value": "CopyWell തുറക്കുക"
+            "value": "CopyWell-ൽ പിൻ ചെയ്യുക"
           }
         },
         "mr": {
           "stringUnit": {
             "state": "translated",
-            "value": "CopyWell उघडा"
+            "value": "CopyWell मध्ये पिन करा"
           }
         },
         "or": {
           "stringUnit": {
             "state": "translated",
-            "value": "CopyWell ଖୋଲନ୍ତୁ"
+            "value": "CopyWell ରେ ପିନ୍ କରନ୍ତୁ"
           }
         },
         "pa": {
           "stringUnit": {
             "state": "translated",
-            "value": "CopyWell ਖੋਲ੍ਹੋ"
+            "value": "CopyWell ਵਿੱਚ ਪਿੰਨ ਕਰੋ"
           }
         },
         "sl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Odpri CopyWell"
+            "value": "Pripni v CopyWell"
           }
         },
         "ta": {
           "stringUnit": {
             "state": "translated",
-            "value": "CopyWell-ஐத் திற"
+            "value": "CopyWell-இல் பின் செய்"
           }
         },
         "te": {
           "stringUnit": {
             "state": "translated",
-            "value": "CopyWellను తెరువు"
+            "value": "CopyWellకు పిన్ చేయి"
           }
         },
         "ur": {
           "stringUnit": {
             "state": "translated",
-            "value": "CopyWell کھولیں"
+            "value": "CopyWell پر پن کریں"
           }
         }
       }
@@ -1390,12 +1383,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Αποθήκευση στο CopyWell"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Save to CopyWell"
           }
         },
         "es": {
@@ -1627,275 +1614,7 @@
           }
         }
       }
-    },
-    "“%@” is not a text file, so there is no text in it to copy.": {
-      "extractionState": "manual",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "«%@» — не текстовый файл, копировать из него нечего."
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "«%@» — не текстовий файл, копіювати з нього нічого."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "„%@“ ist keine Textdatei, es gibt darin keinen Text zum Kopieren."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "« %@ » n’est pas un fichier texte, il n’y a donc rien à copier."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "«%@» no es un archivo de texto, así que no hay texto que copiar."
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” non è un file di testo, quindi non c’è testo da copiare."
-          }
-        },
-        "pt-PT": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” não é um ficheiro de texto, por isso não há texto para copiar."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” não é um arquivo de texto, portanto não há texto para copiar."
-          }
-        },
-        "ca": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "«%@» no és un fitxer de text, així que no hi ha text per copiar."
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "‘%@’ is geen tekstbestand, dus er valt geen tekst uit te kopiëren."
-          }
-        },
-        "sv": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "”%@” är ingen textfil, så det finns ingen text att kopiera."
-          }
-        },
-        "da": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” er ikke en tekstfil, så der er ingen tekst at kopiere."
-          }
-        },
-        "nb": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "«%@» er ikke en tekstfil, så det finnes ingen tekst å kopiere."
-          }
-        },
-        "fi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "”%@” ei ole tekstitiedosto, joten siitä ei ole tekstiä kopioitavaksi."
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "„%@” nie jest plikiem tekstowym, więc nie ma z niego czego kopiować."
-          }
-        },
-        "cs": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "„%@“ není textový soubor, takže v něm není žádný text ke zkopírování."
-          }
-        },
-        "sk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "„%@“ nie je textový súbor, takže v ňom nie je žiadny text na skopírovanie."
-          }
-        },
-        "hr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "„%@“ nije tekstualna datoteka pa u njoj nema teksta za kopiranje."
-          }
-        },
-        "ro": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "„%@” nu este un fișier text, așa că nu are text de copiat."
-          }
-        },
-        "hu": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A(z) „%@” nem szövegfájl, így nincs benne másolható szöveg."
-          }
-        },
-        "el": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Το «%@» δεν είναι αρχείο κειμένου, οπότε δεν υπάρχει κείμενο για αντιγραφή."
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” bir metin dosyası değil, bu yüzden kopyalanacak metin yok."
-          }
-        },
-        "ar": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "‏«%@» ليس ملفاً نصياً، لذا لا يوجد فيه نص لنسخه."
-          }
-        },
-        "he": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "‏„%@” אינו קובץ טקסט, ולכן אין בו טקסט להעתקה."
-          }
-        },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” टेक्स्ट फ़ाइल नहीं है, इसलिए उसमें कॉपी करने योग्य टेक्स्ट नहीं है।"
-          }
-        },
-        "th": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” ไม่ใช่ไฟล์ข้อความ จึงไม่มีข้อความให้คัดลอก"
-          }
-        },
-        "vi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” không phải tệp văn bản, nên không có văn bản để sao chép."
-          }
-        },
-        "id": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” bukan berkas teks, jadi tidak ada teks yang bisa disalin."
-          }
-        },
-        "ms": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” bukan fail teks, jadi tiada teks untuk disalin."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「%@」はテキストファイルではないため、コピーできるテキストがありません。"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@”은(는) 텍스트 파일이 아니라서 복사할 텍스트가 없습니다."
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@”不是文本文件，其中没有可复制的文字。"
-          }
-        },
-        "zh-Hant": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "「%@」不是文字檔案，其中沒有可拷貝的文字。"
-          }
-        },
-        "bn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” কোনো টেক্সট ফাইল নয়, তাই এতে কপি করার মতো কোনো টেক্সট নেই।"
-          }
-        },
-        "gu": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” ટેક્સ્ટ ફાઇલ નથી, તેથી તેમાં કૉપિ કરવા માટે કોઈ ટેક્સ્ટ નથી."
-          }
-        },
-        "kn": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” ಪಠ್ಯ ಫೈಲ್ ಅಲ್ಲ, ಆದ್ದರಿಂದ ಅದರಲ್ಲಿ ನಕಲಿಸಲು ಯಾವುದೇ ಪಠ್ಯವಿಲ್ಲ."
-          }
-        },
-        "ml": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” ഒരു ടെക്സ്റ്റ് ഫയലല്ല, അതിനാൽ അതിൽ പകർത്താൻ ടെക്സ്റ്റൊന്നുമില്ല."
-          }
-        },
-        "mr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” ही मजकूर फाइल नाही, त्यामुळे त्यात कॉपी करण्यासाठी कोणताही मजकूर नाही."
-          }
-        },
-        "or": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” ଏକ ଟେକ୍ସଟ୍ ଫାଇଲ୍ ନୁହେଁ, ତେଣୁ ଏଥିରେ କପି କରିବାକୁ କୌଣସି ଟେକ୍ସଟ୍ ନାହିଁ।"
-          }
-        },
-        "pa": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” ਟੈਕਸਟ ਫ਼ਾਈਲ ਨਹੀਂ ਹੈ, ਇਸ ਲਈ ਇਸ ਵਿੱਚ ਕਾਪੀ ਕਰਨ ਲਈ ਕੋਈ ਟੈਕਸਟ ਨਹੀਂ ਹੈ।"
-          }
-        },
-        "sl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "»%@« ni besedilna datoteka, zato v njej ni besedila za kopiranje."
-          }
-        },
-        "ta": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” ஓர் உரைக் கோப்பு அல்ல, எனவே அதில் நகலெடுக்க உரை எதுவும் இல்லை."
-          }
-        },
-        "te": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” టెక్స్ట్ ఫైల్ కాదు, కాబట్టి దానిలో కాపీ చేయడానికి టెక్స్ట్ ఏదీ లేదు."
-          }
-        },
-        "ur": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "“%@” متنی فائل نہیں ہے، اس لیے اس میں کاپی کرنے کے لیے کوئی متن نہیں ہے۔"
-          }
-        }
-      }
     }
-  }
+  },
+  "version": "1.0"
 }

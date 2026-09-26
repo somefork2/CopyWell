@@ -56,6 +56,10 @@ struct MenuBarContentView: View {
 
     var body: some View {
         VStack(spacing: 0) {
+            if ScreenRecorder.shared.isRecording {
+                recordingBanner
+                Divider()
+            }
             header
             Divider()
             list
@@ -69,6 +73,30 @@ struct MenuBarContentView: View {
         }
         .frame(width: 340)
         .elevatedSurface()
+    }
+
+    /// While a recording runs, the menu bar icon is the one sure way back to
+    /// the Stop button — the floating one may be behind a full-screen app.
+    private var recordingBanner: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "record.circle")
+                .foregroundStyle(.red)
+            TimelineView(.periodic(from: .now, by: 1)) { context in
+                Text(L("Recording \(RecordingClock.string(ScreenRecorder.shared.elapsed(at: context.date)))"))
+                    .monospacedDigit()
+            }
+            Spacer()
+            Button(L("Stop")) {
+                MenuBarPopover.dismiss()
+                ScreenRecorder.shared.stop()
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.red)
+            .controlSize(.small)
+        }
+        .font(.callout)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
     }
 
     private var header: some View {
@@ -152,14 +180,38 @@ struct MenuBarContentView: View {
                     MenuBarPopover.dismiss()
                     coordinator.openMainWindow()
                 }
-                .buttonStyle(.link)
+                .buttonStyle(.hoverLink)
 
                 Button(coordinator.isPaused ? L("Resume") : L("Pause")) {
                     coordinator.togglePause()
                 }
-                .buttonStyle(.link)
+                .buttonStyle(.hoverLink)
 
                 Spacer()
+
+                Button {
+                    MenuBarPopover.dismiss()
+                    // The popover has to be gone before the screen is
+                    // photographed, or it is in the picture.
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        AppCoordinator.unlocked { ScreenshotController.start() }
+                    }
+                } label: {
+                    Image(systemName: "camera.viewfinder")
+                }
+                .buttonStyle(.hoverIcon)
+                .help(L("Capture Area…"))
+
+                Button {
+                    MenuBarPopover.dismiss()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        AppCoordinator.unlocked { ScreenRecorder.shared.toggle() }
+                    }
+                } label: {
+                    Image(systemName: "record.circle")
+                }
+                .buttonStyle(.hoverIcon)
+                .help(ScreenRecorder.shared.isRecording ? L("Stop Recording") : L("Record Screen…"))
 
                 Button {
                     MenuBarPopover.dismiss()
@@ -167,7 +219,7 @@ struct MenuBarContentView: View {
                 } label: {
                     Image(systemName: "questionmark.circle")
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.hoverIcon)
                 .help(L("Setup guide"))
 
                 Button {
@@ -176,7 +228,7 @@ struct MenuBarContentView: View {
                 } label: {
                     Image(systemName: "gearshape")
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.hoverIcon)
                 .help(L("Settings"))
 
                 Button {
@@ -184,7 +236,7 @@ struct MenuBarContentView: View {
                 } label: {
                     Image(systemName: "power")
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.hoverIcon)
                 .help(L("Quit CopyWell"))
             }
             .font(.callout)
@@ -220,7 +272,7 @@ struct MenuBarRow: View {
                         .frame(width: 22, height: 22)
                         .clipShape(RoundedRectangle(cornerRadius: 4))
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.hoverLift(scale: 1.1))
                 .help(L("Show this image"))
             } else {
                 TypeBadge(type: item.type, size: 22)

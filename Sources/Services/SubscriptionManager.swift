@@ -20,6 +20,8 @@ enum PremiumFeature: String, CaseIterable, Identifiable {
     case customShortcuts
     case statistics
     case autoCleanup
+    case screenshots
+    case screenRecording
 
     var id: String { rawValue }
 
@@ -34,6 +36,8 @@ enum PremiumFeature: String, CaseIterable, Identifiable {
         case .customShortcuts: return L("Custom Shortcuts")
         case .statistics: return L("Statistics")
         case .autoCleanup: return L("Auto Cleanup")
+        case .screenshots: return L("Screenshots with Markup")
+        case .screenRecording: return L("Screen Recording")
         }
     }
 
@@ -48,6 +52,8 @@ enum PremiumFeature: String, CaseIterable, Identifiable {
         case .customShortcuts: return "command"
         case .statistics: return "chart.bar"
         case .autoCleanup: return "trash"
+        case .screenshots: return "camera.viewfinder"
+        case .screenRecording: return "record.circle"
         }
     }
 
@@ -63,6 +69,8 @@ enum PremiumFeature: String, CaseIterable, Identifiable {
         case .customShortcuts: return L("Rebind every global shortcut to whatever you prefer.")
         case .statistics: return L("See what you copy most and from which apps.")
         case .autoCleanup: return L("Automatically remove clips older than a chosen age.")
+        case .screenshots: return L("Select an area, add arrows, boxes, text or blur, and copy it in one keystroke.")
+        case .screenRecording: return L("Record an area or the whole screen, with or without the Mac's sound.")
         }
     }
 }

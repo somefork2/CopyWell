@@ -200,7 +200,7 @@ struct EmptyStateView: View {
                 .frame(maxWidth: 320)
             if let actionTitle, let action {
                 Button(actionTitle, action: action)
-                    .buttonStyle(.link)
+                    .buttonStyle(.hoverLink)
                     .padding(.top, 2)
             }
         }
@@ -346,5 +346,139 @@ extension View {
             )
             .frame(width: 0, height: 0)
         )
+    }
+}
+
+// MARK: - Hover and press
+
+/// Every control answers the pointer. These three styles cover the app's
+/// borderless controls, so a button reads as a button before it is clicked:
+///
+/// * **Plate** — icon buttons and plain rows. A soft plate appears behind them
+///   on hover, deepens while pressed, and the button sinks a touch.
+/// * **Lift** — tiles, swatches, chips and cards that already have a shape of
+///   their own. They rise slightly with a shadow, and settle when pressed.
+/// * **Link** — text buttons. The accent lightens and underlines.
+struct HoverPlateStyle: ButtonStyle {
+    var plate: Color = .primary
+    var rest: Double = 0
+    var hover: Double = 0.09
+    var press: Double = 0.17
+    var padding: CGFloat = 4
+    var cornerRadius: CGFloat = 6
+
+    func makeBody(configuration: Configuration) -> some View {
+        HoverPlate(configuration: configuration, style: self)
+    }
+}
+
+private struct HoverPlate: View {
+    let configuration: ButtonStyleConfiguration
+    let style: HoverPlateStyle
+
+    @State private var hovered = false
+    @Environment(\.isEnabled) private var isEnabled
+
+    var body: some View {
+        let shape = RoundedRectangle(cornerRadius: style.cornerRadius, style: .continuous)
+        let amount = !isEnabled ? style.rest
+            : configuration.isPressed ? style.press
+            : hovered ? style.hover : style.rest
+        configuration.label
+            .padding(style.padding)
+            .background(shape.fill(style.plate.opacity(amount)))
+            .contentShape(shape)
+            .scaleEffect(configuration.isPressed ? 0.94 : 1)
+            .opacity(isEnabled ? 1 : 0.45)
+            .onHover { hovered = $0 }
+            .animation(.easeOut(duration: 0.12), value: hovered)
+            .animation(.easeOut(duration: 0.08), value: configuration.isPressed)
+    }
+}
+
+struct HoverLiftStyle: ButtonStyle {
+    var scale: CGFloat = 1.03
+
+    func makeBody(configuration: Configuration) -> some View {
+        HoverLift(configuration: configuration, scale: scale)
+    }
+}
+
+private struct HoverLift: View {
+    let configuration: ButtonStyleConfiguration
+    let scale: CGFloat
+
+    @State private var hovered = false
+    @Environment(\.isEnabled) private var isEnabled
+
+    var body: some View {
+        let lifted = hovered && isEnabled && !configuration.isPressed
+        configuration.label
+            .scaleEffect(configuration.isPressed ? 0.96 : lifted ? scale : 1)
+            .brightness(configuration.isPressed ? -0.04 : lifted ? 0.03 : 0)
+            .shadow(color: .black.opacity(lifted ? 0.18 : 0), radius: lifted ? 5 : 0, y: lifted ? 2 : 0)
+            .opacity(isEnabled ? 1 : 0.45)
+            .onHover { hovered = $0 }
+            .animation(.spring(response: 0.22, dampingFraction: 0.75), value: hovered)
+            .animation(.easeOut(duration: 0.08), value: configuration.isPressed)
+    }
+}
+
+struct HoverLinkStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HoverLink(configuration: configuration)
+    }
+}
+
+private struct HoverLink: View {
+    let configuration: ButtonStyleConfiguration
+
+    @State private var hovered = false
+    @Environment(\.isEnabled) private var isEnabled
+
+    var body: some View {
+        configuration.label
+            .foregroundStyle(Color.accentColor)
+            .underline(hovered && isEnabled)
+            .opacity(!isEnabled ? 0.45 : configuration.isPressed ? 0.55 : hovered ? 0.8 : 1)
+            .contentShape(Rectangle())
+            .onHover { hovered = $0 }
+            .animation(.easeOut(duration: 0.12), value: hovered)
+    }
+}
+
+extension ButtonStyle where Self == HoverPlateStyle {
+    static var hoverIcon: HoverPlateStyle { HoverPlateStyle() }
+
+    static func hoverPlate(
+        _ plate: Color = .primary, rest: Double = 0, hover: Double = 0.09, press: Double = 0.17,
+        padding: CGFloat = 4, cornerRadius: CGFloat = 6
+    ) -> HoverPlateStyle {
+        HoverPlateStyle(plate: plate, rest: rest, hover: hover, press: press, padding: padding, cornerRadius: cornerRadius)
+    }
+}
+
+extension ButtonStyle where Self == HoverLiftStyle {
+    static var hoverLift: HoverLiftStyle { HoverLiftStyle() }
+    static func hoverLift(scale: CGFloat) -> HoverLiftStyle { HoverLiftStyle(scale: scale) }
+}
+
+extension ButtonStyle where Self == HoverLinkStyle {
+    static var hoverLink: HoverLinkStyle { HoverLinkStyle() }
+}
+
+/// The same soft highlight the history rows have, for other lists of clips.
+struct RowHover: ViewModifier {
+    @State private var hovered = false
+
+    func body(content: Content) -> some View {
+        content
+            .background(
+                RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    .fill(Color.primary.opacity(hovered ? 0.06 : 0))
+            )
+            .contentShape(Rectangle())
+            .onHover { hovered = $0 }
+            .animation(.easeOut(duration: 0.12), value: hovered)
     }
 }

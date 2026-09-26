@@ -16,7 +16,15 @@ final class AppSettings {
 
     var launchAtLogin: Bool { didSet { applyLaunchAtLogin() } }
     var showInDock: Bool { didSet { persist(); applyActivationPolicy() } }
-    var showInMenuBar: Bool { didSet { persist() } }
+    var showInMenuBar: Bool {
+        didSet {
+            // With no Dock icon either, the app would have no way back in
+            // until it was relaunched — the footer under this switch promises
+            // that cannot happen, so the switch refuses.
+            if !showInMenuBar && !showInDock { showInMenuBar = true }
+            persist()
+        }
+    }
     var skipPasswords: Bool { didSet { persist() } }
     var skipConcealedPasteboard: Bool { didSet { persist() } }
     var hideFromScreenCapture: Bool { didSet { persist(); NotificationCenter.default.post(name: .copyWellWindowPrivacyChanged, object: nil) } }
@@ -28,6 +36,23 @@ final class AppSettings {
     var captureSound: FeedbackSound { didSet { persist() } }
     var pasteSound: FeedbackSound { didSet { persist() } }
     var hasCompletedOnboarding: Bool { didSet { persist() } }
+    /// Recordings take the Mac's own sound along when this is on. Off by
+    /// default: a notification chime in a screen recording is rarely wanted.
+    var recordSystemAudio: Bool { didSet { persist() } }
+    var recordShowsPointer: Bool { didSet { persist() } }
+    /// Draws a burst round the pointer on every click in a recording.
+    var recordShowsClicks: Bool { didSet { persist() } }
+    /// The camera in a round bubble over the recording. Off until someone
+    /// turns it on, and only then is the camera permission asked for.
+    var recordCamera: Bool { didSet { persist() } }
+    var cameraID: String? { didSet { persist() } }
+    var cameraSize: CameraBubbleSize { didSet { persist() } }
+    /// The narrator's voice. Same rule: off, and asked for only when turned on.
+    var recordMicrophone: Bool { didSet { persist() } }
+    var microphoneID: String? { didSet { persist() } }
+    var recordCountdown: Bool { didSet { persist() } }
+    /// Opens the finished recording for a look, a trim or captions.
+    var openRecordingWhenDone: Bool { didSet { persist() } }
 
     /// The language CopyWell runs in, or `nil` to follow the Mac.
     ///
@@ -73,9 +98,10 @@ final class AppSettings {
 
     /// The languages CopyWell is translated into, in the Mac's own naming.
     static let availableLanguages: [String] = [
-        "en", "ar", "ca", "cs", "da", "de", "el", "es", "fi", "fr", "he", "hi",
-        "hr", "hu", "id", "it", "ja", "ko", "ms", "nb", "nl", "pl", "pt-BR",
-        "pt-PT", "ro", "ru", "sk", "sv", "th", "tr", "uk", "vi", "zh-Hans", "zh-Hant",
+        "en", "ar", "bn", "ca", "cs", "da", "de", "el", "es", "fi", "fr", "gu",
+        "he", "hi", "hr", "hu", "id", "it", "ja", "kn", "ko", "ml", "mr", "ms",
+        "nb", "nl", "or", "pa", "pl", "pt-BR", "pt-PT", "ro", "ru", "sk", "sl",
+        "sv", "ta", "te", "th", "tr", "uk", "ur", "vi", "zh-Hans", "zh-Hant",
     ]
 
     /// A language's name in that language, which is how people recognise it.
@@ -96,6 +122,13 @@ final class AppSettings {
             "skipConcealedPasteboard": true,
             "hideFromScreenCapture": true,
             "icloudSync": false,
+            "recordSystemAudio": false,
+            "recordShowsPointer": true,
+            "recordShowsClicks": true,
+            "recordCamera": false,
+            "recordMicrophone": false,
+            "recordCountdown": true,
+            "openRecordingWhenDone": true,
         ])
 
         launchAtLogin = SMAppService.mainApp.status == .enabled
@@ -114,6 +147,16 @@ final class AppSettings {
         pasteSound = defaults.string(forKey: "sound_pasted")
             .flatMap(FeedbackSound.init(rawValue:)) ?? .pop
         hasCompletedOnboarding = defaults.bool(forKey: "hasCompletedOnboarding")
+        recordSystemAudio = defaults.bool(forKey: "recordSystemAudio")
+        recordShowsPointer = defaults.bool(forKey: "recordShowsPointer")
+        recordShowsClicks = defaults.bool(forKey: "recordShowsClicks")
+        recordCamera = defaults.bool(forKey: "recordCamera")
+        cameraID = defaults.string(forKey: "cameraID")
+        cameraSize = defaults.string(forKey: "cameraSize").flatMap(CameraBubbleSize.init(rawValue:)) ?? .medium
+        recordMicrophone = defaults.bool(forKey: "recordMicrophone")
+        microphoneID = defaults.string(forKey: "microphoneID")
+        recordCountdown = defaults.bool(forKey: "recordCountdown")
+        openRecordingWhenDone = defaults.bool(forKey: "openRecordingWhenDone")
         preferredLanguage = defaults.string(forKey: "preferred_language")
     }
 
@@ -129,6 +172,16 @@ final class AppSettings {
         defaults.set(captureSound.rawValue, forKey: SoundEvent.captured.settingKey)
         defaults.set(pasteSound.rawValue, forKey: SoundEvent.pasted.settingKey)
         defaults.set(hasCompletedOnboarding, forKey: "hasCompletedOnboarding")
+        defaults.set(recordSystemAudio, forKey: "recordSystemAudio")
+        defaults.set(recordShowsPointer, forKey: "recordShowsPointer")
+        defaults.set(recordShowsClicks, forKey: "recordShowsClicks")
+        defaults.set(recordCamera, forKey: "recordCamera")
+        defaults.set(cameraID, forKey: "cameraID")
+        defaults.set(cameraSize.rawValue, forKey: "cameraSize")
+        defaults.set(recordMicrophone, forKey: "recordMicrophone")
+        defaults.set(microphoneID, forKey: "microphoneID")
+        defaults.set(recordCountdown, forKey: "recordCountdown")
+        defaults.set(openRecordingWhenDone, forKey: "openRecordingWhenDone")
         if let preferredLanguage {
             defaults.set(preferredLanguage, forKey: "preferred_language")
         } else {

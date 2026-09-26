@@ -123,7 +123,7 @@ struct ClipboardListView: View {
                 title: searchText.isEmpty ? L("No clips here yet") : L("No matches"),
                 message: searchText.isEmpty
                     ? L("Copy anything and it appears here. Press ⌥⌘V anywhere to paste it back.")
-                    : "Nothing matches “\(searchText)”."
+                    : L("Nothing matches “\(searchText)”.")
             )
         } else {
             List(selection: $selection) {
@@ -134,9 +134,12 @@ struct ClipboardListView: View {
                         onPreview: { previewItem = item }
                     )
                     .tag(item.persistentModelID)
-                    .listRowInsets(EdgeInsets(top: 2, leading: 6, bottom: 2, trailing: 6))
-                    .listRowBackground(Theme.rowBackground(index))
-                    .listRowSeparatorTint(Theme.separator)
+                    .listRowInsets(EdgeInsets(top: 1, leading: 8, bottom: 1, trailing: 8))
+                    // No zebra stripes and no rules between rows: with the
+                    // hover highlight on top they made three overlapping
+                    // bands of shading, each a different shape.
+                    .listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
                     .contextMenu {
                         ClipContextMenu(
                             item: item,
@@ -204,6 +207,6 @@ struct FilterChip: View {
             // whole line inside, and a full point actually covers the curve.
             .overlay(Capsule().strokeBorder(isSelected ? Theme.accent.opacity(0.5) : Theme.separator, lineWidth: 1))
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.hoverLift(scale: 1.04))
     }
 }

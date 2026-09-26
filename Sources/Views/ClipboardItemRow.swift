@@ -11,8 +11,17 @@ struct ClipboardItemRow: View {
     let onPreview: () -> Void
 
     @Environment(ClipboardStore.self) private var store
-    @State private var isHovered = false
+    @State private var isHovered: Bool
     @State private var showCopiedTick = false
+
+    /// `hovered` starts the row under the pointer; the development
+    /// diagnostics use it to picture the hover state without a mouse.
+    init(item: ClipboardItem, hovered: Bool = false, onPaste: @escaping () -> Void, onPreview: @escaping () -> Void) {
+        self.item = item
+        self.onPaste = onPaste
+        self.onPreview = onPreview
+        _isHovered = State(initialValue: hovered)
+    }
 
     var body: some View {
         HStack(spacing: 10) {
@@ -63,14 +72,11 @@ struct ClipboardItemRow: View {
 
             Spacer(minLength: 6)
 
-            if showCopiedTick {
-                Image(systemName: "checkmark")
-                    .font(.callout.weight(.medium))
-                    .foregroundStyle(.secondary)
-                    .transition(.opacity)
-            } else if isHovered {
-                actions
-            } else if item.isFavorite {
+            // Only what never changes on hover takes part in the layout. The
+            // buttons used to replace this star in the row itself, which took
+            // their width away from the text: it re-truncated, and the whole
+            // line jumped every time the pointer crossed it.
+            if item.isFavorite {
                 Image(systemName: "star.fill")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -78,6 +84,39 @@ struct ClipboardItemRow: View {
         }
         .padding(.horizontal, 8)
         .frame(height: Theme.Metric.rowHeight)
+        // Under the buttons the text fades out instead of being cut through
+        // mid-word by them.
+        .mask {
+            HStack(spacing: 0) {
+                Rectangle()
+                if isHovered || showCopiedTick {
+                    LinearGradient(colors: [.black, .clear], startPoint: .leading, endPoint: .trailing)
+                        .frame(width: 40)
+                    Color.clear.frame(width: Self.actionsWidth)
+                }
+            }
+        }
+        // The whole row lights up under the pointer, so it is plain which
+        // clip a double-click or the buttons will act on.
+        .background(
+            RoundedRectangle(cornerRadius: 8, style: .continuous)
+                .fill(Color.primary.opacity(isHovered ? 0.06 : 0))
+        )
+        .overlay(alignment: .trailing) {
+            // The buttons float over the end of the row instead.
+            Group {
+                if showCopiedTick {
+                    Image(systemName: "checkmark")
+                        .font(.callout.weight(.medium))
+                        .foregroundStyle(.secondary)
+                        .padding(.horizontal, 10)
+                } else if isHovered {
+                    actions
+                }
+            }
+            .padding(.trailing, 8)
+            .transition(.opacity)
+        }
         .contentShape(Rectangle())
         .onHover { hovering in
             withAnimation(.easeOut(duration: 0.1)) { isHovered = hovering }
@@ -117,7 +156,7 @@ struct ClipboardItemRow: View {
                         }
                     }
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.hoverLift(scale: 1.06))
             .help(L("Show this image"))
             .accessibilityLabel(L("Show image"))
         } else {
@@ -137,11 +176,14 @@ struct ClipboardItemRow: View {
                         }
                     }
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.hoverLift(scale: 1.06))
             .help(L("Show this clip"))
             .accessibilityLabel(L("Show clip"))
         }
     }
+
+    /// Four buttons of 22 points with a 2-point plate each, and their spacing.
+    private static let actionsWidth: CGFloat = 4 * 26 + 3 * 2 + 8
 
     private var actions: some View {
         HStack(spacing: 2) {
@@ -171,7 +213,7 @@ struct ClipboardItemRow: View {
                 .frame(width: 22, height: 22)
                 .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.hoverPlate(padding: 2))
         .help(help)
     }
 }

@@ -17,7 +17,16 @@ final class AppCoordinator {
 
     private(set) var isPaused = false
     /// Non-nil when a shortcut could not be registered because another app owns it.
-    private(set) var shortcutConflictMessage: String?
+    ///
+    /// Derived rather than stored: it was only recomputed at launch and after
+    /// the recorder changed a binding, so clearing a shortcut or resetting them
+    /// all left the warning standing over a problem that was already gone.
+    var shortcutConflictMessage: String? {
+        let conflicted = shortcuts.conflicts
+        guard !conflicted.isEmpty else { return nil }
+        let names = conflicted.map(\.title).sorted().joined(separator: ", ")
+        return L("Another app already uses the shortcut for: \(names). Pick a different one in Settings ▸ Shortcuts.")
+    }
 
     private init() {}
 
@@ -39,6 +48,10 @@ final class AppCoordinator {
         #endif
 
         registerShortcuts()
+        observeDayChanges()
+        // Only lists Movies ▸ CopyWell, for the sidebar's count; it asks for
+        // nothing and opens no device.
+        RecordingLibrary.shared.refresh()
         SubscriptionManager.shared.start()
         SyncCoordinator.shared.start()
         AppSettings.shared.applyActivationPolicy()
@@ -50,6 +63,20 @@ final class AppCoordinator {
         SyncCoordinator.shared.stop()
     }
 
+    /// A menu bar app runs for weeks. "Copied today" and "keep the last N
+    /// days" were only brought up to date at launch, so both went stale after
+    /// the first midnight.
+    private func observeDayChanges() {
+        NotificationCenter.default.addObserver(
+            forName: .NSCalendarDayChanged, object: nil, queue: .main
+        ) { _ in
+            MainActor.assumeIsolated {
+                StatisticsTracker.shared.resetDailyIfNeeded()
+                ClipboardStore.shared.enforceLimits()
+            }
+        }
+    }
+
     // MARK: - Shortcuts
 
     private func registerShortcuts() {
@@ -59,6 +86,8 @@ final class AppCoordinator {
         shortcuts.setHandler(for: .pinLast) { [weak self] in Self.unlocked { self?.pinLast() } }
         shortcuts.setHandler(for: .togglePause) { [weak self] in Self.unlocked { self?.togglePause() } }
         shortcuts.setHandler(for: .pasteStackNext) { [weak self] in Self.unlocked { self?.pasteStackNext() } }
+        shortcuts.setHandler(for: .captureScreenshot) { Self.unlocked { ScreenshotController.start() } }
+        shortcuts.setHandler(for: .recordScreen) { Self.unlocked { ScreenRecorder.shared.toggle() } }
 
         shortcuts.registerAll()
         updateConflictMessage()
@@ -79,15 +108,8 @@ final class AppCoordinator {
         }
     }
 
-    func updateConflictMessage() {
-        let conflicted = shortcuts.conflicts
-        guard !conflicted.isEmpty else {
-            shortcutConflictMessage = nil
-            return
-        }
-        let names = conflicted.map(\.title).sorted().joined(separator: ", ")
-        shortcutConflictMessage = L("Another app already uses the shortcut for: \(names). Pick a different one in Settings ▸ Shortcuts.")
-    }
+    /// Kept for callers that used to have to ask; the message is now derived.
+    func updateConflictMessage() {}
 
     // MARK: - Actions
 
@@ -147,7 +169,7 @@ final class AppCoordinator {
             // nothing. Performing the menu item is what actually opens it.
             //
             // The item is found by its ⌘, key equivalent rather than by title,
-            // which is the same in all thirty-four languages we ship.
+            // which is the same in every language we ship.
             guard let appMenu = NSApp.mainMenu?.items.first?.submenu,
                   let index = appMenu.items.firstIndex(where: {
                       $0.keyEquivalent == "," && $0.keyEquivalentModifierMask == .command

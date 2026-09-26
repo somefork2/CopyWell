@@ -37,7 +37,7 @@ struct ClipShortcut: Codable, Equatable, Hashable {
         case kVK_ANSI_3: return "3"; case kVK_ANSI_4: return "4"; case kVK_ANSI_5: return "5"
         case kVK_ANSI_6: return "6"; case kVK_ANSI_7: return "7"; case kVK_ANSI_8: return "8"
         case kVK_ANSI_9: return "9"
-        case kVK_Space: return "Space"; case kVK_Return: return "↩"; case kVK_Escape: return "⎋"
+        case kVK_Space: return L("Space"); case kVK_Return: return "↩"; case kVK_Escape: return "⎋"
         case kVK_Delete: return "⌫"; case kVK_Tab: return "⇥"
         case kVK_LeftArrow: return "←"; case kVK_RightArrow: return "→"
         case kVK_UpArrow: return "↑"; case kVK_DownArrow: return "↓"
@@ -47,7 +47,7 @@ struct ClipShortcut: Codable, Equatable, Hashable {
         case kVK_ANSI_Semicolon: return ";"; case kVK_ANSI_Quote: return "'"
         case kVK_ANSI_Comma: return ","; case kVK_ANSI_Period: return "."
         case kVK_ANSI_Slash: return "/"
-        default: return "Key \(keyCode)"
+        default: return L("Key \(keyCode)")
         }
     }
 
@@ -76,6 +76,10 @@ enum ShortcutAction: String, CaseIterable, Identifiable {
     case pinLast
     case togglePause
     case pasteStackNext
+    // Appended, never inserted: the Carbon hotkey id is the case's position,
+    // and moving an existing case would hand its id to another action.
+    case captureScreenshot
+    case recordScreen
 
     var id: String { rawValue }
 
@@ -87,17 +91,21 @@ enum ShortcutAction: String, CaseIterable, Identifiable {
         case .pinLast: return L("Pin Last Copied Item")
         case .togglePause: return L("Pause / Resume Recording")
         case .pasteStackNext: return L("Copy Next from Stack")
+        case .captureScreenshot: return L("Capture Area")
+        case .recordScreen: return L("Record Screen")
         }
     }
 
     var subtitle: String {
         switch self {
         case .quickPaste: return L("Floating palette at the cursor; pick a clip and press ⌘V")
-        case .pastePrevious: return "Put the item copied before the current one back on the clipboard"
-        case .pastePlainText: return "Put the latest clip on the clipboard with formatting stripped"
+        case .pastePrevious: return L("Put the item copied before the current one back on the clipboard")
+        case .pastePlainText: return L("Put the latest clip on the clipboard with formatting stripped")
         case .pinLast: return L("Add the most recent clip to Favourites")
         case .togglePause: return L("Stop recording clipboard activity")
         case .pasteStackNext: return L("Put the next queued item on the clipboard")
+        case .captureScreenshot: return L("Select part of the screen, mark it up, copy or save it")
+        case .recordScreen: return L("Record an area or the whole screen; press again to stop")
         }
     }
 
@@ -118,6 +126,13 @@ enum ShortcutAction: String, CaseIterable, Identifiable {
             return ClipShortcut(keyCode: UInt32(kVK_ANSI_P), modifiers: UInt32(controlKey | optionKey))
         case .pasteStackNext:
             return ClipShortcut(keyCode: UInt32(kVK_ANSI_S), modifiers: UInt32(optionKey | cmdKey))
+        case .captureScreenshot:
+            // ⇧⌘9 is what Lightshot uses on the Mac, so people coming from it
+            // already have it in their fingers. ⇧⌘3–⇧⌘6 belong to macOS, and
+            // ⌥⌘1–⌥⌘5 are Xcode's inspectors.
+            return ClipShortcut(keyCode: UInt32(kVK_ANSI_9), modifiers: UInt32(shiftKey | cmdKey))
+        case .recordScreen:
+            return ClipShortcut(keyCode: UInt32(kVK_ANSI_0), modifiers: UInt32(shiftKey | cmdKey))
         }
     }
 

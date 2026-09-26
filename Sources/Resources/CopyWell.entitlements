@@ -14,6 +14,17 @@
     <key>com.apple.security.files.user-selected.read-write</key>
     <true/>
 
+    <!-- The presenter's camera bubble and voice in screen recordings. Each is
+         off until the user switches it on, and only then is the system asked. -->
+    <key>com.apple.security.device.camera</key>
+    <true/>
+    <key>com.apple.security.device.audio-input</key>
+    <true/>
+
+    <!-- Screen recordings are saved to Movies ▸ CopyWell. -->
+    <key>com.apple.security.assets.movies.read-write</key>
+    <true/>
+
     <!-- Private CloudKit database for optional history sync. -->
     <key>com.apple.developer.icloud-services</key>
     <array>

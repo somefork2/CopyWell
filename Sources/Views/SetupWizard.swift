@@ -105,7 +105,7 @@ struct SetupWizard: View {
     private var footer: some View {
         HStack {
             Button(L("Skip setup")) { finish() }
-                .buttonStyle(.link)
+                .buttonStyle(.hoverLink)
             Spacer()
             if step > 0 {
                 Button(L("Back")) { move(to: step - 1) }
@@ -143,7 +143,7 @@ struct SetupWizard: View {
                 .labelsHidden()
                 .frame(maxWidth: 260, alignment: .leading)
 
-            Text(L("CopyWell is translated into 34 languages. The rest of this guide, and the app itself, change as soon as one is picked."))
+            Text(L("CopyWell is translated into \(AppSettings.availableLanguages.count) languages. The rest of this guide, and the app itself, change as soon as one is picked."))
                 .font(.callout)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)

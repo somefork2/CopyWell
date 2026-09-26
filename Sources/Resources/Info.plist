@@ -39,11 +39,23 @@
     <key>ITSAppUsesNonExemptEncryption</key>
     <false/>
 
-    <!-- CopyWell requests no privacy-protected data and declares no usage
-         descriptions, because it calls none of the APIs that need one. It does
+    <!-- The clipboard history requests no privacy-protected data. It does
          not synthesise keystrokes, so it needs no Accessibility access; clips
          are placed on the pasteboard and the user presses ⌘V, or inserts them
-         through the Services entries below. -->
+         through the Services entries below.
+
+         Screenshots and screen recordings use ScreenCaptureKit, which needs
+         the Screen Recording permission. macOS has no usage-description key
+         for it; CopyWell explains it in its own alert the first time either
+         feature is used.
+
+         The camera and microphone are used only for the presenter's bubble
+         and voice in screen recordings, both off by default and asked for
+         when switched on. Translations live in InfoPlist.xcstrings. -->
+    <key>NSCameraUsageDescription</key>
+    <string>CopyWell shows your camera in a round bubble over screen recordings, when you switch the camera on.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>CopyWell records your voice with screen recordings, when you switch the microphone on.</string>
 
     <!-- The Finder extension runs in its own sandbox and cannot reach the app's
          database, so it hands the selection over through this scheme. -->

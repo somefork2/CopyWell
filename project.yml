@@ -8,6 +8,7 @@ options:
   developmentLanguage: en
   knownRegions:
     - ar
+    - bn
     - ca
     - cs
     - da
@@ -17,6 +18,7 @@ options:
     - es
     - fi
     - fr
+    - gu
     - he
     - hi
     - hr
@@ -24,28 +26,37 @@ options:
     - id
     - it
     - ja
+    - kn
     - ko
+    - ml
+    - mr
     - ms
-    - nl
     - nb
+    - nl
+    - or
+    - pa
     - pl
     - pt-BR
     - pt-PT
     - ro
     - ru
     - sk
+    - sl
     - sv
+    - ta
+    - te
     - th
     - tr
     - uk
+    - ur
     - vi
     - zh-Hans
     - zh-Hant
 
 settings:
   base:
-    MARKETING_VERSION: "1.0.0"
-    CURRENT_PROJECT_VERSION: "36"
+    MARKETING_VERSION: "1.1.0"
+    CURRENT_PROJECT_VERSION: "37"
     SWIFT_VERSION: "5.10"
     DEVELOPMENT_TEAM: "54NPZH7Z2Q"
     CODE_SIGN_STYLE: Automatic
@@ -67,6 +78,8 @@ targets:
           - "Resources/CopyWell.entitlements"
           - "Resources/Assets.xcassets"
           - "Resources/Localizable.xcstrings"
+          - "Resources/ServicesMenu.xcstrings"
+          - "Resources/InfoPlist.xcstrings"
       # Declared explicitly: picked up by the generic include above it never
       # reached actool, so the app shipped with no icon at all.
       - path: Sources/Resources/Assets.xcassets
@@ -74,6 +87,13 @@ targets:
       - path: Sources/Resources/PrivacyInfo.xcprivacy
         buildPhase: resources
       - path: Sources/Resources/Localizable.xcstrings
+        buildPhase: resources
+      # The Services menu titles come from Info.plist and are translated
+      # through a table of their own, which macOS looks up by this name.
+      - path: Sources/Resources/ServicesMenu.xcstrings
+        buildPhase: resources
+      # The camera and microphone explanations macOS shows when it asks.
+      - path: Sources/Resources/InfoPlist.xcstrings
         buildPhase: resources
     dependencies:
       - target: CopyWellFinder

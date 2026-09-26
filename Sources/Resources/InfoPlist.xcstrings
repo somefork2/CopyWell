@@ -1,0 +1,556 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "NSCameraUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell shows your camera in a round bubble over screen recordings, when you switch the camera on."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يعرض CopyWell الكاميرا في فقاعة دائرية فوق تسجيلات الشاشة، عندما تشغّل الكاميرا."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আপনি ক্যামেরা চালু করলে CopyWell স্ক্রিন রেকর্ডিংয়ের ওপর একটি গোল বাবলে আপনার ক্যামেরা দেখায়।"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El CopyWell mostra la teva càmera en una bombolla rodona sobre les gravacions de pantalla quan actives la càmera."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell zobrazuje vaši kameru v kulaté bublině nad záznamy obrazovky, pokud kameru zapnete."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell viser dit kamera i en rund boble over skærmoptagelser, når du slår kameraet til."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell zeigt deine Kamera in einer runden Blase über Bildschirmaufnahmen, wenn du die Kamera einschaltest."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Το CopyWell εμφανίζει την κάμερά σας σε μια στρογγυλή φυσαλίδα πάνω από τις εγγραφές οθόνης, όταν ενεργοποιείτε την κάμερα."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell muestra tu cámara en una burbuja redonda sobre las grabaciones de pantalla cuando activas la cámara."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell näyttää kamerasi pyöreässä kuplassa näytön tallenteiden päällä, kun laitat kameran päälle."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell affiche votre caméra dans une bulle ronde par-dessus les enregistrements de l’écran, lorsque vous activez la caméra."
+          }
+        },
+        "gu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "તમે કૅમેરા ચાલુ કરો ત્યારે CopyWell સ્ક્રીન રેકોર્ડિંગ પર એક ગોળ બબલમાં તમારો કૅમેરા બતાવે છે."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell מציג את המצלמה שלכם בבועה עגולה מעל הקלטות המסך, כשאתם מפעילים את המצלמה."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जब आप कैमरा चालू करते हैं, तब CopyWell स्क्रीन रिकॉर्डिंग पर आपका कैमरा एक गोल बबल में दिखाता है।"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell prikazuje vašu kameru u okruglom oblačiću preko videosnimaka zaslona kad uključite kameru."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A CopyWell egy kerek buborékban megjeleníti a kamerája képét a képernyőfelvételeken, amikor bekapcsolja a kamerát."
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell menampilkan kamera Anda dalam gelembung bundar di atas rekaman layar, saat Anda menyalakan kamera."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell mostra la tua videocamera in una bolla rotonda sopra le registrazioni dello schermo, quando attivi la videocamera."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "カメラをオンにすると、CopyWellは画面収録の上に丸いバブルでカメラの映像を表示します。"
+          }
+        },
+        "kn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ನೀವು ಕ್ಯಾಮೆರಾವನ್ನು ಆನ್ ಮಾಡಿದಾಗ, CopyWell ಸ್ಕ್ರೀನ್ ರೆಕಾರ್ಡಿಂಗ್‌ಗಳ ಮೇಲೆ ದುಂಡಗಿನ ಬಬಲ್‌ನಲ್ಲಿ ನಿಮ್ಮ ಕ್ಯಾಮೆರಾವನ್ನು ತೋರಿಸುತ್ತದೆ."
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "카메라를 켜면 CopyWell이 화면 기록 위에 둥근 버블로 카메라 화면을 표시합니다."
+          }
+        },
+        "ml": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "നിങ്ങൾ ക്യാമറ ഓണാക്കുമ്പോൾ, CopyWell സ്ക്രീൻ റെക്കോർഡിംഗുകൾക്ക് മുകളിൽ ഒരു വൃത്താകൃതിയിലുള്ള ബബിളിൽ നിങ്ങളുടെ ക്യാമറ കാണിക്കുന്നു."
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "तुम्ही कॅमेरा चालू केल्यावर CopyWell स्क्रीन रेकॉर्डिंगवर गोल बबलमध्ये तुमचा कॅमेरा दाखवते."
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell menunjukkan kamera anda dalam gelembung bulat di atas rakaman skrin, apabila anda menghidupkan kamera."
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell viser kameraet ditt i en rund boble over skjermopptak når du slår på kameraet."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell toont je camera in een ronde bubbel over schermopnamen, als je de camera inschakelt."
+          }
+        },
+        "or": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ଆପଣ କ୍ୟାମେରା ଚାଲୁ କଲେ, CopyWell ସ୍କ୍ରିନ୍ ରେକର୍ଡିଂ ଉପରେ ଏକ ଗୋଲାକାର ବବଲରେ ଆପଣଙ୍କ କ୍ୟାମେରା ଦେଖାଏ।"
+          }
+        },
+        "pa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ਜਦੋਂ ਤੁਸੀਂ ਕੈਮਰਾ ਚਾਲੂ ਕਰਦੇ ਹੋ, CopyWell ਸਕ੍ਰੀਨ ਰਿਕਾਰਡਿੰਗਾਂ ਉੱਤੇ ਇੱਕ ਗੋਲ ਬੁਲਬੁਲੇ ਵਿੱਚ ਤੁਹਾਡਾ ਕੈਮਰਾ ਦਿਖਾਉਂਦਾ ਹੈ।"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell pokazuje obraz z kamery w okrągłej bańce na nagraniach ekranu, gdy włączysz kamerę."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O CopyWell mostra sua câmera em uma bolha redonda sobre as gravações de tela quando você ativa a câmera."
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O CopyWell mostra a sua câmara numa bolha redonda sobre as gravações do ecrã, quando ativa a câmara."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell afișează camera dvs. într-o bulă rotundă peste înregistrările de ecran, atunci când activați camera."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell показывает изображение с камеры в круглом окошке поверх записи экрана, когда вы включаете камеру."
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell zobrazuje vašu kameru v okrúhlej bubline nad nahrávkami obrazovky, keď kameru zapnete."
+          }
+        },
+        "sl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell prikaže vašo kamero v okroglem mehurčku nad posnetki zaslona, ko vklopite kamero."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell visar din kamera i en rund bubbla över skärminspelningar när du slår på kameran."
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "நீங்கள் கேமராவை இயக்கும்போது, CopyWell திரைப் பதிவுகளின் மேல் உங்கள் கேமராவை ஒரு வட்டக் குமிழில் காட்டும்."
+          }
+        },
+        "te": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "మీరు కెమెరాను ఆన్ చేసినప్పుడు, CopyWell స్క్రీన్ రికార్డింగ్‌లపై మీ కెమెరాను గుండ్రని బబుల్‌లో చూపుతుంది."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell จะแสดงภาพจากกล้องของคุณในวงกลมบนการบันทึกหน้าจอ เมื่อคุณเปิดกล้อง"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kamerayı açtığınızda CopyWell, kameranızı ekran kayıtlarının üzerinde yuvarlak bir balonda gösterir."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell показує зображення з камери в круглому віконці поверх записів екрана, коли ви вмикаєте камеру."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جب آپ کیمرا آن کرتے ہیں تو CopyWell اسکرین ریکارڈنگز پر آپ کا کیمرا ایک گول ببل میں دکھاتا ہے۔"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell hiện camera của bạn trong một bong bóng tròn trên bản ghi màn hình khi bạn bật camera."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开摄像头后，CopyWell 会在录屏上以圆形气泡显示你的摄像头画面。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開啟相機後，CopyWell 會在螢幕錄影上以圓形泡泡顯示你的相機畫面。"
+          }
+        }
+      }
+    },
+    "NSMicrophoneUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell records your voice with screen recordings, when you switch the microphone on."
+          }
+        },
+        "ar": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "يسجّل CopyWell صوتك مع تسجيلات الشاشة، عندما تشغّل الميكروفون."
+          }
+        },
+        "bn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "আপনি মাইক্রোফোন চালু করলে CopyWell স্ক্রিন রেকর্ডিংয়ের সঙ্গে আপনার কণ্ঠস্বর রেকর্ড করে।"
+          }
+        },
+        "ca": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El CopyWell grava la teva veu amb les gravacions de pantalla quan actives el micròfon."
+          }
+        },
+        "cs": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell nahrává váš hlas spolu se záznamy obrazovky, pokud zapnete mikrofon."
+          }
+        },
+        "da": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell optager din stemme sammen med skærmoptagelser, når du slår mikrofonen til."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell nimmt deine Stimme zusammen mit Bildschirmaufnahmen auf, wenn du das Mikrofon einschaltest."
+          }
+        },
+        "el": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Το CopyWell ηχογραφεί τη φωνή σας μαζί με τις εγγραφές οθόνης, όταν ενεργοποιείτε το μικρόφωνο."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell graba tu voz junto con las grabaciones de pantalla cuando activas el micrófono."
+          }
+        },
+        "fi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell tallentaa äänesi näytön tallenteisiin, kun laitat mikrofonin päälle."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell enregistre votre voix avec les enregistrements de l’écran, lorsque vous activez le microphone."
+          }
+        },
+        "gu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "તમે માઇક્રોફોન ચાલુ કરો ત્યારે CopyWell સ્ક્રીન રેકોર્ડિંગ સાથે તમારો અવાજ રેકોર્ડ કરે છે."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell מקליט את הקול שלכם יחד עם הקלטות המסך, כשאתם מפעילים את המיקרופון."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जब आप माइक्रोफ़ोन चालू करते हैं, तब CopyWell स्क्रीन रिकॉर्डिंग के साथ आपकी आवाज़ रिकॉर्ड करता है।"
+          }
+        },
+        "hr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell snima vaš glas uz videosnimke zaslona kad uključite mikrofon."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A CopyWell a képernyőfelvételekkel együtt rögzíti a hangját, amikor bekapcsolja a mikrofont."
+          }
+        },
+        "id": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell merekam suara Anda bersama rekaman layar, saat Anda menyalakan mikrofon."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell registra la tua voce insieme alle registrazioni dello schermo, quando attivi il microfono."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "マイクをオンにすると、CopyWellは画面収録と一緒にあなたの声を録音します。"
+          }
+        },
+        "kn": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ನೀವು ಮೈಕ್ರೋಫೋನ್ ಅನ್ನು ಆನ್ ಮಾಡಿದಾಗ, CopyWell ಸ್ಕ್ರೀನ್ ರೆಕಾರ್ಡಿಂಗ್‌ಗಳೊಂದಿಗೆ ನಿಮ್ಮ ಧ್ವನಿಯನ್ನು ರೆಕಾರ್ಡ್ ಮಾಡುತ್ತದೆ."
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "마이크를 켜면 CopyWell이 화면 기록과 함께 음성을 녹음합니다."
+          }
+        },
+        "ml": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "നിങ്ങൾ മൈക്രോഫോൺ ഓണാക്കുമ്പോൾ, CopyWell സ്ക്രീൻ റെക്കോർഡിംഗുകൾക്കൊപ്പം നിങ്ങളുടെ ശബ്ദം റെക്കോർഡ് ചെയ്യുന്നു."
+          }
+        },
+        "mr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "तुम्ही मायक्रोफोन चालू केल्यावर CopyWell स्क्रीन रेकॉर्डिंगसोबत तुमचा आवाज रेकॉर्ड करते."
+          }
+        },
+        "ms": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell merakam suara anda bersama rakaman skrin, apabila anda menghidupkan mikrofon."
+          }
+        },
+        "nb": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell tar opp stemmen din sammen med skjermopptak når du slår på mikrofonen."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell neemt je stem op bij schermopnamen, als je de microfoon inschakelt."
+          }
+        },
+        "or": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ଆପଣ ମାଇକ୍ରୋଫୋନ୍ ଚାଲୁ କଲେ, CopyWell ସ୍କ୍ରିନ୍ ରେକର୍ଡିଂ ସହିତ ଆପଣଙ୍କ ସ୍ୱର ରେକର୍ଡ କରେ।"
+          }
+        },
+        "pa": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ਜਦੋਂ ਤੁਸੀਂ ਮਾਈਕ੍ਰੋਫ਼ੋਨ ਚਾਲੂ ਕਰਦੇ ਹੋ, CopyWell ਸਕ੍ਰੀਨ ਰਿਕਾਰਡਿੰਗਾਂ ਦੇ ਨਾਲ ਤੁਹਾਡੀ ਆਵਾਜ਼ ਰਿਕਾਰਡ ਕਰਦਾ ਹੈ।"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell nagrywa Twój głos razem z nagraniami ekranu, gdy włączysz mikrofon."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O CopyWell grava sua voz junto com as gravações de tela quando você ativa o microfone."
+          }
+        },
+        "pt-PT": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O CopyWell grava a sua voz com as gravações do ecrã, quando ativa o microfone."
+          }
+        },
+        "ro": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell vă înregistrează vocea odată cu înregistrările de ecran, atunci când activați microfonul."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell записывает ваш голос вместе с записью экрана, когда вы включаете микрофон."
+          }
+        },
+        "sk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell nahráva váš hlas spolu s nahrávkami obrazovky, keď zapnete mikrofón."
+          }
+        },
+        "sl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell posname vaš glas skupaj s posnetki zaslona, ko vklopite mikrofon."
+          }
+        },
+        "sv": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell spelar in din röst tillsammans med skärminspelningar när du slår på mikrofonen."
+          }
+        },
+        "ta": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "நீங்கள் மைக்ரோஃபோனை இயக்கும்போது, CopyWell திரைப் பதிவுகளுடன் உங்கள் குரலையும் பதிவு செய்யும்."
+          }
+        },
+        "te": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "మీరు మైక్రోఫోన్‌ను ఆన్ చేసినప్పుడు, CopyWell స్క్రీన్ రికార్డింగ్‌లతో పాటు మీ వాయిస్‌ను రికార్డ్ చేస్తుంది."
+          }
+        },
+        "th": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell จะบันทึกเสียงของคุณไปพร้อมกับการบันทึกหน้าจอ เมื่อคุณเปิดไมโครโฟน"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mikrofonu açtığınızda CopyWell, sesinizi ekran kayıtlarıyla birlikte kaydeder."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell записує ваш голос разом із записом екрана, коли ви вмикаєте мікрофон."
+          }
+        },
+        "ur": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "جب آپ مائیکروفون آن کرتے ہیں تو CopyWell اسکرین ریکارڈنگز کے ساتھ آپ کی آواز ریکارڈ کرتا ہے۔"
+          }
+        },
+        "vi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CopyWell ghi giọng nói của bạn cùng với bản ghi màn hình khi bạn bật micrô."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开麦克风后，CopyWell 会在录屏时录下你的声音。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開啟麥克風後，CopyWell 會在錄製螢幕時錄下你的聲音。"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

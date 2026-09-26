@@ -24,6 +24,10 @@ struct SidebarView: View {
                 Label(L("Paste Stack"), systemImage: "square.stack")
                     .badge(PasteStackManager.shared.stackItems.count)
                     .tag(SidebarSection.pasteStack)
+
+                Label(L("Recordings"), systemImage: "film.stack")
+                    .badge(RecordingLibrary.shared.recordings.count)
+                    .tag(SidebarSection.recordings)
             }
 
             Section {
@@ -53,7 +57,7 @@ struct SidebarView: View {
                     } label: {
                         Image(systemName: "plus")
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.hoverIcon)
                     .help(L("New pinboard"))
                 }
             }
@@ -97,7 +101,7 @@ struct SidebarView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .contentShape(Rectangle())
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.hoverPlate(padding: 5))
                 .help(L("Settings (⌘,)"))
 
                 Button {
@@ -106,7 +110,7 @@ struct SidebarView: View {
                     Image(systemName: "questionmark.circle")
                         .contentShape(Rectangle())
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.hoverIcon)
                 .help(L("Setup guide"))
             }
             .padding(.horizontal, 12)
@@ -153,7 +157,7 @@ struct SidebarView: View {
                 }
 
                 Button(L("See CopyWell Pro")) { subscriptions.showingPaywall = true }
-                    .buttonStyle(.link)
+                    .buttonStyle(.hoverLink)
                     .font(.caption)
             }
             .padding(.horizontal, 10)

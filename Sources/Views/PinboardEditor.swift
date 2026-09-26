@@ -28,7 +28,7 @@ struct PinboardEditor: View {
             Text(board == nil ? L("New Pinboard") : L("Edit Pinboard"))
                 .font(.headline)
 
-            TextField("Name", text: $name)
+            TextField(L("Name"), text: $name)
                 .textFieldStyle(.roundedBorder)
                 .onSubmit(commit)
 
@@ -50,7 +50,7 @@ struct PinboardEditor: View {
                                         .padding(-3)
                                 )
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(.hoverLift(scale: 1.15))
                         .accessibilityLabel(option)
                     }
                 }
@@ -77,7 +77,7 @@ struct PinboardEditor: View {
                                         .stroke(icon == symbol ? Color.named(color) : .clear, lineWidth: 1.5)
                                 )
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(.hoverLift(scale: 1.08))
                         .accessibilityLabel(symbol)
                     }
                 }

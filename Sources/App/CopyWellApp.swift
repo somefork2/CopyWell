@@ -9,6 +9,7 @@ struct CopyWellApp: App {
     @State private var coordinator = AppCoordinator.shared
     @State private var settings = AppSettings.shared
     @State private var subscriptions = SubscriptionManager.shared
+    @State private var recorder = ScreenRecorder.shared
 
     var body: some Scene {
         WindowGroup(id: "main") {
@@ -29,7 +30,7 @@ struct CopyWellApp: App {
         .defaultSize(width: 980, height: 640)
         .commands { CopyWellCommands() }
 
-        MenuBarExtra("CopyWell", systemImage: coordinator.isPaused ? "clipboard" : "clipboard.fill", isInserted: menuBarBinding) {
+        MenuBarExtra("CopyWell", systemImage: menuBarSymbol, isInserted: menuBarBinding) {
             // No frame here. `MenuBarContentView` states its own width and
             // computes its own height; an outer minHeight fought that and cut
             // the footer — with it, the "Open CopyWell" button — off the
@@ -54,6 +55,13 @@ struct CopyWellApp: App {
                 .dynamicTypeSize(settings.textSize.dynamicTypeSize)
                 .id(settings.languageGeneration)
         }
+    }
+
+    /// A recording in progress shows in the menu bar, where the icon is also
+    /// the way back to the Stop button.
+    private var menuBarSymbol: String {
+        if recorder.isRecording { return "record.circle" }
+        return coordinator.isPaused ? "clipboard" : "clipboard.fill"
     }
 
     private var menuBarBinding: Binding<Bool> {
@@ -96,6 +104,13 @@ struct CopyWellCommands: Commands {
                 AppCoordinator.unlocked { AppCoordinator.shared.togglePause() }
             }
             .keyboardShortcut("p", modifiers: [.control, .option])
+            Divider()
+            Button(L("Capture Area…")) {
+                AppCoordinator.unlocked { ScreenshotController.start() }
+            }
+            Button(ScreenRecorder.shared.isRecording ? L("Stop Recording") : L("Record Screen…")) {
+                AppCoordinator.unlocked { ScreenRecorder.shared.toggle() }
+            }
             Divider()
             Button(L("Clear History…")) {
                 AppCoordinator.unlocked {
@@ -154,6 +169,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private static var isRunningADiagnostic: Bool {
         #if DEBUG
         CommandLine.arguments.contains("--render-screenshots")
+            || CommandLine.arguments.contains("--diagnose-capture")
+            || CommandLine.arguments.contains("--diagnose-clicks")
+            || CommandLine.arguments.contains("--diagnose-recording")
+            || CommandLine.arguments.contains("--diagnose-screenshot-actions")
+            || CommandLine.arguments.contains("--render-feature-shots")
         #else
         false
         #endif
@@ -179,6 +199,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             if ScreenshotRenderer.isDiagnosingRelayout { ScreenshotRenderer.diagnoseRelayout() }
             if ScreenshotRenderer.isDiagnosingFileRead { ScreenshotRenderer.diagnoseFileRead() }
             if ScreenshotRenderer.isDiagnosingLanguage { ScreenshotRenderer.diagnoseLanguage() }
+            if CaptureDiagnostics.isActive { CaptureDiagnostics.run() }
+            if CaptureDiagnostics.isShowingClicks { CaptureDiagnostics.showClicks() }
+            if CaptureDiagnostics.isTestingRecording { CaptureDiagnostics.testRecording() }
+            if CaptureDiagnostics.isTestingScreenshotActions { CaptureDiagnostics.testScreenshotActions() }
+            if FeatureShots.isActive { FeatureShots.run() }
             #endif
 
             // An accessory app is not brought forward by the system when it
@@ -274,7 +299,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @MainActor
     static func applyPrivacyToAllWindows() {
         let hide = AppSettings.shared.hideFromScreenCapture
-        for window in NSApp.windows {
+        // The camera bubble and the click and drawing layer are there to be
+        // recorded; hiding them would make the settings that show them do
+        // nothing.
+        for window in NSApp.windows where !(window is RecordableWindow) {
             window.sharingType = hide ? .none : .readOnly
         }
     }

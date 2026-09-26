@@ -40,7 +40,7 @@ struct PaywallView: View {
                     Image(systemName: "xmark")
                         .foregroundStyle(.secondary)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.hoverIcon)
                 .accessibilityLabel(L("Close"))
             }
 
@@ -115,7 +115,7 @@ struct PaywallView: View {
                         product: product,
                         introOffer: manager.introductoryOffer(for: product.id),
                         savingsBadge: product.id == SubscriptionManager.annualID
-                            ? manager.annualSavingsPercent.map { "Save \($0)%" }
+                            ? manager.annualSavingsPercent.map { L("Save \($0)%") }
                             : nil,
                         isSelected: selectedProductID == product.id
                     ) {
@@ -152,7 +152,7 @@ struct PaywallView: View {
             Button(L("Restore Purchases")) {
                 Task { await manager.restorePurchases() }
             }
-            .buttonStyle(.link)
+            .buttonStyle(.hoverLink)
             .disabled(manager.purchaseInFlight)
 
             if let error = manager.lastError, !manager.products.isEmpty {
@@ -174,7 +174,7 @@ struct PaywallView: View {
                 Link(L("Terms of Use"), destination: LegalLinks.termsOfUse)
                 Text("·").foregroundStyle(.secondary)
                 Button(L("Manage Subscription")) { manager.showManageSubscriptions() }
-                    .buttonStyle(.link)
+                    .buttonStyle(.hoverLink)
             }
             .font(.caption2)
         }
@@ -260,7 +260,7 @@ struct PlanCard: View {
                     .stroke(isSelected ? Theme.accent : Theme.separator, lineWidth: isSelected ? 1.5 : 0.5)
             )
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.hoverLift(scale: 1.015))
         .accessibilityAddTraits(isSelected ? [.isSelected] : [])
     }
 

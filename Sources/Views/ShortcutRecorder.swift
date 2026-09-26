@@ -41,7 +41,7 @@ struct ShortcutRecorder: View {
                                 .stroke(isRecording ? Theme.accent : Theme.separator, lineWidth: isRecording ? 1.5 : 0.5)
                         )
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.hoverLift(scale: 1.02))
 
                 if !manager.shortcut(for: action).isEmpty {
                     Button {
@@ -50,7 +50,7 @@ struct ShortcutRecorder: View {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(.tertiary)
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.hoverPlate(padding: 2, cornerRadius: 10))
                     .help(L("Remove this shortcut"))
                 }
 

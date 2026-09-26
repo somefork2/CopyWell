@@ -6,6 +6,7 @@ enum SidebarSection: Hashable, Identifiable {
     case favorites
     case pasteStack
     case statistics
+    case recordings
     case pinboard(UUID)
 
     var id: String {
@@ -14,6 +15,7 @@ enum SidebarSection: Hashable, Identifiable {
         case .favorites: return "favorites"
         case .pasteStack: return "pasteStack"
         case .statistics: return "statistics"
+        case .recordings: return "recordings"
         case .pinboard(let id): return id.uuidString
         }
     }
@@ -105,6 +107,8 @@ struct MainView: View {
             StatisticsView()
         case .pasteStack:
             PasteStackView()
+        case .recordings:
+            RecordingsView(searchText: searchText)
         default:
             ClipboardListView(
                 items: filteredItems,

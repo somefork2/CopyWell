@@ -99,7 +99,7 @@ struct QuickPasteView: View {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundStyle(.tertiary)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.hoverPlate(padding: 2, cornerRadius: 10))
                 .accessibilityLabel(L("Clear search"))
             }
         }
@@ -112,10 +112,10 @@ struct QuickPasteView: View {
         if results.isEmpty {
             EmptyStateView(
                 icon: searchText.isEmpty ? "doc.on.clipboard" : "magnifyingglass",
-                title: searchText.isEmpty ? L("Nothing copied yet") : "No matches",
+                title: searchText.isEmpty ? L("Nothing copied yet") : L("No matches"),
                 message: searchText.isEmpty
                     ? L("Copy something and it will appear here.")
-                    : "No clip contains “\(searchText)”."
+                    : L("No clip contains “\(searchText)”.")
             )
             .frame(maxHeight: .infinity)
         } else {
@@ -274,7 +274,7 @@ struct QuickPasteRow: View {
                                 .stroke(Theme.separator, lineWidth: 0.5)
                         )
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.hoverLift(scale: 1.06))
                 .help(L("Show this image"))
             } else {
                 TypeBadge(type: item.type)
@@ -442,7 +442,7 @@ struct ClipPreviewSheet: View {
                         copiedRecognisedText = false
                     }
                 }
-                .buttonStyle(.link)
+                .buttonStyle(.hoverLink)
                 .font(.caption)
             }
         }
@@ -508,7 +508,7 @@ struct InlineClipPreview: View {
                 Image(systemName: "xmark.circle.fill")
                     .foregroundStyle(.tertiary)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.hoverPlate(padding: 2, cornerRadius: 10))
             .help(L("Close preview"))
         }
         .padding(.horizontal, 10)
@@ -518,7 +518,7 @@ struct InlineClipPreview: View {
         var parts: [String] = []
         if item.type == .image {
             let summary = item.imageSummary
-            parts.append(summary.isEmpty ? "Image" : summary)
+            parts.append(summary.isEmpty ? L("Image") : summary)
         } else {
             parts.append(item.type.displayName)
         }
@@ -568,7 +568,7 @@ struct InlineClipPreview: View {
                         copied = true
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { copied = false }
                     }
-                    .buttonStyle(.link)
+                    .buttonStyle(.hoverLink)
                     .font(.caption2)
                 }
             }
