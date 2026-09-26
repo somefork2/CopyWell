@@ -2,268 +2,315 @@
 <meta charset="utf-8">
 <title>CopyWell store shots</title>
 <style>
-  :root {
-    --blue: #2F6FED; --blue-deep: #1B4FC4; --ink: #10141C; --ink-soft: #565F6E;
-  }
+  /*
+   * One look for the whole listing, shared with the capture shots the app
+   * renders itself (Sources/App/FeatureShots.swift): a near-black ground lit
+   * by two coloured glows, the header centred at the top, and the scene on a
+   * Mac screen — wallpaper, menu bar, windows — below it. Each frame sets its
+   * own two glow colours; everything else is the same everywhere.
+   */
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { width: 1440px; height: 900px; overflow: hidden; }
-  body { font-family: -apple-system, "SF Pro Display", "Helvetica Neue", sans-serif; -webkit-font-smoothing: antialiased; }
+  html, body { width: 1440px; height: 900px; overflow: hidden; background: #050509; }
+  body { font-family: -apple-system, "SF Pro Display", "Helvetica Neue", sans-serif; -webkit-font-smoothing: antialiased; color: #fff; }
 
-  .frame { position: relative; width: 1440px; height: 900px; overflow: hidden; }
-  .light { background:
-      radial-gradient(1100px 700px at 80% 68%, #dce7ff 0%, rgba(220,231,255,0) 62%),
-      linear-gradient(160deg, #f5f6fa 0%, #e6e9f2 100%); color: var(--ink); }
-  .dark { background:
-      radial-gradient(950px 620px at 72% 62%, #1b2f63 0%, rgba(27,47,99,0) 66%),
-      linear-gradient(160deg, #0d1017 0%, #151b28 100%); color: #eef1f7; }
+  .frame { position: relative; width: 1440px; height: 900px; overflow: hidden;
+    background:
+      radial-gradient(circle 380px at 780px 120px, rgba(var(--g1), .35) 0%, rgba(var(--g1), .16) 50%, rgba(var(--g1), 0) 100%),
+      radial-gradient(circle 560px at 1260px 750px, rgba(var(--g2), .7) 0%, rgba(var(--g2), .32) 50%, rgba(var(--g2), 0) 100%),
+      radial-gradient(circle 620px at 250px 870px, rgba(var(--g1), .75) 0%, rgba(var(--g1), .34) 50%, rgba(var(--g1), 0) 100%),
+      linear-gradient(180deg, #0f0f17 0%, #050509 100%); }
 
-  .copy { position: absolute; left: 88px; top: 104px; width: 540px; }
-  .copy.center { left: 0; right: 0; width: auto; text-align: center; top: 76px; }
-  .copy.center .sub { margin: 18px auto 0; max-width: 820px; }
-  .eyebrow { font-size: 17px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--blue-deep); }
-  .dark .eyebrow { color: #7aa2ff; }
-  h1 { font-size: 64px; line-height: 1.04; font-weight: 700; letter-spacing: -0.026em; margin-top: 14px; text-wrap: balance; }
-  .sub { font-size: 24px; line-height: 1.35; color: #565F6E; margin-top: 18px; max-width: 480px; text-wrap: pretty; }
-  .dark .sub { color: #a6b1c8; }
+  .head { position: absolute; left: 0; right: 0; top: 58px; text-align: center; z-index: 5; }
+  .eyebrow { display: inline-block; font-size: 17px; font-weight: 800; letter-spacing: 3.5px; text-transform: uppercase;
+    background: linear-gradient(90deg, rgb(var(--g1)), rgb(var(--g2))); -webkit-background-clip: text; color: transparent; }
+  h1 { font-size: 60px; line-height: 1.12; font-weight: 800; letter-spacing: -1.4px; margin-top: 10px; }
+  .sub { font-size: 23px; line-height: 1.38; color: rgba(255,255,255,.66); margin: 12px auto 0; max-width: 980px; text-wrap: balance; }
 
-  /* A generic macOS window used as the stage. */
-  .win { position: absolute; background: #fbfbfd; border-radius: 15px; overflow: hidden;
-         box-shadow: 0 0 0 .5px rgba(16,20,28,.14), 0 44px 96px -12px rgba(16,28,60,.26), 0 12px 32px rgba(16,28,60,.10); }
-  .dark .win { background: #1b1f28; box-shadow: 0 0 0 .5px rgba(255,255,255,.12), 0 34px 96px rgba(0,0,0,.6); }
-  .bar { height: 44px; display: flex; align-items: center; gap: 8px; padding: 0 16px; border-bottom: 1px solid rgba(16,20,28,.07); }
-  .dark .bar { border-color: rgba(255,255,255,.07); }
-  .dot { width: 12px; height: 12px; border-radius: 50%; }
-  .bar .t { flex: 1; text-align: center; font-size: 13px; font-weight: 600; color: #737b8a; margin-right: 60px; }
+  /* The Mac the scene happens on. Scene coordinates are the screen's own
+     1440 × 900; the screen is shown at 1180 wide. */
+  .display { position: absolute; left: 130px; top: 250px; width: 1180px; height: 737.5px; overflow: hidden; border-radius: 18px;
+    box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.14), 0 26px 100px rgba(0,0,0,.6); }
+  .screen { position: absolute; left: 0; top: 0; width: 1440px; height: 900px; transform: scale(.81944); transform-origin: 0 0; overflow: hidden; }
+  .wall-0 { background:
+      radial-gradient(circle 620px at 1200px 770px, rgba(242,115,102,.7), rgba(242,115,102,.3) 50%, rgba(242,115,102,0)),
+      radial-gradient(circle 520px at 200px 210px, rgba(92,36,122,.8), rgba(92,36,122,.35) 50%, rgba(92,36,122,0)),
+      linear-gradient(135deg, rgb(33,26,89), rgb(92,36,122)); }
+  .wall-1 { background:
+      radial-gradient(circle 620px at 1200px 770px, rgba(140,217,191,.7), rgba(140,217,191,.3) 50%, rgba(140,217,191,0)),
+      radial-gradient(circle 520px at 200px 210px, rgba(26,115,128,.8), rgba(26,115,128,.35) 50%, rgba(26,115,128,0)),
+      linear-gradient(135deg, rgb(13,51,77), rgb(26,115,128)); }
+  .wall-2 { background:
+      radial-gradient(circle 620px at 1200px 770px, rgba(255,179,102,.7), rgba(255,179,102,.3) 50%, rgba(255,179,102,0)),
+      radial-gradient(circle 520px at 200px 210px, rgba(140,46,51,.8), rgba(140,46,51,.35) 50%, rgba(140,46,51,0)),
+      linear-gradient(135deg, rgb(51,20,26), rgb(140,46,51)); }
+  .wall-3 { background:
+      radial-gradient(circle 620px at 1200px 770px, rgba(120,150,255,.7), rgba(120,150,255,.3) 50%, rgba(120,150,255,0)),
+      radial-gradient(circle 520px at 200px 210px, rgba(40,60,160,.8), rgba(40,60,160,.35) 50%, rgba(40,60,160,0)),
+      linear-gradient(135deg, rgb(14,22,60), rgb(40,60,160)); }
+  .menubar { position: absolute; left: 0; top: 0; width: 1440px; height: 26px; background: rgba(0,0,0,.28);
+    display: flex; align-items: center; gap: 18px; padding: 0 18px; font-size: 13px; color: rgba(255,255,255,.92); }
+  .menubar b { font-weight: 700; }
+  .menubar .sp { flex: 1; }
 
-  /* CopyWell's palette, drawn to match the app. */
-  .pal { position: absolute; width: 470px; border-radius: 16px; overflow: hidden; background: #f3f4f7;
-         box-shadow: 0 0 0 .5px rgba(16,20,28,.16), 0 40px 90px -8px rgba(16,28,60,.38), 0 10px 26px rgba(16,28,60,.16); }
-  .dark .pal { background: #232833; box-shadow: 0 0 0 .5px rgba(255,255,255,.14), 0 40px 90px rgba(0,0,0,.66); }
-  .pal .search { display: flex; align-items: center; gap: 11px; padding: 15px 18px; font-size: 18px; color: #8b93a3; border-bottom: 1px solid rgba(16,20,28,.07); }
-  .dark .pal .search { border-color: rgba(255,255,255,.07); color: #8d97ab; }
-  .pal .search b { color: #10141C; font-weight: 400; }
-  .dark .pal .search b { color: #eef1f7; }
-  .caret { display: inline-block; width: 2px; height: 20px; background: var(--blue); vertical-align: -4px; }
+  /* Windows, drawn as the capture shots draw them. */
+  .win { position: absolute; background: #1a1a1a; border-radius: 12px; overflow: hidden;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.12), 0 16px 60px rgba(0,0,0,.5); }
+  .bar { height: 38px; display: flex; align-items: center; gap: 8px; padding: 0 14px; background: #2b2b2b; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; flex: none; }
+  .bar .t { flex: 1; text-align: center; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.7); margin-right: 60px; }
+
+  /* CopyWell's palette, in its dark theme. */
+  .pal { position: absolute; width: 520px; border-radius: 16px; overflow: hidden; background: #232833;
+         box-shadow: 0 0 0 .5px rgba(255,255,255,.16), 0 40px 90px rgba(0,0,0,.66); }
+  .pal .search { display: flex; align-items: center; gap: 11px; padding: 15px 18px; font-size: 18px; color: #8d97ab; border-bottom: 1px solid rgba(255,255,255,.07); }
+  .pal .search b { color: #eef1f7; font-weight: 400; }
+  .caret { display: inline-block; width: 2px; height: 20px; background: #4f8bff; vertical-align: -4px; }
   .clip { display: flex; align-items: center; gap: 12px; padding: 11px 18px; }
-  .clip .n { width: 14px; text-align: right; font-size: 13px; color: #9aa2b1; flex: none; }
-  .clip .ic { width: 34px; height: 34px; border-radius: 9px; background: #e3e6ed; display: flex; align-items: center; justify-content: center; font-size: 16px; flex: none; }
-  .dark .clip .ic { background: #333a49; }
+  .clip .n { width: 14px; text-align: right; font-size: 13px; color: #8a93a5; flex: none; }
+  .clip .ic { width: 34px; height: 34px; border-radius: 9px; background: #333a49; display: flex; align-items: center; justify-content: center; font-size: 16px; flex: none; }
   .clip .tx { min-width: 0; }
-  .clip .tx b { display: block; font-size: 16px; font-weight: 400; color: #10141C; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .dark .clip .tx b { color: #eef1f7; }
-  .clip .tx span { font-size: 13px; color: #838b9a; }
-  .clip.on { background: #cddcff; }
-  .dark .clip.on { background: #2b3450; }
-  .pal .foot { display: flex; align-items: center; gap: 16px; padding: 12px 18px; border-top: 1px solid rgba(16,20,28,.07); font-size: 13px; color: #737b8a; }
-  .dark .pal .foot { border-color: rgba(255,255,255,.07); }
-  .key { display: inline-block; min-width: 24px; text-align: center; padding: 3px 7px; border-radius: 6px; background: #e3e6ed; color: #444c5c; font-size: 12px; margin-right: 6px; }
-  .dark .key { background: #333a49; color: #c3cad8; }
+  .clip .tx b { display: block; font-size: 16px; font-weight: 400; color: #eef1f7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .clip .tx span { font-size: 13px; color: #8a93a5; }
+  .clip.on { background: #2b3a66; }
+  .pal .foot { display: flex; align-items: center; gap: 16px; padding: 12px 18px; border-top: 1px solid rgba(255,255,255,.07); font-size: 13px; color: #8a93a5; }
+  .key { display: inline-block; min-width: 24px; text-align: center; padding: 3px 7px; border-radius: 6px; background: #333a49; color: #c3cad8; font-size: 12px; margin-right: 6px; }
 
-  .tag { position: absolute; padding: 14px 24px; border-radius: 999px; background: var(--blue); color: #fff;
-         font-size: 27px; font-weight: 700; letter-spacing: -.01em; white-space: nowrap; box-shadow: 0 18px 42px rgba(47,111,237,.36); }
-  .tag:after { content: ""; position: absolute; left: 40px; bottom: -11px; border: 11px solid transparent; border-top-color: var(--blue); border-bottom: 0; }
-  .tag.up:after { bottom: auto; top: -11px; border: 11px solid transparent; border-bottom-color: var(--blue); border-top: 0; }
+  /* The callout: a glowing capsule, the same one the capture shots use. */
+  .tag { position: absolute; z-index: 6; display: inline-flex; align-items: center; padding: 12px 20px; border-radius: 999px; white-space: nowrap;
+    font-size: 21px; font-weight: 700; color: #fff; letter-spacing: -.1px;
+    background: linear-gradient(90deg, rgb(var(--t1)), rgb(var(--t2)));
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.25), 0 10px 44px rgba(var(--t1), .55); }
+  .tag.down:after, .tag.up:after { content: ""; position: absolute; left: 50%; margin-left: -11px; border: 11px solid transparent; }
+  .tag.down:after { bottom: -11px; border-top-color: rgb(var(--t2)); border-bottom: 0; }
+  .tag.up:after { top: -11px; border-bottom-color: rgb(var(--t2)); border-top: 0; }
 
-  .mail { padding: 24px 30px; font-size: 17px; line-height: 1.6; color: #333b49; }
-  .mail .f { display: flex; gap: 12px; padding: 9px 0; border-bottom: 1px solid rgba(16,20,28,.07); font-size: 15px; }
-  .mail .f i { color: #8b93a3; font-style: normal; width: 52px; }
-  .dark .mail { color: #c9d1e0; }
-  .dark .mail .f { border-color: rgba(255,255,255,.07); }
+  .mail { padding: 24px 30px; font-size: 17px; line-height: 1.6; color: #c9d1e0; }
+  .mail .f { display: flex; gap: 12px; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,.07); font-size: 15px; }
+  .mail .f i { color: #8b93a3; font-style: normal; width: 60px; }
 </style>
 <body></body>
+<!-- Loaded in order while the page parses, so the frame renders in one pass
+     with nothing left pending: a script fetched after load kept headless
+     Chrome waiting and it never took the screenshot. -->
+<script src="strings/en.js"></script>
 <script>
-const N = new URLSearchParams(location.search).get('n') || '1';
+  window.S_EN = window.S;
+  window.S = undefined;
+  (function () {
+    const lang = new URLSearchParams(location.search).get('lang') || 'en';
+    if (lang !== 'en') document.write('<script src="strings/' + lang + '.js"><\/script>');
+  })();
+</script>
+<script>
+const params = new URLSearchParams(location.search);
+const N = params.get('n') || '1';
+const LANG = params.get('lang') || 'en';
+const RTL = ['ar', 'he', 'ur'].includes(LANG);
+
+/* Strings come from strings/<lang>.js (made from docs/store/shots/<lang>.json),
+   with English underneath for anything missing. */
+const t = k => (window.S_LANG && window.S_LANG[k]) || (window.S_EN && window.S_EN[k]) || k;
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const T = k => esc(t(k));
+
+
 const dots = '<span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span>';
-const bar = t => `<div class="bar">${dots}<div class="t">${t}</div></div>`;
+const bar = title => `<div class="bar">${dots}<div class="t">${title}</div></div>`;
 const clip = (n, ic, title, meta, on) =>
   `<div class="clip ${on ? 'on' : ''}"><div class="n">${n}</div><div class="ic">${ic}</div><div class="tx"><b>${title}</b><span>${meta}</span></div></div>`;
-const foot = `<div class="foot"><span><span class="key">⏎</span>Copy</span><span><span class="key">⌘1–9</span>Jump</span><span><span class="key">⌘Y</span>Preview</span></div>`;
-const rows = `
-  ${clip(1, '🔗', 'https://developer.apple.com/documentation', 'Safari · 4 min ago', true)}
-  ${clip(2, '✉️', 'dana.whitfield@northstarlabs.com', 'Mail · 9 min ago')}
-  ${clip(3, '📄', 'Northstar Labs, 144 Bridge Street, Edinburgh', 'Notes · 22 min ago')}
-  ${clip(4, '{ }', 'docker compose up --build -d', 'Terminal · 1 hr ago')}
-  ${clip(5, '📄', 'Invoice 2026-0418 · Due 30 September', 'Numbers · 2 hr ago')}`;
+const foot = () => `<div class="foot"><span><span class="key">⏎</span>${T('ui.copy')}</span><span><span class="key">⌘1–9</span>${T('ui.jump')}</span><span><span class="key">⌘Y</span>${T('ui.preview')}</span></div>`;
+const menubar = app => `<div class="menubar"><span style="font-size:15px">&#xF8FF;</span><b>${app}</b><span>${T('menu.file')}</span><span>${T('menu.edit')}</span><span>${T('menu.view')}</span><span>${T('menu.window')}</span><span>${T('menu.help')}</span><span class="sp"></span><span>📋</span><span>${T('menu.clock')}</span></div>`;
+
+/* A frame: glow colours, the header (by key prefix), the wallpaper, the scene
+   in screen coordinates, and tags in page coordinates. A tag given `right`
+   is anchored by its right edge, so a longer translation grows leftwards. */
+const tag = ({ key, left, right, top, tail }) =>
+  `<div class="tag ${tail || ''}" style="${right !== undefined ? `right:${right}px;` : `left:${left}px;`} top:${top}px;">${T(key)}</div>`;
+const frame = ({ g1, g2, prefix, wall, app, scene, tags = [] }) => `
+<section class="frame" style="--g1:${g1}; --g2:${g2}; --t1:${g1}; --t2:${g2}">
+  <div class="head" ${RTL ? 'dir="rtl"' : ''}>
+    <div class="eyebrow">${T(prefix + '.eyebrow')}</div>
+    <h1>${T(prefix + '.title')}</h1>
+    <div class="sub">${T(prefix + '.sub')}</div>
+  </div>
+  <div class="display"><div class="screen wall-${wall}">${menubar(app)}${scene}</div></div>
+  ${tags.map(tag).join('')}
+</section>`;
 
 const frames = {
-1: () => `<section class="frame light">
-  <div class="copy">
-    <div class="eyebrow">Clipboard history for Mac</div>
-    <h1>Everything you copy, one keystroke away</h1>
-    <div class="sub">Press ⌥⌘V in any app. The palette opens right where you are.</div>
-  </div>
-  <div class="win" style="left:700px; top:120px; width:660px; height:520px;">
-    ${bar('New Message')}
-    <div class="mail">
-      <div class="f"><i>To</i> dana.whitfield@northstarlabs.com</div>
-      <div class="f"><i>Subject</i> Q3 figures</div>
-      <div style="padding-top:18px">Hi Dana,<br><br>Here is the link we talked about:<span class="caret"></span></div>
-    </div>
-  </div>
-  <div class="pal" style="left:520px; top:392px;">
-    <div class="search">🔍 <b>Search clips</b><span class="caret"></span></div>
-    ${rows}
-    ${foot}
-  </div>
-</section>`,
-
-2: () => `<section class="frame dark">
-  <div class="copy center">
-    <div class="eyebrow">Search</div>
-    <h1>Find it in a second, weeks later</h1>
-    <div class="sub">Type a word and the thing you copied last Tuesday is right there.</div>
-  </div>
-  <div class="pal" style="left:430px; top:322px; width:580px;">
-    <div class="search">🔍 <b>invoice</b><span class="caret"></span></div>
-    ${clip(1, '📄', 'Invoice 2026-0418 · Due 30 September', 'Numbers · last Tuesday', true)}
-    ${clip(2, '✉️', 'Invoice query — Northstar Labs', 'Mail · 8 September')}
-    ${clip(3, '🔗', 'northstar.example/billing/invoices', 'Safari · 2 September')}
-    ${clip(4, '📄', 'Invoice template — final', 'Pages · 27 August')}
-    ${clip(5, '{ }', 'SELECT * FROM invoices WHERE paid = false', 'TablePlus · 21 August')}
-    ${foot}
-  </div>
-  <div class="tag" style="left:1000px; top:268px;">5 matches, instantly</div>
-</section>`,
-
-3: () => `<section class="frame light">
-  <div class="copy">
-    <div class="eyebrow">Pinboards</div>
-    <h1>Never retype the same thing again</h1>
-    <div class="sub">Signatures, snippets, addresses — kept where you can always reach them.</div>
-  </div>
-  <div class="win" style="left:680px; top:186px; width:680px; height:528px;">
-    ${bar('CopyWell')}
-    <div style="display:grid; grid-template-columns: 210px 1fr; height:calc(100% - 44px)">
-      <div style="background:#f0f1f5; border-right:1px solid rgba(16,20,28,.07); padding:14px 10px; font-size:15px; color:#3b4453">
-        <div style="font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:#8b93a3; padding:6px 10px">Library</div>
-        <div style="padding:9px 10px; border-radius:9px">🕘 &nbsp;History</div>
-        <div style="padding:9px 10px; border-radius:9px">☆ &nbsp;Favourites</div>
-        <div style="font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:#8b93a3; padding:14px 10px 6px">Pinboards</div>
-        <div style="padding:9px 10px; border-radius:9px; background:#cddcff">{ } &nbsp;Snippets</div>
-        <div style="padding:9px 10px; border-radius:9px">💬 &nbsp;Replies</div>
-        <div style="padding:9px 10px; border-radius:9px">🏷 &nbsp;Addresses</div>
-      </div>
-      <div style="padding:8px 0">
-        ${clip('', '{ }', 'let total = items.reduce(0) { $0 + $1.amount }', 'Xcode', true)}
-        ${clip('', '{ }', 'docker compose up --build -d', 'Terminal')}
-        ${clip('', '{ }', 'git rebase -i origin/main', 'Terminal')}
-        ${clip('', '{ }', 'SELECT * FROM invoices WHERE paid = false', 'TablePlus')}
-        ${clip('', '{ }', 'ssh deploy@northstar.example', 'Terminal')}
-        ${clip('', '{ }', 'npm run build -- --production', 'Terminal')}
-        ${clip('', '{ }', 'brew services restart postgresql', 'Terminal')}
+// 1 · the palette, over a half-written mail
+1: () => frame({
+  g1: '59,107,255', g2: '140,92,255', prefix: 'palette', wall: 3, app: T('app.mail'),
+  scene: `
+    <div class="win" style="left:250px; top:90px; width:940px; height:620px;">
+      ${bar(T('mail.window'))}
+      <div class="mail">
+        <div class="f"><i>${T('mail.to')}</i> dana.whitfield@northstarlabs.com</div>
+        <div class="f"><i>${T('mail.subject')}</i> ${T('mail.subjectValue')}</div>
+        <div style="padding-top:18px">${T('mail.greeting')}<br><br>${T('mail.body')}<span class="caret"></span></div>
       </div>
     </div>
-  </div>
-</section>`,
+    <div class="pal" style="left:470px; top:330px; width:600px;">
+      <div class="search">🔍 <b>${T('ui.searchClips')}</b><span class="caret"></span></div>
+      ${clip(1, '🔗', 'https://developer.apple.com/documentation', T('clip.meta1'), true)}
+      ${clip(2, '✉️', 'dana.whitfield@northstarlabs.com', T('clip.meta2'))}
+      ${clip(3, '📄', 'Northstar Labs, 144 Bridge Street, Edinburgh', T('clip.meta3'))}
+      ${clip(4, '{ }', 'docker compose up --build -d', T('clip.meta4'))}
+      ${clip(5, '📄', T('clip.invoiceTitle'), T('clip.meta5'))}
+      ${foot()}
+    </div>`,
+  tags: [{ key: 'palette.tag', left: 1000, top: 470 }],
+}),
 
-4: () => `<section class="frame dark">
-  <div class="copy center">
-    <div class="eyebrow">Even screenshots</div>
-    <h1>It reads the words inside your images</h1>
-    <div class="sub">Copy a screenshot and you can still search what it says.</div>
-  </div>
-  <div class="pal" style="left:430px; top:322px; width:580px;">
-    <div class="search">🔍 <b>wi-fi</b><span class="caret"></span></div>
-    <div class="clip on" style="align-items:flex-start; padding:16px 18px">
-      <div class="n" style="padding-top:22px">1</div>
-      <div style="width:124px; height:84px; border-radius:9px; flex:none; background:#11151d; border:1px solid rgba(255,255,255,.12); padding:11px 12px; font-size:10px; line-height:1.6; color:#9fb0cc; overflow:hidden">
-        Northstar Summit<br>Wi-Fi: Northstar-Guest<br>Hall B, level 2
-      </div>
-      <div class="tx">
-        <b>Screenshot · 1280 × 720</b>
-        <span>Preview · yesterday</span>
-        <div style="margin-top:8px; font-size:13px; color:#8fb4ff">Recognised: “Wi-Fi: Northstar-Guest…”</div>
-      </div>
-    </div>
-    ${clip(2, '📄', 'Wi-Fi details for the Edinburgh office', 'Notes · last week')}
-    ${clip(3, '🔗', 'northstar.example/guest-wifi', 'Safari · last week')}
-    ${foot}
-  </div>
-  <div class="tag" style="left:1000px; top:268px;">Found inside the picture</div>
-</section>`,
-
-5: () => `<section class="frame light">
-  <div class="copy">
-    <div class="eyebrow">Privacy</div>
-    <h1>It refuses to see your passwords</h1>
-    <div class="sub">No permission to control your Mac. Nothing uploaded. Ever.</div>
-  </div>
-  <div class="win" style="left:720px; top:230px; width:600px; height:326px;">
-    ${bar('Password Manager')}
-    <div style="padding:26px 30px">
-      <div style="font-size:15px; color:#8b93a3">Northstar Labs</div>
-      <div style="font-size:21px; margin-top:6px">dana.whitfield@northstarlabs.com</div>
-      <div style="margin-top:20px; font-size:15px; color:#8b93a3">Password</div>
-      <div style="font-size:25px; letter-spacing:.14em; margin-top:4px">••••••••••••</div>
-      <div style="margin-top:22px; display:inline-flex; align-items:center; gap:10px; padding:11px 17px; border-radius:12px; background:#e8ecf6; font-size:16px; color:#3b4453">
-        📋 Copied to clipboard
+// 4 · search
+2: () => frame({
+  g1: '40,140,255', g2: '60,210,230', prefix: 'search', wall: 3, app: T('app.numbers'),
+  scene: `
+    <div class="win" style="left:200px; top:90px; width:1040px; height:640px;">
+      ${bar(T('search.window'))}
+      <div style="padding:28px 32px; color:#c9d1e0; font-size:16px; line-height:2.2; opacity:.5">
+        ${T('search.row1')}<br>${T('search.row2')}<br>${T('search.row3')}<br>${T('clip.invoiceTitle')}
       </div>
     </div>
-  </div>
-  <div class="tag" style="left:700px; top:590px;">CopyWell did not record this</div>
-  <div style="position:absolute; left:700px; top:672px; font-size:19px; color:#565F6E; max-width:600px; line-height:1.45">
-    Anything your password manager marks as secret is skipped, and so is anything shaped like a key.
-  </div>
-</section>`,
+    <div class="pal" style="left:400px; top:200px; width:640px;">
+      <div class="search">🔍 <b>${T('search.query')}</b><span class="caret"></span></div>
+      ${clip(1, '📄', T('clip.invoiceTitle'), T('search.r1meta'), true)}
+      ${clip(2, '✉️', T('search.r2'), T('search.r2meta'))}
+      ${clip(3, '🔗', 'northstar.example/billing/invoices', T('search.r3meta'))}
+      ${clip(4, '📄', T('search.r4'), T('search.r4meta'))}
+      ${clip(5, '{ }', 'SELECT * FROM invoices WHERE paid = false', T('search.r5meta'))}
+      ${foot()}
+    </div>`,
+  tags: [{ key: 'search.tag', left: 960, top: 330, tail: 'down' }],
+}),
 
-6: () => `<section class="frame light">
-  <div class="copy center">
-    <div class="eyebrow">In every app</div>
-    <h1>Right there in the right-click menu</h1>
-    <div class="sub">And in the menu bar, and in Finder. Wherever you already are.</div>
-  </div>
-  <div class="win" style="left:330px; top:330px; width:560px; height:340px;">
-    ${bar('Meeting notes')}
-    <div class="mail"><div style="padding-top:6px">Meeting moved to Thursday at 15:00.<br>Same room, same link.</div></div>
-  </div>
-  <div style="position:absolute; left:680px; top:400px; width:340px; border-radius:12px; background:#fbfbfd; padding:7px; font-size:16px; color:#10141C; box-shadow:0 0 0 .5px rgba(16,20,28,.16), 0 30px 70px rgba(16,28,60,.32)">
-    <div style="padding:8px 14px">Copy</div>
-    <div style="padding:8px 14px">Paste</div>
-    <div style="height:1px; background:rgba(16,20,28,.09); margin:6px 0"></div>
-    <div style="padding:8px 14px; border-radius:8px; background:#2F6FED; color:#fff">Save to CopyWell</div>
-    <div style="padding:8px 14px">Pin to CopyWell</div>
-    <div style="padding:8px 14px">Paste from CopyWell</div>
-  </div>
-</section>`,
-
-// Frames 7 and 8 are the app itself, not a drawing of it: a real capture of
-// the whole window, rendered by `CopyWell --demo-content --render-screenshots
-// --all-themes --language en`. The other frames stage the palette over a mock
-// app, which shows the moment the product earns its keep but never shows the
-// window — which is what the listing was missing.
-7: () => `<section class="frame light">
-  <div class="copy center" style="top:56px">
-    <div class="eyebrow">All of it, in one window</div>
-    <h1>Everything you copied, still there</h1>
-  </div>
-  <div class="win" style="left:230px; top:222px; width:980px;">
-    ${bar('CopyWell')}
-    <!-- The capture has no toolbar: a plain NSHostingView is not a window that
-         SwiftUI will attach one to. The empty strip that leaves under the title
-         bar is cropped off here rather than filled with a drawing of a toolbar
-         that would not quite match the real one. -->
-    <div style="height:545px; overflow:hidden">
-      <img src="out/window/paper.png" style="display:block; width:100%; margin-top:-30px">
+// 7 · text inside images
+3: () => frame({
+  g1: '30,190,200', g2: '70,220,140', prefix: 'ocr', wall: 1, app: T('app.preview'),
+  scene: `
+    <div class="win" style="left:170px; top:90px; width:560px; height:420px;">
+      ${bar(T('ocr.window'))}
+      <div style="padding:40px; color:#dfe6f2; font-size:26px; line-height:1.7; background:#11151d; height:100%">
+        <b style="font-size:34px">${T('ocr.l1')}</b><br>${T('ocr.l2')}<br>${T('ocr.l3')}<br>${T('ocr.l4')}
+      </div>
     </div>
-  </div>
-</section>`,
+    <div class="pal" style="left:620px; top:300px; width:640px;">
+      <div class="search">🔍 <b>${T('ocr.query')}</b><span class="caret"></span></div>
+      <div class="clip on" style="align-items:flex-start; padding:16px 18px">
+        <div class="n" style="padding-top:22px">1</div>
+        <div style="width:124px; height:84px; border-radius:9px; flex:none; background:#11151d; border:1px solid rgba(255,255,255,.12); padding:11px 12px; font-size:10px; line-height:1.6; color:#9fb0cc; overflow:hidden">
+          ${T('ocr.l1')}<br>${T('ocr.l2')}<br>${T('ocr.l4')}
+        </div>
+        <div class="tx">
+          <b>${T('ocr.clipTitle')}</b>
+          <span>${T('ocr.clipMeta')}</span>
+          <div style="margin-top:8px; font-size:13px; color:#8fe4c4">${T('ocr.recognised')}</div>
+        </div>
+      </div>
+      ${clip(2, '📄', T('ocr.r2'), T('ocr.r2meta'))}
+      ${clip(3, '🔗', 'northstar.example/guest-wifi', T('ocr.r3meta'))}
+      ${foot()}
+    </div>`,
+  tags: [{ key: 'ocr.tag', left: 900, top: 420, tail: 'down' }],
+}),
 
-8: () => `<section class="frame dark">
-  <div class="copy center" style="top:56px">
-    <div class="eyebrow">Seven themes</div>
-    <h1>Including one that is almost black</h1>
-  </div>
-  <div class="win" style="left:230px; top:222px; width:980px;">
-    ${bar('CopyWell')}
-    <!-- The capture has no toolbar: a plain NSHostingView is not a window that
-         SwiftUI will attach one to. The empty strip that leaves under the title
-         bar is cropped off here rather than filled with a drawing of a toolbar
-         that would not quite match the real one. -->
-    <div style="height:545px; overflow:hidden">
-      <img src="out/window/ink.png" style="display:block; width:100%; margin-top:-30px">
+// 8 · pinboards
+4: () => frame({
+  g1: '255,150,40', g2: '255,95,120', prefix: 'pinboards', wall: 2, app: 'CopyWell',
+  scene: `
+    <div class="win" style="left:210px; top:80px; width:1020px; height:660px;">
+      ${bar('CopyWell')}
+      <div style="display:grid; grid-template-columns: 230px 1fr; height:calc(100% - 38px)">
+        <div style="background:#212121; padding:14px 10px; font-size:15px; color:#d6d9df">
+          <div style="font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:#8b93a3; padding:6px 10px">${T('ui.library')}</div>
+          <div style="padding:9px 10px; border-radius:9px">🕘 &nbsp;${T('ui.history')}</div>
+          <div style="padding:9px 10px; border-radius:9px">☆ &nbsp;${T('ui.favourites')}</div>
+          <div style="padding:9px 10px; border-radius:9px">🎞 &nbsp;${T('ui.recordings')}</div>
+          <div style="font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:#8b93a3; padding:14px 10px 6px">${T('ui.pinboards')}</div>
+          <div style="padding:9px 10px; border-radius:9px; background:rgba(255,150,40,.35); color:#fff; font-weight:600">{ } &nbsp;${T('ui.board.snippets')}</div>
+          <div style="padding:9px 10px; border-radius:9px">💬 &nbsp;${T('ui.board.replies')}</div>
+          <div style="padding:9px 10px; border-radius:9px">🏷 &nbsp;${T('ui.board.addresses')}</div>
+        </div>
+        <div style="padding:8px 0; background:#171717">
+          ${clip('', '{ }', 'let total = items.reduce(0) { $0 + $1.amount }', 'Xcode', true)}
+          ${clip('', '{ }', 'docker compose up --build -d', 'Terminal')}
+          ${clip('', '{ }', 'git rebase -i origin/main', 'Terminal')}
+          ${clip('', '{ }', 'SELECT * FROM invoices WHERE paid = false', 'TablePlus')}
+          ${clip('', '{ }', 'ssh deploy@northstar.example', 'Terminal')}
+          ${clip('', '{ }', 'npm run build -- --production', 'Terminal')}
+          ${clip('', '{ }', 'brew services restart postgresql', 'Terminal')}
+          ${clip('', '{ }', 'kubectl rollout restart deploy/api', 'Terminal')}
+        </div>
+      </div>
+    </div>`,
+  tags: [{ key: 'pinboards.tag', right: 40, top: 330 }],
+}),
+
+// 9 · privacy
+5: () => frame({
+  g1: '40,200,140', g2: '40,160,230', prefix: 'privacy', wall: 1, app: T('app.passwords'),
+  scene: `
+    <div class="win" style="left:330px; top:130px; width:780px; height:440px;">
+      ${bar(T('privacy.window'))}
+      <div style="padding:36px 40px; color:#e6e9ef">
+        <div style="font-size:16px; color:#8b93a3">Northstar Labs</div>
+        <div style="font-size:26px; margin-top:8px">dana.whitfield@northstarlabs.com</div>
+        <div style="margin-top:26px; font-size:16px; color:#8b93a3">${T('privacy.password')}</div>
+        <div style="font-size:32px; letter-spacing:.14em; margin-top:6px">••••••••••••</div>
+        <div style="margin-top:30px; display:inline-flex; align-items:center; gap:10px; padding:13px 20px; border-radius:12px; background:#2a3140; font-size:18px; color:#d6dbe6">
+          📋 ${T('privacy.copied')}
+        </div>
+      </div>
+    </div>`,
+  tags: [{ key: 'privacy.tag', left: 560, top: 790, tail: 'up' }],
+}),
+
+// 10 · right-click
+6: () => frame({
+  g1: '90,110,255', g2: '190,90,255', prefix: 'rightclick', wall: 0, app: T('app.notes'),
+  scene: `
+    <div class="win" style="left:230px; top:130px; width:760px; height:480px;">
+      ${bar(T('rightclick.window'))}
+      <div class="mail" style="font-size:22px; line-height:1.7"><div style="padding-top:10px"><span style="background:rgba(90,130,255,.45); border-radius:4px">${T('rightclick.line1')}<br>${T('rightclick.line2')}</span></div></div>
     </div>
-  </div>
-</section>`,
+    <div style="position:absolute; left:720px; top:260px; width:420px; border-radius:12px; background:#2a2a2e; padding:7px; font-size:18px; color:#e8e8ec;
+                box-shadow:0 0 0 .5px rgba(255,255,255,.18), 0 30px 70px rgba(0,0,0,.55)">
+      <div style="padding:9px 14px">${T('ui.menu.copy')}</div>
+      <div style="padding:9px 14px">${T('ui.menu.paste')}</div>
+      <div style="height:1px; background:rgba(255,255,255,.1); margin:6px 0"></div>
+      <div style="padding:9px 14px; border-radius:8px; background:#2F6FED; color:#fff">${T('ui.menu.save')}</div>
+      <div style="padding:9px 14px">${T('ui.menu.pin')}</div>
+      <div style="padding:9px 14px">${T('ui.menu.stack')}</div>
+      <div style="padding:9px 14px">${T('ui.menu.pasteFrom')}</div>
+    </div>`,
+  tags: [{ key: 'rightclick.tag', right: 40, top: 360 }],
+}),
 };
+
+/* Shrinks whatever a longer language would push past its room. */
+function fit() {
+  // The text's own width, not its box's: the heading block always spans the
+  // page, so measuring the block shrank every title, fitting or not.
+  const textWidth = el => { const r = document.createRange(); r.selectNodeContents(el); return r.getBoundingClientRect().width; };
+  const h1 = document.querySelector('h1');
+  if (h1) {
+    h1.style.whiteSpace = 'nowrap';
+    let size = 60;
+    while (textWidth(h1) > 1340 && size > 30) { size -= 1; h1.style.fontSize = size + 'px'; }
+  }
+  const sub = document.querySelector('.sub');
+  let subSize = 23;
+  while (sub && sub.getBoundingClientRect().height > subSize * 1.38 * 2 + 4 && subSize > 16) { subSize -= 1; sub.style.fontSize = subSize + 'px'; }
+  document.querySelectorAll('.tag').forEach(el => {
+    if (RTL) el.setAttribute('dir', 'rtl');
+    let tagSize = 21;
+    const fits = () => { const r = el.getBoundingClientRect(); return r.left >= 10 && r.right <= 1430; };
+    while (!fits() && tagSize > 12) { tagSize -= 1; el.style.fontSize = tagSize + 'px'; }
+  });
+}
+
+window.S_LANG = LANG === 'en' ? undefined : window.S;
+document.documentElement.lang = LANG;
 document.body.innerHTML = (frames[N] || frames[1])();
+fit();
 </script>

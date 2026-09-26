@@ -8,13 +8,18 @@ TRIAL AND SUBSCRIPTION
 - To see the locked state yourself, the trial can simply be allowed to lapse; the app is fully usable during review either way.
 
 PERMISSIONS
-- CopyWell requests no permissions at all. In particular it does not use Accessibility: it never sends keystrokes, so a clip is placed on the clipboard and the user presses Command-V themselves.
+- The clipboard features request no permissions. In particular CopyWell does not use Accessibility: it never sends keystrokes, so a clip is placed on the clipboard and the user presses Command-V themselves.
+- Screen Recording is requested only for the screenshot (Shift-Command-9) and screen recording (Shift-Command-0) features, and only when one of them is first used. An explanation is shown before the system asks. Nothing else depends on it.
+- The Movies read-write entitlement is used to save screen recordings to Movies > CopyWell and to list them in the app's Recordings section. Screenshots are saved through a standard save panel.
+- Recording a single window or app uses the system's SCContentSharingPicker, so the user chooses in macOS's own picker and CopyWell never enumerates other apps' windows to offer them.
+- Camera and microphone are requested only when the user switches on "Show my camera in a bubble" or "Record my voice" (Settings > General > Camera & Microphone, or the buttons on the recording toolbar). Both are off by default. They are used only while a screen recording is being made: the camera appears in a round bubble over the recording, and the voice is recorded with it. Nothing is uploaded.
 - Copies that a password manager marks with org.nspasteboard.ConcealedType are not recorded, and neither is anything shaped like an API key or a private key.
 
 HOW TO TRY IT
 1. Copy a few different things - some text, a link, an image.
 2. Press Option-Command-V anywhere. The palette opens at the cursor. Arrow keys or Command-1 to 9 select, Return copies the clip, Command-Y previews it.
 3. The menu bar icon lists recent clips.
-4. The right-click entries are macOS Services, which macOS ships switched off. To see them: System Settings > Keyboard > Keyboard Shortcuts > Services, then tick the CopyWell entries. The Finder extension is enabled in System Settings > General > Login Items & Extensions > Finder Extensions.
+4. Press Shift-Command-9 to capture an area: drag to select it, draw with the tools beside it, then press Return to copy it (it also appears in the history). Shift-Command-0 records an area or the whole screen; press it again, or the Stop button, to finish. The recording is saved to Movies > CopyWell, opens in a review window where it can be trimmed, and is listed under Recordings in the main window.
+5. The right-click entries are macOS Services, which macOS ships switched off. To see them: System Settings > Keyboard > Keyboard Shortcuts > Services, then tick the CopyWell entries. The Finder extension is enabled in System Settings > General > Login Items & Extensions > Finder Extensions.
 
 iCLOUD SYNC is off by default. When switched on it uses the user's own private CloudKit database; the developer has no access to it.

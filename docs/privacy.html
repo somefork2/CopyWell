@@ -24,7 +24,7 @@
 
 <h1>Privacy Policy</h1>
 <p class="lede">CopyWell records what you copy, which is about as private as data gets. This page explains exactly where it goes.</p>
-<p class="updated">Last updated 19 September 2026. Applies to CopyWell for macOS.</p>
+<p class="updated">Last updated 25 September 2026. Applies to CopyWell for macOS.</p>
 
 <div class="card">
   <h3>The short version</h3>
@@ -47,7 +47,16 @@
   <li><strong>Passwords and secrets.</strong> When a password manager such as 1Password, Bitwarden, or Keychain Access marks a copy as confidential, macOS attaches a marker to it. CopyWell honours that marker and does not record the item at all.</li>
   <li><strong>Anything that looks like a credential.</strong> Items that match the shape of an API key, a private key, or a labelled secret are skipped even without a marker.</li>
   <li><strong>Your keystrokes.</strong> CopyWell does not monitor the keyboard and does not use macOS Accessibility features. It never presses keys on your behalf.</li>
-  <li><strong>Your screen.</strong> CopyWell does not take screenshots and does not record the screen.</li>
+  <li><strong>Your screen, unless you ask.</strong> CopyWell never looks at the screen on its own. It captures it only at the moment you use its screenshot or screen recording command.</li>
+</ul>
+
+<h2>Screenshots and screen recordings</h2>
+<p>These two features need macOS's Screen Recording permission, which CopyWell asks for the first time you use one of them. You can withdraw it at any time in System Settings ▸ Privacy &amp; Security ▸ Screen &amp; System Audio Recording; the clipboard history keeps working without it.</p>
+<ul>
+  <li>A screenshot is taken only when you press the shortcut or choose the command, and only the area you select is kept. Copying it puts it on the clipboard and in your history like anything else you copy; saving it writes a file where you choose.</li>
+  <li>A recording starts only when you press Record and stops when you press Stop. It is saved to the Movies ▸ CopyWell folder on your Mac. The Mac's sound is included only if you switch that on.</li>
+  <li>Your camera and microphone are used only if you switch on the camera bubble or your voice for recordings. Both are off to begin with, and macOS asks for your permission the first time you turn one on. They are active only while a recording is being made, and what they capture goes into that recording on your Mac and nowhere else.</li>
+  <li>Screenshots and recordings are processed on your Mac. They are not uploaded anywhere, and images are never included in iCloud sync.</li>
 </ul>
 
 <h2>Data the developer collects</h2>

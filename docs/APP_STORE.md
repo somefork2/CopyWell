@@ -105,13 +105,16 @@ signing works.
 
 ### 4. Review notes to include
 
-CopyWell requests no privacy-protected data at all, which removes the usual
-reason clipboard utilities get rejected. Say so plainly:
+The clipboard requests no privacy-protected data, which removes the usual
+reason clipboard utilities get rejected. Screen Recording is asked for only by
+the screenshot and screen recording features, on first use. Say so plainly
+(docs/review-notes.txt has the full text):
 
-> CopyWell does not request Accessibility, Automation or any other privacy
-> permission. It never synthesises keystrokes: selecting a clip places it on the
-> system pasteboard and the user presses ⌘V. Optional insertion without a
-> keypress is provided through a standard macOS Service.
+> CopyWell does not request Accessibility or Automation. It never synthesises
+> keystrokes: selecting a clip places it on the system pasteboard and the user
+> presses ⌘V. Optional insertion without a keypress is provided through a
+> standard macOS Service. Screen Recording is requested only when the user first
+> takes a screenshot (⇧⌘9) or records the screen (⇧⌘0).
 
 Also mention that the Services entries appear under the Services submenu and how
 to enable them in System Settings ▸ Keyboard ▸ Keyboard Shortcuts ▸ Services.
