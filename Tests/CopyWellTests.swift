@@ -1,4 +1,5 @@
 import AppKit
+import AVFoundation
 import Testing
 import Foundation
 @testable import CopyWell
@@ -469,5 +470,173 @@ struct ImageHashTests {
         let b = try #require(ImageStore.png(from: two, maxSize: nil))
         #expect(ContentHasher.hash(text: nil, url: nil, imageData: a)
                 != ContentHasher.hash(text: nil, url: nil, imageData: b))
+    }
+}
+
+// MARK: - Secrets
+
+@Suite("Sensitive content in categorisation")
+struct SensitiveCategorisationTests {
+
+    /// Every one of these used to be flagged as a secret and, with "skip
+    /// passwords" on by default, silently never recorded.
+    @Test("Ordinary copies are not mistaken for secrets", arguments: [
+        "jane@acme.com",
+        "https://accounts.example.com/oauth/authorize?client_id=42",
+        "https://blog.example.com/author/jane",
+        #"<div className="card">"#,
+        "How many tokens does this prompt use?",
+        "Order 2024-11-05, reference 4417 1234",
+        "+44 20 7946 0958",
+        "Please renew your passport before the trip",
+    ])
+    func ordinaryTextPasses(_ text: String) {
+        #expect(!SmartCategorizer.looksLikeSecret(text))
+    }
+
+    @Test("Credentials are still caught", arguments: [
+        "password: hunter2",
+        "API_KEY=abcd1234efgh5678",
+        "пароль: qwerty123",
+        "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.abcdefghijk",
+        "-----BEGIN RSA PRIVATE KEY-----",
+        // Token shapes are assembled from parts, so that no line of the
+        // repository looks like a live credential to secret scanners.
+        "AKIA" + "EXAMPLEEXAMPLE00",
+        "ghp" + "_" + String(repeating: "x", count: 36),
+        "sk" + "_live_" + "EXAMPLE0000000000000000",
+        "4111 1111 1111 1111",
+        "123-45-6789",
+    ])
+    func secretsAreCaught(_ text: String) {
+        #expect(SmartCategorizer.looksLikeSecret(text))
+    }
+}
+
+// MARK: - Retina pictures
+
+@Suite("Image resolution")
+struct ImageResolutionTests {
+
+    /// A Retina screenshot is 2× its point size. It used to be stored at its
+    /// point size, which is half its pixels.
+    @Test("Pictures keep their pixels and their point size")
+    func keepsPixels() throws {
+        let rep = try #require(NSBitmapImageRep(
+            bitmapDataPlanes: nil, pixelsWide: 200, pixelsHigh: 100, bitsPerSample: 8,
+            samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: .deviceRGB,
+            bytesPerRow: 0, bitsPerPixel: 0))
+        rep.size = NSSize(width: 100, height: 50)
+        let image = NSImage(size: rep.size)
+        image.addRepresentation(rep)
+
+        let png = try #require(ImageStore.png(from: image, maxSize: nil))
+        let decoded = try #require(NSBitmapImageRep(data: png))
+        #expect(decoded.pixelsWide == 200)
+        #expect(decoded.pixelsHigh == 100)
+        #expect(decoded.size == NSSize(width: 100, height: 50))
+    }
+}
+
+// MARK: - Recordings
+
+@Suite("Recording mixdown")
+struct RecordingMixdownTests {
+
+    /// Voice and system sound are written as two tracks; most players play
+    /// only the first, so a finished recording is mixed down to one.
+    @Test("Two audio tracks become one, and the picture and length survive")
+    func mixesTwoTracksIntoOne() async throws {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("mix-\(UUID().uuidString).mov")
+        defer { try? FileManager.default.removeItem(at: url) }
+        try await Self.writeMovie(to: url, audioTracks: 2, seconds: 1)
+
+        let before = AVURLAsset(url: url)
+        #expect(try await before.loadTracks(withMediaType: .audio).count == 2)
+
+        await RecordingMixdown.mixAudioIfNeeded(at: url)
+
+        let after = AVURLAsset(url: url)
+        #expect(try await after.loadTracks(withMediaType: .audio).count == 1)
+        #expect(try await after.loadTracks(withMediaType: .video).count == 1)
+        let duration = try await after.load(.duration).seconds
+        #expect(abs(duration - 1) < 0.2)
+    }
+
+    @Test("A recording with one track is left alone")
+    func leavesSingleTrackAlone() async throws {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("single-\(UUID().uuidString).mov")
+        defer { try? FileManager.default.removeItem(at: url) }
+        try await Self.writeMovie(to: url, audioTracks: 1, seconds: 1)
+        let modified = try FileManager.default.attributesOfItem(atPath: url.path)[.modificationDate] as? Date
+
+        await RecordingMixdown.mixAudioIfNeeded(at: url)
+
+        let after = try FileManager.default.attributesOfItem(atPath: url.path)[.modificationDate] as? Date
+        #expect(modified == after)
+    }
+
+    /// A short movie: grey frames at 30 fps and a sine tone per audio track.
+    static func writeMovie(to url: URL, audioTracks: Int, seconds: Int) async throws {
+        let writer = try AVAssetWriter(outputURL: url, fileType: .mov)
+        let video = AVAssetWriterInput(mediaType: .video, outputSettings: [
+            AVVideoCodecKey: AVVideoCodecType.h264, AVVideoWidthKey: 320, AVVideoHeightKey: 200,
+        ])
+        let adaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: video, sourcePixelBufferAttributes: [
+            kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA,
+            kCVPixelBufferWidthKey as String: 320, kCVPixelBufferHeightKey as String: 200,
+        ])
+        writer.add(video)
+        var audios: [AVAssetWriterInput] = []
+        for _ in 0..<audioTracks {
+            let audio = AVAssetWriterInput(mediaType: .audio, outputSettings: [
+                AVFormatIDKey: kAudioFormatMPEG4AAC, AVSampleRateKey: 48_000, AVNumberOfChannelsKey: 1,
+            ])
+            writer.add(audio)
+            audios.append(audio)
+        }
+        #expect(writer.startWriting())
+        writer.startSession(atSourceTime: .zero)
+
+        for frame in 0..<(30 * seconds) {
+            while !video.isReadyForMoreMediaData { try await Task.sleep(nanoseconds: 1_000_000) }
+            var buffer: CVPixelBuffer?
+            CVPixelBufferPoolCreatePixelBuffer(nil, adaptor.pixelBufferPool!, &buffer)
+            adaptor.append(buffer!, withPresentationTime: CMTime(value: CMTimeValue(frame), timescale: 30))
+        }
+
+        let format = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 48_000, channels: 1, interleaved: false)!
+        let chunk = 4800
+        for (index, audio) in audios.enumerated() {
+            for start in stride(from: 0, to: 48_000 * seconds, by: chunk) {
+                let pcm = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(chunk))!
+                pcm.frameLength = AVAudioFrameCount(chunk)
+                for i in 0..<chunk {
+                    pcm.floatChannelData![0][i] = 0.2 * sin(Float(start + i) * Float(index + 1) * 0.05)
+                }
+                while !audio.isReadyForMoreMediaData { try await Task.sleep(nanoseconds: 1_000_000) }
+                audio.append(try sampleBuffer(pcm, at: start))
+            }
+        }
+        video.markAsFinished()
+        audios.forEach { $0.markAsFinished() }
+        await writer.finishWriting()
+        #expect(writer.status == .completed)
+    }
+
+    private static func sampleBuffer(_ pcm: AVAudioPCMBuffer, at frame: Int) throws -> CMSampleBuffer {
+        var format: CMAudioFormatDescription?
+        CMAudioFormatDescriptionCreate(allocator: nil, asbd: pcm.format.streamDescription, layoutSize: 0, layout: nil,
+                                       magicCookieSize: 0, magicCookie: nil, extensions: nil, formatDescriptionOut: &format)
+        var buffer: CMSampleBuffer?
+        var timing = CMSampleTimingInfo(duration: CMTime(value: 1, timescale: 48_000),
+                                        presentationTimeStamp: CMTime(value: CMTimeValue(frame), timescale: 48_000),
+                                        decodeTimeStamp: .invalid)
+        CMSampleBufferCreate(allocator: nil, dataBuffer: nil, dataReady: false, makeDataReadyCallback: nil, refcon: nil,
+                             formatDescription: format, sampleCount: CMItemCount(pcm.frameLength), sampleTimingEntryCount: 1,
+                             sampleTimingArray: &timing, sampleSizeEntryCount: 0, sampleSizeArray: nil, sampleBufferOut: &buffer)
+        CMSampleBufferSetDataBufferFromAudioBufferList(buffer!, blockBufferAllocator: nil, blockBufferMemoryAllocator: nil,
+                                                       flags: 0, bufferList: pcm.audioBufferList)
+        return buffer!
     }
 }

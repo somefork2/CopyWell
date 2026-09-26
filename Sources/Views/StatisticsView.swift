@@ -12,7 +12,7 @@ struct StatisticsView: View {
                 icon: "chart.bar",
                 title: L("Statistics are part of CopyWell Pro"),
                 message: L("See what you copy most, which apps you copy from, and how your history grows over time."),
-                actionTitle: "See CopyWell Pro",
+                actionTitle: L("See CopyWell Pro"),
                 action: { subscriptions.showingPaywall = true }
             )
         } else {

@@ -106,15 +106,12 @@ final class QuickPastePanel: NSObject, NSWindowDelegate {
         panel.backgroundColor = .clear
         panel.delegate = self
 
-        let root = QuickPasteView(
+        let root = QuickPasteRoot(
             onSelect: { [weak self] item, plainText in
                 self?.commit(item, plainText: plainText)
             },
             onDismiss: { [weak self] in self?.hide() }
         )
-        .environment(ClipboardStore.shared)
-        .tint(ThemeManager.shared.accentColor)
-        .dynamicTypeSize(AppSettings.shared.textSize.dynamicTypeSize)
 
         let hosting = NSHostingView(rootView: root)
         hosting.frame = NSRect(origin: .zero, size: size)
@@ -192,4 +189,23 @@ final class QuickPastePanel: NSObject, NSWindowDelegate {
 private final class KeyablePanel: NSPanel {
     override var canBecomeKey: Bool { true }
     override var canBecomeMain: Bool { false }
+}
+
+/// The palette's content, reading the settings inside a `body`.
+///
+/// The panel is built once and kept. Its tint, text size and language used to
+/// be read when it was built, so changing any of them in Settings left the
+/// palette as it was until CopyWell was quit.
+private struct QuickPasteRoot: View {
+    let onSelect: (ClipboardItem, Bool) -> Void
+    let onDismiss: () -> Void
+
+    var body: some View {
+        let settings = AppSettings.shared
+        QuickPasteView(onSelect: onSelect, onDismiss: onDismiss)
+            .environment(ClipboardStore.shared)
+            .tint(ThemeManager.shared.accentColor)
+            .dynamicTypeSize(settings.textSize.dynamicTypeSize)
+            .id(settings.languageGeneration)
+    }
 }

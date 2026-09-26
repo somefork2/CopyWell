@@ -17,7 +17,7 @@ enum FeedbackSound: String, CaseIterable, Identifiable, Codable {
 
     var displayName: String {
         switch self {
-        case .none: return "None"
+        case .none: return L("None")
         case .tink: return "Tink"
         case .pop: return "Pop"
         case .morse: return "Morse"

@@ -15,8 +15,10 @@ struct CloudClip: Sendable {
     var createdAt: Date
 
     init?(_ item: ClipboardItem) {
-        // Sensitive clips stay on the device that captured them.
-        guard !item.isSensitive else { return nil }
+        // Sensitive clips stay on the device that captured them. So do images:
+        // the record carries no picture, and another Mac received an empty
+        // "Image" clip that pasted nothing.
+        guard !item.isSensitive, item.type != .image else { return nil }
         contentHash = item.contentHash
         contentType = item.contentType
         text = item.body
@@ -65,7 +67,9 @@ struct CloudClip: Sendable {
             detectedLanguage: nil,
             sentiment: 0,
             confidence: 0.5,
-            entities: []
+            entities: [],
+            createdAt: createdAt,
+            isFavorite: isFavorite
         )
     }
 }
@@ -165,7 +169,7 @@ actor CloudKitSyncManager {
         } catch let error as CKError {
             return .failure(describe(error))
         } catch {
-            return .failure("Sync failed: \(error.localizedDescription)")
+            return .failure(L("Sync failed: \(error.localizedDescription)"))
         }
     }
 

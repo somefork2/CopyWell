@@ -289,22 +289,65 @@ actor SmartCategorizer {
 
     // MARK: - Sensitivity Check
 
-    private func checkSensitivity(_ text: String, entities: [ExtractedEntity]) -> Bool {
-        let lowercased = text.lowercased()
-        let sensitivePatterns = [
-            "password", "passwd", "pwd", "secret", "token",
-            "api_key", "apikey", "api-key", "auth", "credential",
-            "credit card", "信用卡", "номер карты", "cvv", "ssn",
-            "social security", "passport", "паспорт"
+    /// True when the text looks like a credential, not merely mentions one.
+    ///
+    /// This used to match plain substrings — "auth", "token", "pwd", "ssn" —
+    /// and any short text with an email address in it. Sensitive clips are not
+    /// recorded at all while "skip passwords" is on, which is the default, so
+    /// a copied email address, an `/oauth/` link, an `/author/` page or JSX
+    /// with `className` in it all vanished without a trace. The patterns below
+    /// look for the shape of a secret instead: a labelled value, a known token
+    /// format, a private key, a card number that passes the Luhn check.
+    nonisolated static func looksLikeSecret(_ text: String) -> Bool {
+        let patterns = [
+            // "password: hunter2", "api_key=…", "пароль: …"
+            #"(?i)\b(password|passwd|pwd|passcode|pin code|secret|client[_-]?secret|api[_-]?key|access[_-]?key|secret[_-]?key|private[_-]?key|auth[_-]?token|access[_-]?token|refresh[_-]?token|token|пароль|парол[ья]|kennwort|mot de passe|contraseña|senha|密码|パスワード|비밀번호)\s*[:=：]\s*\S+"#,
+            #"(?i)\bbearer\s+[A-Za-z0-9\-._~+/]{16,}=*"#,
+            #"-----BEGIN [A-Z ]*PRIVATE KEY-----"#,
+            #"\bAKIA[0-9A-Z]{16}\b"#,
+            #"\bgh[pousr]_[A-Za-z0-9]{36,}\b"#,
+            #"\bgithub_pat_[A-Za-z0-9_]{40,}\b"#,
+            #"\bxox[abprs]-[A-Za-z0-9-]{10,}"#,
+            #"\b[rs]k_live_[A-Za-z0-9]{16,}\b"#,
+            #"\bsk-(?:ant-|proj-)?[A-Za-z0-9_-]{20,}\b"#,
+            #"\bAIza[0-9A-Za-z_-]{35}\b"#,
+            #"(?i)\b(cvv|cvc|cvv2)\s*[:=]?\s*\d{3,4}\b"#,
+            #"\b\d{3}-\d{2}-\d{4}\b"#,
         ]
-        for pattern in sensitivePatterns {
-            if lowercased.contains(pattern) { return true }
+        for pattern in patterns where text.range(of: pattern, options: .regularExpression) != nil {
+            return true
         }
+        return containsCardNumber(text)
+    }
 
-        // Personal data counts as sensitive too
-        if entities.contains(where: { $0.type == .email }) && text.count < 100 { return true }
-
+    /// 13–19 digits, optionally grouped by spaces or dashes, passing Luhn —
+    /// so order numbers and phone numbers do not count.
+    nonisolated private static func containsCardNumber(_ text: String) -> Bool {
+        let pattern = #"(?<!\d)(?:\d[ -]?){12,18}\d(?!\d)"#
+        var searchRange = text.startIndex..<text.endIndex
+        while let range = text.range(of: pattern, options: .regularExpression, range: searchRange) {
+            let digits = text[range].compactMap(\.wholeNumberValue)
+            if (13...19).contains(digits.count), luhn(digits) { return true }
+            searchRange = range.upperBound..<text.endIndex
+        }
         return false
+    }
+
+    nonisolated private static func luhn(_ digits: [Int]) -> Bool {
+        var sum = 0
+        for (index, digit) in digits.reversed().enumerated() {
+            if index % 2 == 1 {
+                let doubled = digit * 2
+                sum += doubled > 9 ? doubled - 9 : doubled
+            } else {
+                sum += digit
+            }
+        }
+        return sum % 10 == 0
+    }
+
+    private func checkSensitivity(_ text: String, entities: [ExtractedEntity]) -> Bool {
+        Self.looksLikeSecret(text)
     }
 
     // MARK: - Title Suggestion

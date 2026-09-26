@@ -30,9 +30,18 @@ enum SecureStore {
         lock.lock()
         defer { lock.unlock() }
         if let cachedKey { return cachedKey }
-        if let existing = loadKey() {
+        switch loadKey() {
+        case .found(let existing):
             cachedKey = existing
             return existing
+        case .failed:
+            // The keychain answered with an error — locked, busy, access
+            // denied — not "there is no key". Making a new key here used to
+            // delete the old one on the way in, and every encrypted clip
+            // became unreadable for good. Better to fail this once.
+            return nil
+        case .missing:
+            break
         }
         let fresh = SymmetricKey(size: .bits256)
         guard storeKey(fresh) else { return nil }
@@ -40,7 +49,13 @@ enum SecureStore {
         return fresh
     }
 
-    private static func loadKey() -> SymmetricKey? {
+    private enum Lookup {
+        case found(SymmetricKey)
+        case missing
+        case failed
+    }
+
+    private static func loadKey() -> Lookup {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrAccount as String: account,
@@ -49,9 +64,10 @@ enum SecureStore {
             kSecMatchLimit as String: kSecMatchLimitOne
         ]
         var result: CFTypeRef?
-        guard SecItemCopyMatching(query as CFDictionary, &result) == errSecSuccess,
-              let data = result as? Data else { return nil }
-        return SymmetricKey(data: data)
+        let status = SecItemCopyMatching(query as CFDictionary, &result)
+        if status == errSecItemNotFound { return .missing }
+        guard status == errSecSuccess, let data = result as? Data else { return .failed }
+        return .found(SymmetricKey(data: data))
     }
 
     private static func storeKey(_ key: SymmetricKey) -> Bool {

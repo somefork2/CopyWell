@@ -29,6 +29,10 @@ struct CapturedClip: Sendable {
     var sentiment: Double
     var confidence: Double
     var entities: [ExtractedEntity]
+    /// Set only for clips arriving from iCloud, which keep the time they were
+    /// first copied on the other Mac; local clips are stamped on insert.
+    var createdAt: Date? = nil
+    var isFavorite = false
 }
 
 @MainActor
@@ -119,8 +123,13 @@ final class ClipboardMonitor {
             rtf: pasteboard.data(forType: .rtf)
         )
 
+        // Stamped now, not when the analysis finishes: OCR on a picture takes
+        // far longer than tagging a line of text, so text copied after an
+        // image used to land underneath it.
+        let copiedAt = Date()
+
         Task.detached(priority: .utility) { [typeDetector] in
-            guard let clip = await Self.process(
+            guard var clip = await Self.process(
                 snapshot: snapshot,
                 sourceApp: sourceApp,
                 sourceBundleID: sourceBundleID,
@@ -128,6 +137,7 @@ final class ClipboardMonitor {
                 skipPasswords: settings.skipPasswords,
                 analyse: analyse
             ) else { return }
+            clip.createdAt = copiedAt
 
             await MainActor.run { [weak self] in
                 self?.onClipCaptured?(clip)

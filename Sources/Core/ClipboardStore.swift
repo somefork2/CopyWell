@@ -129,10 +129,14 @@ final class ClipboardStore {
         ).first
 
         if let existing {
+            // The same clip coming back from iCloud is this Mac's own upload,
+            // or another Mac's copy of it — not a fresh copy. Bumping it here
+            // stamped every clip "now" on every sync and shuffled the history.
+            if origin == .remote { return existing }
             // Re-copying something already in history moves it back to the top
             // instead of creating a duplicate.
             existing.updatedAt = Date()
-            existing.createdAt = Date()
+            existing.createdAt = clip.createdAt ?? Date()
             existing.isTrashed = false
             save()
             reload()
@@ -163,6 +167,11 @@ final class ClipboardStore {
         item.sentiment = clip.sentiment
         item.aiConfidence = clip.confidence
         item.entities = clip.entities
+        if let createdAt = clip.createdAt {
+            item.createdAt = createdAt
+            item.updatedAt = createdAt
+        }
+        if clip.isFavorite { item.isFavorite = true }
 
         context.insert(item)
         save()
@@ -210,6 +219,7 @@ final class ClipboardStore {
             if !item.isSensitive { DeletionLog.record(item.contentHash) }
             context.delete(item)
         }
+        PasteStackManager.shared.forget(itemsToDelete)
         save()
         reload()
         SyncCoordinator.shared.localHistoryChanged()
@@ -222,6 +232,7 @@ final class ClipboardStore {
         let wanted = Set(contentHashes)
         let doomed = items.filter { wanted.contains(ContentHasher.recordName(for: $0.contentHash)) || wanted.contains($0.contentHash) }
         guard !doomed.isEmpty else { return }
+        PasteStackManager.shared.forget(doomed)
         for item in doomed {
             if let fileName = item.imageFileName { ImageStore.remove(fileName: fileName) }
             context.delete(item)
@@ -325,7 +336,12 @@ final class ClipboardStore {
             if let fileName = item.imageFileName { ImageStore.remove(fileName: fileName) }
             context.delete(item)
         }
+        PasteStackManager.shared.forget(doomed)
         save()
+        // Without this the list kept showing clips that had just been deleted —
+        // switching from "Keep everything" to "Last 100" appeared to do nothing
+        // — and acting on one of them touched a deleted object.
+        reload()
     }
 
     /// Fills in dimensions and file size for image clips captured before the
@@ -362,6 +378,7 @@ final class ClipboardStore {
         // would delete every real image on disk for not belonging to one.
         if DemoContent.isActive { return }
         #endif
+        ImageStore.recoverMisplacedImages()
         let live = (try? context.fetch(FetchDescriptor<ClipboardItem>())) ?? []
         // A store that failed to open comes up empty, and pruning against an
         // empty store deletes everything the user has. Nothing to keep means

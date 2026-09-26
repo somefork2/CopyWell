@@ -44,6 +44,17 @@ final class PasteStackManager {
 
     func rewind() { currentIndex = 0 }
 
+    /// Drops clips that were deleted from the history, so the stack never
+    /// hands out an object that no longer exists.
+    func forget(_ items: [ClipboardItem]) {
+        let gone = Set(items.map(\.id))
+        let before = stackItems.count
+        let consumedGone = stackItems.prefix(currentIndex).filter { gone.contains($0.id) }.count
+        stackItems.removeAll { gone.contains($0.id) }
+        guard stackItems.count != before else { return }
+        currentIndex = max(0, min(currentIndex - consumedGone, stackItems.count))
+    }
+
     func reset() {
         currentIndex = 0
         stackItems.removeAll()

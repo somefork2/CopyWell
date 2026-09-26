@@ -54,12 +54,25 @@ enum LanguageBundle {
     }
 
     static func use(_ language: String?) {
-        let resolved = language.flatMap(bundle(for:)) ?? .main
+        let resolved = language.flatMap(bundle(for:)) ?? macLanguageBundle()
         lock.lock()
         defer { lock.unlock() }
         guard resolved != storage else { return }
         storage = resolved
         generationStorage += 1
+    }
+
+    /// The bundle for the Mac's own language, for "Same as the Mac".
+    ///
+    /// Not simply `.main`: after running in German, `.main` *is* German for the
+    /// rest of the process, so switching back found nothing to change and the
+    /// interface stayed German. The app's own `AppleLanguages` entry has been
+    /// removed by the time this runs, so the lookup falls through to the Mac's.
+    private static func macLanguageBundle() -> Bundle {
+        let preferences = UserDefaults.standard.stringArray(forKey: "AppleLanguages") ?? Locale.preferredLanguages
+        let best = Bundle.preferredLocalizations(from: Bundle.main.localizations, forPreferences: preferences)
+            .first { $0 != "Base" }
+        return best.flatMap(bundle(for:)) ?? .main
     }
 
     /// Falls back from `pt-BR` to `pt` and the other way, so a stored code that

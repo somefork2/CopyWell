@@ -21,13 +21,43 @@ enum ImageStore {
         #if DEBUG
         if CommandLine.arguments.contains("--demo-content") { folder = "CopyWell/DemoImages" }
         #endif
-        let base = FileManager.default
-            .urls(for: .applicationSupportDirectory, in: .userDomainMask).first
-            ?? URL(fileURLWithPath: NSTemporaryDirectory())
+        // The parentheses matter. Without them the folder was appended to the
+        // temporary-directory fallback only, so images went straight into
+        // Application Support — and pruning, which empties this folder of
+        // everything that is not a live image, deleted the history database
+        // sitting next to them on every launch.
+        let base = (applicationSupport ?? URL(fileURLWithPath: NSTemporaryDirectory()))
             .appendingPathComponent(folder, isDirectory: true)
         try? FileManager.default.createDirectory(at: base, withIntermediateDirectories: true)
         return base
     }()
+
+    private static var applicationSupport: URL? {
+        FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+    }
+
+    /// Clip images are named after their content hash: 32 hex digits, `.png`.
+    private static func isClipImageName(_ name: String) -> Bool {
+        guard name.hasSuffix(".png") else { return false }
+        let stem = name.dropLast(4)
+        return stem.count == 32 && stem.allSatisfy(\.isHexDigit)
+    }
+
+    /// Moves images that build 36 wrote into Application Support itself back
+    /// into the images folder, where their clips look for them.
+    static func recoverMisplacedImages() {
+        guard let support = applicationSupport,
+              support.standardizedFileURL != directory.standardizedFileURL,
+              let names = try? FileManager.default.contentsOfDirectory(atPath: support.path) else { return }
+        for name in names where isClipImageName(name) {
+            let misplaced = support.appendingPathComponent(name)
+            if FileManager.default.fileExists(atPath: url(for: name).path) {
+                try? FileManager.default.removeItem(at: misplaced)
+            } else {
+                try? FileManager.default.moveItem(at: misplaced, to: url(for: name))
+            }
+        }
+    }
 
     static func url(for fileName: String) -> URL {
         directory.appendingPathComponent(fileName)
@@ -70,9 +100,12 @@ enum ImageStore {
     }
 
     /// Removes image files that no longer belong to any live clip.
+    ///
+    /// Only files named the way clip images are named: if the folder is ever
+    /// wrong again, whatever else lives there is left alone.
     static func pruneOrphans(keeping liveFileNames: Set<String>) {
         guard let names = try? FileManager.default.contentsOfDirectory(atPath: directory.path) else { return }
-        for name in names where !liveFileNames.contains(name) {
+        for name in names where isClipImageName(name) && !liveFileNames.contains(name) {
             remove(fileName: name)
         }
     }
@@ -93,16 +126,27 @@ enum ImageStore {
         png(from: image, maxSize: thumbnailMaxSize)
     }
 
-    /// Renders `image` to PNG, optionally downscaled so its longest side is `maxSize`.
+    /// Renders `image` to PNG, optionally downscaled so its longest side is
+    /// `maxSize` pixels.
+    ///
+    /// Sized from the pixels, not from `image.size`: that is in points, so a
+    /// Retina screenshot was stored at half its resolution — it pasted back
+    /// blurry and half the size, and OCR ran on the smaller copy. The point
+    /// size is written into the PNG as its resolution, so the picture still
+    /// pastes at the size it was on screen.
     static func png(from image: NSImage, maxSize: CGFloat?) -> Data? {
-        let source = image.size
-        guard source.width > 0, source.height > 0 else { return nil }
+        let points = image.size
+        var pixels = pixelSize(of: image)
+        if pixels.width <= 0 || pixels.height <= 0 { pixels = points }
+        guard pixels.width > 0, pixels.height > 0, points.width > 0, points.height > 0 else { return nil }
 
-        var target = source
-        if let maxSize, max(source.width, source.height) > maxSize {
-            let scale = maxSize / max(source.width, source.height)
-            target = CGSize(width: (source.width * scale).rounded(),
-                            height: (source.height * scale).rounded())
+        var target = pixels
+        var targetPoints = points
+        if let maxSize, max(pixels.width, pixels.height) > maxSize {
+            let scale = maxSize / max(pixels.width, pixels.height)
+            target = CGSize(width: (pixels.width * scale).rounded(),
+                            height: (pixels.height * scale).rounded())
+            targetPoints = target
         }
 
         guard let rep = NSBitmapImageRep(
@@ -118,10 +162,14 @@ enum ImageStore {
             bitsPerPixel: 0
         ) else { return nil }
 
+        // Drawing is done in pixels; the point size is applied afterwards so
+        // the encoder records the right resolution.
+        rep.size = target
         NSGraphicsContext.saveGraphicsState()
         NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: rep)
         image.draw(in: NSRect(origin: .zero, size: target))
         NSGraphicsContext.restoreGraphicsState()
+        rep.size = targetPoints
 
         return rep.representation(using: .png, properties: [:])
     }

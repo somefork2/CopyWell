@@ -159,7 +159,7 @@ final class ClipboardItem {
     var imageHeadline: String {
         if let first = recognizedFirstLine { return first }
         if let dimensions = imageDimensionsText { return L("Image · \(dimensions)") }
-        return "Image"
+        return L("Image")
     }
 
     /// The first line of recognised text, but only when it is worth showing as a
@@ -197,7 +197,7 @@ final class ClipboardItem {
         }
         let words = recognizedWordCount
         if words > 0 {
-            parts.append("\(words) word\(words == 1 ? "" : "s") recognised")
+            parts.append(L("\(words) words recognised"))
         } else if extractedText == nil {
             parts.append(L("no text recognised"))
         }
@@ -206,8 +206,8 @@ final class ClipboardItem {
 
     var displayTitle: String {
         switch type {
-        case .url: return urlTitle ?? URL(string: url ?? "")?.host() ?? "Link"
-        case .image: return "Image"
+        case .url: return urlTitle ?? URL(string: url ?? "")?.host() ?? L("Link")
+        case .image: return L("Image")
         case .code: return L("Code Snippet")
         case .password: return L("Protected Item")
         default:

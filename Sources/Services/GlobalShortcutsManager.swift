@@ -82,7 +82,12 @@ final class GlobalShortcutsManager {
     @discardableResult
     private func register(_ action: ShortcutAction) -> Bool {
         let shortcut = self.shortcut(for: action)
-        guard !shortcut.isEmpty, shortcut.isValidGlobalBinding else { return true }
+        // A cleared binding cannot clash with anything; without this its old
+        // conflict stayed flagged after the shortcut was removed.
+        guard !shortcut.isEmpty, shortcut.isValidGlobalBinding else {
+            conflicts.remove(action)
+            return true
+        }
 
         let hotKeyID = EventHotKeyID(signature: Self.signature, id: action.hotKeyID)
         var ref: EventHotKeyRef?
