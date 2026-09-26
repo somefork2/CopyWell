@@ -221,13 +221,18 @@ def step_status():
 
 def step_submit():
     version = find_version() or sys.exit("run `version` first")
-    submission = asc.post("/v1/reviewSubmissions", {"data": {
+    # A draft left by an earlier attempt (say, one made while a withdrawal was
+    # still settling) is picked up rather than duplicated.
+    drafts = asc.get_all(f"/v1/apps/{APP_ID}/reviewSubmissions",
+                         **{"filter[platform]": "MAC_OS", "filter[state]": "READY_FOR_REVIEW"})
+    submission = drafts[0] if drafts else asc.post("/v1/reviewSubmissions", {"data": {
         "type": "reviewSubmissions", "attributes": {"platform": "MAC_OS"},
         "relationships": {"app": {"data": {"type": "apps", "id": APP_ID}}}}})["data"]
-    asc.post("/v1/reviewSubmissionItems", {"data": {
-        "type": "reviewSubmissionItems",
-        "relationships": {"reviewSubmission": {"data": {"type": "reviewSubmissions", "id": submission["id"]}},
-                          "appStoreVersion": {"data": {"type": "appStoreVersions", "id": version["id"]}}}}})
+    if not asc.get_all(f"/v1/reviewSubmissions/{submission['id']}/items"):
+        asc.post("/v1/reviewSubmissionItems", {"data": {
+            "type": "reviewSubmissionItems",
+            "relationships": {"reviewSubmission": {"data": {"type": "reviewSubmissions", "id": submission["id"]}},
+                              "appStoreVersion": {"data": {"type": "appStoreVersions", "id": version["id"]}}}}})
     asc.patch(f"/v1/reviewSubmissions/{submission['id']}", {"data": {
         "type": "reviewSubmissions", "id": submission["id"], "attributes": {"submitted": True}}})
     print(f"submitted for review: {submission['id']}")
