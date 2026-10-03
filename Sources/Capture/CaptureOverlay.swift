@@ -207,7 +207,14 @@ final class CaptureOverlayView: NSView, NSTextFieldDelegate {
         let size = string.size()
         var origin = CGPoint(x: selection.minX, y: selection.maxY + 6)
         if origin.y + size.height + 6 > bounds.maxY { origin.y = selection.maxY - size.height - 10 }
-        let background = CGRect(x: origin.x, y: origin.y, width: size.width + 12, height: size.height + 4)
+        var background = CGRect(x: origin.x, y: origin.y, width: size.width + 12, height: size.height + 4)
+        // A bar may have had to go above the selection, where the label lives;
+        // then the label steps inside the selection's corner instead of hiding.
+        let bars = [toolsBar, actionBar].compactMap { $0 }.filter { !$0.isHidden }.map(\.frame)
+        if bars.contains(where: { $0.intersects(background) }) {
+            origin = CGPoint(x: selection.minX + 6, y: selection.maxY - background.height - 6)
+            background.origin = origin
+        }
         NSColor.black.withAlphaComponent(0.72).setFill()
         NSBezierPath(roundedRect: background, xRadius: 4, yRadius: 4).fill()
         string.draw(at: CGPoint(x: origin.x + 6, y: origin.y + 2))
@@ -650,9 +657,8 @@ final class CaptureOverlayView: NSView, NSTextFieldDelegate {
         actionBar = actions
     }
 
-    /// The tools sit to the right of the selection and the actions under it,
-    /// as in the screenshot tools people already know; each moves to the other
-    /// side, or inside, when the selection runs up against the screen's edge.
+    /// Placement is worked out for both bars together, so that one never lands
+    /// on the other; see `CaptureBarLayout`.
     private func layoutBars() {
         guard let selection else {
             if mode == .recording, let actionBar {
@@ -663,30 +669,21 @@ final class CaptureOverlayView: NSView, NSTextFieldDelegate {
             }
             return
         }
-        let margin: CGFloat = 8
-        let edge: CGFloat = 4
-
-        if let toolsBar {
-            let size = toolsBar.fittingSize
-            var x = selection.maxX + margin
-            if x + size.width > bounds.maxX - edge { x = selection.minX - margin - size.width }
-            if x < bounds.minX + edge { x = selection.maxX - margin - size.width }
-            var y = selection.maxY - size.height
-            y = min(max(y, bounds.minY + edge), bounds.maxY - size.height - edge)
-            toolsBar.frame = CGRect(origin: CGPoint(x: x, y: y), size: size)
-        }
-
-        if let actionBar {
-            let size = actionBar.fittingSize
-            var x = selection.maxX - size.width
-            x = min(max(x, bounds.minX + edge), bounds.maxX - size.width - edge)
-            var y = selection.minY - margin - size.height
-            if y < bounds.minY + edge { y = selection.maxY + margin }
-            if y + size.height > bounds.maxY - edge { y = selection.minY + margin }
-            actionBar.frame = CGRect(origin: CGPoint(x: x, y: y), size: size)
-        }
+        guard let actionBar else { return }
+        let placed = CaptureBarLayout.place(selection: selection, in: bounds,
+                                            tools: toolsBar?.fittingSize, actions: actionBar.fittingSize)
+        toolsBar?.frame = placed.tools ?? .zero
+        actionBar.frame = placed.actions
         window?.invalidateCursorRects(for: self)
+        needsDisplay = true
     }
+
+    #if DEBUG
+    /// Diagnostics: where the bars ended up, for the overlap sweep.
+    var barFrames: (tools: CGRect?, actions: CGRect?) {
+        (toolsBar.map(\.frame), actionBar.map(\.frame))
+    }
+    #endif
 
     // MARK: - Output
 
@@ -1007,5 +1004,77 @@ struct CaptureActionBar: View {
             .fill(Color.white.opacity(0.18))
             .frame(width: 1, height: 20)
             .padding(.horizontal, 3)
+    }
+}
+
+// MARK: - Bar placement
+
+/// Where the two capture bars go around a selection.
+///
+/// The tools prefer the right of the selection and the actions the space under
+/// it, as in the screenshot tools people already know. Near a screen edge each
+/// has to move, and moved one at a time they collided: a small selection by the
+/// right edge sent the tall tools bar to the left while the wide action bar,
+/// still under the selection, reached left into the same corner. So every
+/// pairing of the candidate spots is scored at once — overlapping each other is
+/// ruled out, covering the selection is expensive, distance from it costs a
+/// little — and the cheapest pair wins.
+enum CaptureBarLayout {
+    static let margin: CGFloat = 8
+    static let edge: CGFloat = 4
+
+    static func place(selection s: CGRect, in bounds: CGRect,
+                      tools: CGSize?, actions: CGSize) -> (tools: CGRect?, actions: CGRect) {
+        let area = bounds.insetBy(dx: edge, dy: edge)
+        func clamp(_ r: CGRect) -> CGRect {
+            var r = r
+            r.origin.x = min(max(r.minX, area.minX), max(area.minX, area.maxX - r.width))
+            r.origin.y = min(max(r.minY, area.minY), max(area.minY, area.maxY - r.height))
+            return r.integral
+        }
+        func rect(_ x: CGFloat, _ y: CGFloat, _ size: CGSize) -> CGRect {
+            clamp(CGRect(origin: CGPoint(x: x, y: y), size: size))
+        }
+        /// Share of the bar lying over the selection, 0…1.
+        func covering(_ r: CGRect) -> CGFloat {
+            let i = r.intersection(s)
+            return i.isNull ? 0 : (i.width * i.height) / max(1, r.width * r.height)
+        }
+        func gap(_ r: CGRect) -> CGFloat {
+            let dx = max(0, max(s.minX - r.maxX, r.minX - s.maxX))
+            let dy = max(0, max(s.minY - r.maxY, r.minY - s.maxY))
+            return (dx * dx + dy * dy).squareRoot()
+        }
+        func barCost(_ r: CGRect) -> CGFloat { covering(r) * 2000 + gap(r) }
+
+        var toolSpots: [CGRect?] = [nil]
+        if let t = tools {
+            let xs = [s.maxX + margin, s.minX - margin - t.width, s.maxX - margin - t.width]
+            let ys = [s.maxY - t.height, s.minY]
+            toolSpots = xs.flatMap { x in ys.map { y in Optional(rect(x, y, t)) } }
+        }
+
+        var best: (cost: CGFloat, tools: CGRect?, actions: CGRect)?
+        for (ti, toolRect) in toolSpots.enumerated() {
+            let a = actions
+            var xs = [s.maxX - a.width, s.minX, s.midX - a.width / 2]
+            var ys = [s.minY - margin - a.height, s.maxY + margin, s.minY + margin]
+            // Clear of the tools bar: past its ends, or beside it.
+            if let toolRect {
+                ys += [toolRect.minY - margin - a.height, toolRect.maxY + margin]
+                xs += [toolRect.maxX + margin, toolRect.minX - margin - a.width]
+            }
+            var spots: [CGRect] = []
+            for y in ys { for x in xs { spots.append(rect(x, y, a)) } }
+            for (ai, actionRect) in spots.enumerated() {
+                var cost = barCost(actionRect) + CGFloat(ai) * 0.5 + CGFloat(ti) * 0.5
+                if let toolRect {
+                    cost += barCost(toolRect)
+                    if toolRect.insetBy(dx: -2, dy: -2).intersects(actionRect) { cost += 1_000_000 }
+                }
+                if best == nil || cost < best!.cost { best = (cost, toolRect, actionRect) }
+            }
+        }
+        return (best!.tools, best!.actions)
     }
 }

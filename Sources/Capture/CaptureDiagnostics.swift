@@ -17,6 +17,64 @@ enum CaptureDiagnostics {
     static var isShowingClicks: Bool { CommandLine.arguments.contains("--diagnose-clicks") }
     static var isTestingRecording: Bool { CommandLine.arguments.contains("--diagnose-recording") }
     static var isTestingScreenshotActions: Bool { CommandLine.arguments.contains("--diagnose-screenshot-actions") }
+    static var isTestingBarLayout: Bool { CommandLine.arguments.contains("--diagnose-bar-layout") }
+
+    /// The two capture bars must never land on each other and never leave the
+    /// screen, wherever the selection is. Real bar sizes come from a hosted
+    /// overlay; the sweep then runs the placement over thousands of selections
+    /// on several screen sizes, and the case from the field (a small selection
+    /// by the right edge) is drawn to a file to look at.
+    static func testBarLayout() {
+        var failures = 0
+        func check(_ ok: Bool, _ what: String) {
+            print((ok ? "PASS  " : "FAIL  ") + what)
+            if !ok { failures += 1 }
+        }
+        let size = CGSize(width: 1026, height: 806)
+        let picture = syntheticScreen(pixels: CGSize(width: size.width * 2, height: size.height * 2))
+        let state = CaptureToolState()
+        let (window, view) = host(mode: .screenshot, snapshot: picture, state: state, size: size)
+        drag(view, from: CGPoint(x: 515, y: 503), to: CGPoint(x: 1010, y: 691))
+        let frames = view.barFrames
+        guard let tools = frames.tools, let actions = frames.actions else {
+            print("RESULT: bars did not appear"); exit(2)
+        }
+        check(!tools.insetBy(dx: -2, dy: -2).intersects(actions), "reported case: bars apart (tools \(NSStringFromRect(tools)), actions \(NSStringFromRect(actions)))")
+        check(view.bounds.contains(tools) && view.bounds.contains(actions), "reported case: both bars on screen")
+        let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("Screenshots", isDirectory: true)
+        try? FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        save(view, to: directory.appendingPathComponent("bar-layout-reported.png"))
+        window.orderOut(nil)
+
+        var cases = 0, overlaps = 0, offscreen = 0
+        var example = ""
+        for screen in [CGSize(width: 1026, height: 806), CGSize(width: 1280, height: 800),
+                       CGSize(width: 1440, height: 900), CGSize(width: 1920, height: 1080)] {
+            let bounds = CGRect(origin: .zero, size: screen)
+            for w in stride(from: 20.0, through: screen.width, by: 60) {
+                for h in stride(from: 20.0, through: screen.height, by: 60) {
+                    for x in stride(from: 0.0, through: screen.width - w, by: 50) {
+                        for y in stride(from: 0.0, through: screen.height - h, by: 50) {
+                            let selection = CGRect(x: x, y: y, width: w, height: h)
+                            let placed = CaptureBarLayout.place(selection: selection, in: bounds,
+                                                                tools: tools.size, actions: actions.size)
+                            cases += 1
+                            if let t = placed.tools, t.insetBy(dx: -2, dy: -2).intersects(placed.actions) {
+                                overlaps += 1
+                                if example.isEmpty { example = "\(screen) \(NSStringFromRect(selection))" }
+                            }
+                            if !bounds.contains(placed.actions) || !(placed.tools.map(bounds.contains) ?? true) { offscreen += 1 }
+                        }
+                    }
+                }
+            }
+        }
+        check(overlaps == 0, "sweep: \(overlaps) overlaps in \(cases) selections\(example.isEmpty ? "" : ", first: " + example)")
+        check(offscreen == 0, "sweep: bars on screen in \(cases) selections (\(offscreen) off)")
+        print("RESULT: \(failures == 0 ? "all passed" : "\(failures) failed")")
+        exit(failures == 0 ? 0 : 1)
+    }
 
     /// What the buttons under a screenshot do: Copy (clipboard, and the clip
     /// the history would get), the file Save writes, and Copy Text in Image.

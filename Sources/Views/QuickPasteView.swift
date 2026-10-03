@@ -398,15 +398,7 @@ struct ClipPreviewSheet: View {
     @ViewBuilder
     private func body(for item: ClipboardItem) -> some View {
         if let image = item.imageData.flatMap(NSImage.init(data:)) {
-            Image(nsImage: image)
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: .infinity)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Theme.separator, lineWidth: 0.5)
-                )
+            ExpandableImage(image: image, item: item, cornerRadius: 8)
         } else if item.type == .image {
             EmptyStateView(
                 icon: "photo.badge.exclamationmark",
@@ -502,6 +494,18 @@ struct InlineClipPreview: View {
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
             Spacer()
+            if item.type == .image, item.imageFileName != nil {
+                Button {
+                    ImageViewer.show(item)
+                } label: {
+                    Image(systemName: "arrow.up.left.and.arrow.down.right")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.hoverPlate(padding: 3, cornerRadius: 10))
+                .help(L("Open full size"))
+                .accessibilityLabel(L("Open full size"))
+            }
             Button {
                 onClose()
             } label: {
@@ -529,15 +533,7 @@ struct InlineClipPreview: View {
     @ViewBuilder
     private var visual: some View {
         if let image = item.imageData.flatMap(NSImage.init(data:)) {
-            Image(nsImage: image)
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: .infinity, maxHeight: 150)
-                .clipShape(RoundedRectangle(cornerRadius: 6))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 6)
-                        .stroke(Theme.separator, lineWidth: 0.5)
-                )
+            ExpandableImage(image: image, item: item, maxHeight: 150)
         } else if item.type == .image {
             Text(L("The stored file for this image could not be read."))
                 .font(.caption)

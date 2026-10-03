@@ -203,6 +203,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             if CaptureDiagnostics.isShowingClicks { CaptureDiagnostics.showClicks() }
             if CaptureDiagnostics.isTestingRecording { CaptureDiagnostics.testRecording() }
             if CaptureDiagnostics.isTestingScreenshotActions { CaptureDiagnostics.testScreenshotActions() }
+            if CaptureDiagnostics.isTestingBarLayout { CaptureDiagnostics.testBarLayout() }
+            if ImageViewer.isDiagnosing { ImageViewer.diagnose() }
             if FeatureShots.isActive { FeatureShots.run() }
             #endif
 
