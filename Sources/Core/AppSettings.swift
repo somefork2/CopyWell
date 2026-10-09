@@ -199,6 +199,13 @@ final class AppSettings {
     }
 
     private func applyLaunchAtLogin() {
+        #if DEBUG
+        // A login item is recorded by path. A debug build registering itself
+        // would take the place of the installed app at every login — and,
+        // signed differently, it has none of that app's permissions.
+        let enabled = SMAppService.mainApp.status == .enabled
+        if launchAtLogin != enabled { launchAtLogin = enabled }
+        #else
         do {
             if launchAtLogin {
                 if SMAppService.mainApp.status != .enabled {
@@ -213,6 +220,7 @@ final class AppSettings {
             // Registration fails when the app runs outside /Applications; reflect reality.
             launchAtLogin = SMAppService.mainApp.status == .enabled
         }
+        #endif
     }
 }
 
